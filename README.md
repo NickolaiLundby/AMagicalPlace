@@ -1,0 +1,2 @@
+# AMagicalPlace
+SMAP App Project
