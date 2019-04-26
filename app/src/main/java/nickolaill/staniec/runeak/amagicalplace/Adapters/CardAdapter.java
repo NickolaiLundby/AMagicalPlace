@@ -43,7 +43,7 @@ public class CardAdapter extends ListAdapter<Card, CardAdapter.CardHolder> {
     @Override
     public void onBindViewHolder(@NonNull CardHolder cardHolder, int i) {
         Card card = getItem(i);
-        cardHolder.textViewTitle.setText(card.getText());
+        cardHolder.textViewTitle.setText(card.getTitle());
         cardHolder.textViewSeries.setText(card.getSeries());
         cardHolder.textViewText.setText(card.getText());
     }
@@ -74,5 +74,9 @@ public class CardAdapter extends ListAdapter<Card, CardAdapter.CardHolder> {
 
     public interface OnItemClickListener {
         void onItemClick(Card card);
+    }
+
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        this.listener = listener;
     }
 }

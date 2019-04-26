@@ -1,10 +1,12 @@
 package nickolaill.staniec.runeak.amagicalplace.Models;
 
 import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.PrimaryKey;
 
 @Entity(tableName = "card_table")
 public class Card {
 
+    @PrimaryKey(autoGenerate = true)
     private int id;
 
     private String title;
