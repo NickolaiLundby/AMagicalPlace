@@ -8,20 +8,23 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 
-import nickolaill.staniec.runeak.amagicalplace.Models.Card;
-import nickolaill.staniec.runeak.amagicalplace.Models.CardDao;
+import java.util.List;
 
-@Database(entities = {Card.class}, version = 1)
+import nickolaill.staniec.runeak.amagicalplace.Models.Card;
+import nickolaill.staniec.runeak.amagicalplace.Models.Collection;
+import nickolaill.staniec.runeak.amagicalplace.Models.MagicDao;
+
+@Database(entities = {Card.class, Collection.class}, version = 1)
 public abstract class CardDatabase extends RoomDatabase {
     private static CardDatabase instance;
 
-    public abstract CardDao cardDao();
+    public abstract MagicDao magicDao();
 
     public static synchronized CardDatabase getInstance(Context context) {
         if (instance == null) {
             instance = Room.databaseBuilder(context.getApplicationContext(),
                     CardDatabase.class,
-                    "card_database")
+                    "magic_database")
                     .addCallback(roomCallback)
                     .build();
         }
@@ -37,17 +40,31 @@ public abstract class CardDatabase extends RoomDatabase {
     };
 
     private static class PopulateDbAsyncTask extends AsyncTask<Void, Void, Void> {
-        private CardDao cardDao;
+        private MagicDao magicDao;
 
         private PopulateDbAsyncTask(CardDatabase db) {
-            cardDao = db.cardDao();
+            magicDao = db.magicDao();
         }
 
         @Override
         protected Void doInBackground(Void... voids) {
-            cardDao.insert(new Card("Lightning Bolt", "Alpha", "Lightning Bolt does 3 damage to one target."));
-            cardDao.insert(new Card("Lightning Bolt", "Fourth Edition", "Lightning Bolt deals 3 damage to target creature or player."));
-            cardDao.insert(new Card("Lightning Bolt", "Magic 2011", "Lightning Bolt deals 3 damage to target creature or player."));
+            Collection collection1 = new Collection("Grease Lightning", "It's shocking.");
+            collection1.setCoId(123);
+            magicDao.insertCollection(collection1);
+            Collection collection2 = new Collection("Lightning", "It's not as shocking.");
+            collection2.setCoId(321);
+            magicDao.insertCollection(collection2);
+
+            Card card1 = new Card("Lightning Bolt", "Alpha", "Lightning Bolt does 3 damage to one target.");
+            card1.setCollectionId(collection1.getCoId());
+            magicDao.insertCard(card1);
+            Card card2 = new Card("Lightning Bolt", "Fourth Edition", "Lightning Bolt deals 3 damage to target creature or player.");
+            card2.setCollectionId(collection1.getCoId());
+            magicDao.insertCard(card2);
+            Card card3 = new Card("Lightning Bolt", "Magic 2011", "Lightning Bolt deals 3 damage to target creature or player.");
+            card3.setCollectionId(collection2.getCoId());
+            magicDao.insertCard(card3);
+
             return null;
         }
     }

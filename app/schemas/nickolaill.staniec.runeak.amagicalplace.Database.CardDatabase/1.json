@@ -2,15 +2,15 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "5b2f0d6bca1a7d8088bf271cfafe46a2",
+    "identityHash": "6ff0f4957cdeadf1cd2001b955794770",
     "entities": [
       {
         "tableName": "card_table",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `title` TEXT, `series` TEXT, `text` TEXT)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`caId` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `title` TEXT, `series` TEXT, `text` TEXT, `quantity` INTEGER NOT NULL, `collectionId` INTEGER NOT NULL, FOREIGN KEY(`collectionId`) REFERENCES `collection_table`(`coId`) ON UPDATE NO ACTION ON DELETE CASCADE )",
         "fields": [
           {
-            "fieldPath": "id",
-            "columnName": "id",
+            "fieldPath": "caId",
+            "columnName": "caId",
             "affinity": "INTEGER",
             "notNull": true
           },
@@ -31,21 +31,95 @@
             "columnName": "text",
             "affinity": "TEXT",
             "notNull": false
+          },
+          {
+            "fieldPath": "quantity",
+            "columnName": "quantity",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "collectionId",
+            "columnName": "collectionId",
+            "affinity": "INTEGER",
+            "notNull": true
           }
         ],
         "primaryKey": {
           "columnNames": [
-            "id"
+            "caId"
           ],
           "autoGenerate": true
         },
-        "indices": [],
+        "indices": [
+          {
+            "name": "index_card_table_caId",
+            "unique": true,
+            "columnNames": [
+              "caId"
+            ],
+            "createSql": "CREATE UNIQUE INDEX `index_card_table_caId` ON `${TABLE_NAME}` (`caId`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "collection_table",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "collectionId"
+            ],
+            "referencedColumns": [
+              "coId"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "collection_table",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`coId` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `title` TEXT, `description` TEXT)",
+        "fields": [
+          {
+            "fieldPath": "coId",
+            "columnName": "coId",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "title",
+            "columnName": "title",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "description",
+            "columnName": "description",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "coId"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [
+          {
+            "name": "index_collection_table_coId",
+            "unique": true,
+            "columnNames": [
+              "coId"
+            ],
+            "createSql": "CREATE UNIQUE INDEX `index_collection_table_coId` ON `${TABLE_NAME}` (`coId`)"
+          }
+        ],
         "foreignKeys": []
       }
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"5b2f0d6bca1a7d8088bf271cfafe46a2\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"6ff0f4957cdeadf1cd2001b955794770\")"
     ]
   }
 }

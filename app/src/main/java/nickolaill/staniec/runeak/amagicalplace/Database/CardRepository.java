@@ -7,31 +7,31 @@ import android.os.AsyncTask;
 import java.util.List;
 
 import nickolaill.staniec.runeak.amagicalplace.Models.Card;
-import nickolaill.staniec.runeak.amagicalplace.Models.CardDao;
+import nickolaill.staniec.runeak.amagicalplace.Models.MagicDao;
 
 public class CardRepository {
-    private CardDao cardDao;
+    private MagicDao magicDao;
     private LiveData<List<Card>> allCards;
 
     public CardRepository(Application app) {
-        cardDao = CardDatabase.getInstance(app).cardDao();
-        allCards = cardDao.getAllCards();
+        magicDao = CardDatabase.getInstance(app).magicDao();
+        allCards = magicDao.getAllCards();
     }
 
     public void insert(Card card){
-        new InsertCardAsyncTask(cardDao).execute(card);
+        new InsertCardAsyncTask(magicDao).execute(card);
     }
 
     public void update(Card card){
-        new UpdateCardAsyncTask(cardDao).execute(card);
+        new UpdateCardAsyncTask(magicDao).execute(card);
     }
 
     public void delete(Card card){
-        new DeleteCardAsyncTask(cardDao).execute(card);
+        new DeleteCardAsyncTask(magicDao).execute(card);
     }
 
     public void deleteAllCards(){
-        new DeleteAllCardsAsyncTask(cardDao).execute();
+        new DeleteAllCardsAsyncTask(magicDao).execute();
     }
 
     public LiveData<List<Card>> getAllCards(){
@@ -39,57 +39,57 @@ public class CardRepository {
     }
 
     private static class InsertCardAsyncTask extends AsyncTask<Card, Void, Void> {
-        private CardDao cardDao;
+        private MagicDao magicDao;
 
-        private InsertCardAsyncTask(CardDao cardDao) {
-            this.cardDao = cardDao;
+        private InsertCardAsyncTask(MagicDao magicDao) {
+            this.magicDao = magicDao;
         }
 
         @Override
         protected Void doInBackground(Card... cards) {
-            cardDao.insert(cards[0]);
+            magicDao.insertCard(cards[0]);
             return null;
         }
     }
 
     private static class UpdateCardAsyncTask extends AsyncTask<Card, Void, Void> {
-        private CardDao cardDao;
+        private MagicDao magicDao;
 
-        private UpdateCardAsyncTask(CardDao cardDao) {
-            this.cardDao = cardDao;
+        private UpdateCardAsyncTask(MagicDao magicDao) {
+            this.magicDao = magicDao;
         }
 
         @Override
         protected Void doInBackground(Card... cards) {
-            cardDao.update(cards[0]);
+            magicDao.updateCard(cards[0]);
             return null;
         }
     }
 
     private static class DeleteCardAsyncTask extends AsyncTask<Card, Void, Void> {
-        private CardDao cardDao;
+        private MagicDao magicDao;
 
-        private DeleteCardAsyncTask(CardDao cardDao) {
-            this.cardDao = cardDao;
+        private DeleteCardAsyncTask(MagicDao magicDao) {
+            this.magicDao = magicDao;
         }
 
         @Override
         protected Void doInBackground(Card... cards) {
-            cardDao.delete(cards[0]);
+            magicDao.deleteCard(cards[0]);
             return null;
         }
     }
 
     private static class DeleteAllCardsAsyncTask extends AsyncTask<Void, Void, Void> {
-        private CardDao cardDao;
+        private MagicDao magicDao;
 
-        private DeleteAllCardsAsyncTask(CardDao cardDao) {
-            this.cardDao = cardDao;
+        private DeleteAllCardsAsyncTask(MagicDao magicDao) {
+            this.magicDao = magicDao;
         }
 
         @Override
         protected Void doInBackground(Void... voids) {
-            cardDao.deleteAllCards();
+            magicDao.deleteAllCards();
             return null;
         }
     }
