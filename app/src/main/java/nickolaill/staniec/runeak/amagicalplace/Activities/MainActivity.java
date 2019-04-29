@@ -11,8 +11,6 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.View;
 import android.widget.Toast;
 
@@ -72,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemClick(Card card) {
                 Intent intent = new Intent(MainActivity.this, CardActivity.class);
-                intent.putExtra(Constants.EDIT_EXTRA_ID, card.getId());
+                intent.putExtra(Constants.EDIT_EXTRA_ID, card.getCaId());
                 intent.putExtra(Constants.EDIT_EXTRA_TITLE, card.getTitle());
                 intent.putExtra(Constants.EDIT_EXTRA_SERIES, card.getSeries());
                 intent.putExtra(Constants.EDIT_EXTRA_TEXT, card.getText());
@@ -114,7 +112,7 @@ public class MainActivity extends AppCompatActivity {
                     }
 
                     Card card = new Card(title, series, text);
-                    card.setId(id);
+                    card.setCaId(id);
 
                     mainViewModel.update(card);
                     Toast.makeText(this, "Card updated", Toast.LENGTH_SHORT).show();

@@ -23,7 +23,7 @@ public class CardAdapter extends ListAdapter<Card, CardAdapter.CardHolder> {
     private static final DiffUtil.ItemCallback<Card> DIFF_CALLBACK = new DiffUtil.ItemCallback<Card>() {
         @Override
         public boolean areItemsTheSame(@NonNull Card oldItem, @NonNull Card newItem) {
-            return oldItem.getId() == newItem.getId();
+            return oldItem.getCaId() == newItem.getCaId();
         }
 
         @Override
