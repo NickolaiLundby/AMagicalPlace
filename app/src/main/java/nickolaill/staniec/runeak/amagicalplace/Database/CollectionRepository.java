@@ -30,7 +30,7 @@ public class CollectionRepository {
         new DeleteCollectionAsyncTask(magicDao).execute(collection);
     }
 
-    public void deleteAllCards(){
+    public void deleteAllCollections(){
         new DeleteAllCollectionsAsyncTask(magicDao).execute();
     }
 
