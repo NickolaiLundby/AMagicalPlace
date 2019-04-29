@@ -3,7 +3,7 @@ package nickolaill.staniec.runeak.amagicalplace.Models;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
 
-// HEJ
+// Hello
 
 @Entity(tableName = "card_table")
 public class Card {
