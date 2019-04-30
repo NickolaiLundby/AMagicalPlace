@@ -14,9 +14,9 @@ public class CollectionViewModel extends AndroidViewModel {
     private CardRepository repository;
     private LiveData<List<Card>> allCards;
 
-    public CollectionViewModel(@NonNull Application application) {
+    public CollectionViewModel(@NonNull Application application, int id) {
         super(application);
-        repository = new CardRepository(application);
+        repository = new CardRepository(application, id);
         allCards = repository.getAllCards();
     }
 

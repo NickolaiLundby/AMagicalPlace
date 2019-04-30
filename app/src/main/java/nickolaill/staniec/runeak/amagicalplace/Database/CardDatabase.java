@@ -51,6 +51,7 @@ public abstract class CardDatabase extends RoomDatabase {
             Collection collection1 = new Collection("Grease Lightning", "It's shocking.");
             collection1.setCoId(123);
             magicDao.insertCollection(collection1);
+
             Collection collection2 = new Collection("Lightning", "It's not as shocking.");
             collection2.setCoId(321);
             magicDao.insertCollection(collection2);
@@ -58,9 +59,11 @@ public abstract class CardDatabase extends RoomDatabase {
             Card card1 = new Card("Lightning Bolt", "Alpha", "Lightning Bolt does 3 damage to one target.");
             card1.setCollectionId(collection1.getCoId());
             magicDao.insertCard(card1);
+
             Card card2 = new Card("Lightning Bolt", "Fourth Edition", "Lightning Bolt deals 3 damage to target creature or player.");
             card2.setCollectionId(collection1.getCoId());
             magicDao.insertCard(card2);
+
             Card card3 = new Card("Lightning Bolt", "Magic 2011", "Lightning Bolt deals 3 damage to target creature or player.");
             card3.setCollectionId(collection2.getCoId());
             magicDao.insertCard(card3);

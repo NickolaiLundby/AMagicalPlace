@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import nickolaill.staniec.runeak.amagicalplace.Fragments.CollectionFragment;
 import nickolaill.staniec.runeak.amagicalplace.R;
+import nickolaill.staniec.runeak.amagicalplace.Utilities.Constants;
 
 public class CollectionActivity extends AppCompatActivity {
 
@@ -13,12 +14,9 @@ public class CollectionActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_collection);
 
-        CollectionFragment fragment = new CollectionFragment();
-        Bundle args = new Bundle();
-        // TODO: Specify any args
-        fragment.setArguments(args);
+        CollectionFragment fragment = CollectionFragment.newInstance(getIntent().getIntExtra(Constants.COLLECTION_ID, -1));
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.overview_container, fragment)
+                .replace(R.id.collection_container, fragment)
                 .commit();
     }
 }

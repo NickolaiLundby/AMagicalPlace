@@ -28,11 +28,22 @@ import nickolaill.staniec.runeak.amagicalplace.Models.Card;
 import nickolaill.staniec.runeak.amagicalplace.R;
 import nickolaill.staniec.runeak.amagicalplace.Utilities.Constants;
 import nickolaill.staniec.runeak.amagicalplace.ViewModels.CollectionViewModel;
+import nickolaill.staniec.runeak.amagicalplace.ViewModels.CollectionViewModelFactory;
 
 import static android.app.Activity.RESULT_OK;
 
 public class CollectionFragment extends Fragment {
+    private static final String ARG_COID = "collectionId";
+    private int collectionId;
     private CollectionViewModel viewModel;
+
+    public static CollectionFragment newInstance(int collectionId) {
+        CollectionFragment fragment = new CollectionFragment();
+        Bundle args = new Bundle();
+        args.putInt(ARG_COID, collectionId);
+        fragment.setArguments(args);
+        return fragment;
+    }
 
     @Nullable
     @Override
@@ -49,12 +60,17 @@ public class CollectionFragment extends Fragment {
             }
         });
 
-        RecyclerView recyclerView = v.findViewById(R.id.recycler_view);
+        // Get arguments passed from Args Bundle
+        collectionId = getArguments().getInt(ARG_COID);
+        if (collectionId == -1)
+            return v;
+
+        RecyclerView recyclerView = v.findViewById(R.id.collection_recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(adapter);
 
-        viewModel = ViewModelProviders.of(this).get(CollectionViewModel.class);
+        viewModel = ViewModelProviders.of(this, new CollectionViewModelFactory(getActivity().getApplication(), collectionId)).get(CollectionViewModel.class);
         viewModel.getAllCards().observe(this, new Observer<List<Card>>() {
             @Override
             public void onChanged(@Nullable List<Card> cards) {

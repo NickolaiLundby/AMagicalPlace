@@ -2,9 +2,7 @@ package nickolaill.staniec.runeak.amagicalplace.Fragments;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
-import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -29,11 +27,24 @@ import nickolaill.staniec.runeak.amagicalplace.ViewModels.OverviewViewModel;
 public class OverviewFragment extends Fragment {
     private OverviewViewModel viewModel;
 
+    public static OverviewFragment newInstance(){
+        OverviewFragment fragment = new OverviewFragment();
+        Bundle args = new Bundle();
+        // TODO: Specify args
+        fragment.setArguments(args);
+        return fragment;
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_overview, container, false);
         final CollectionAdapter adapter = new CollectionAdapter();
+
+        RecyclerView recyclerView = v.findViewById(R.id.overview_recycler_view);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setAdapter(adapter);
 
         viewModel = ViewModelProviders.of(this).get(OverviewViewModel.class);
         viewModel.getAllCollections().observe(this, new Observer<List<Collection>>() {
@@ -42,11 +53,6 @@ public class OverviewFragment extends Fragment {
                 adapter.submitList(collections);
             }
         });
-
-        RecyclerView recyclerView = v.findViewById(R.id.recycler_view);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setAdapter(adapter);
 
         new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0,
                 ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {

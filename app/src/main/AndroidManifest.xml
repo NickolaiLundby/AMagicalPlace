@@ -9,12 +9,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Activities.OverviewActivity"></activity>
+        <activity android:name=".Activities.CollectionActivity"></activity>
         <activity
             android:name=".Activities.CardActivity"
             android:parentActivityName=".Activities.CollectionActivity" />
         <activity
-            android:name=".Activities.CollectionActivity"
+            android:name=".Activities.OverviewActivity"
             android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

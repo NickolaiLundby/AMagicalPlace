@@ -19,7 +19,7 @@ public class CollectionRepository {
     }
 
     public void insert(Collection collection){
-        new InsertCardAsyncTask(magicDao).execute(collection);
+        new InsertCollectionAsyncTask(magicDao).execute(collection);
     }
 
     public void update(Collection collection){
@@ -34,14 +34,14 @@ public class CollectionRepository {
         new DeleteAllCollectionsAsyncTask(magicDao).execute();
     }
 
-    public LiveData<List<Collection>> getAllCards(){
+    public LiveData<List<Collection>> getAllCollections(){
         return allCollections;
     }
 
-    private static class InsertCardAsyncTask extends AsyncTask<Collection, Void, Void> {
+    private static class InsertCollectionAsyncTask extends AsyncTask<Collection, Void, Void> {
         private MagicDao magicDao;
 
-        private InsertCardAsyncTask(MagicDao magicDao) {
+        private InsertCollectionAsyncTask(MagicDao magicDao) {
             this.magicDao = magicDao;
         }
 

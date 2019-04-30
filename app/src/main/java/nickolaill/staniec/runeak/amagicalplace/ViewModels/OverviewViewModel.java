@@ -17,7 +17,7 @@ public class OverviewViewModel extends AndroidViewModel {
     public OverviewViewModel(@NonNull Application application) {
         super(application);
         repository = new CollectionRepository(application);
-        allCollections = repository.getAllCards();
+        allCollections = repository.getAllCollections();
     }
 
     public void insert(Collection collection) {
