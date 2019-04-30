@@ -36,8 +36,8 @@ public interface MagicDao {
     @Query("SELECT * FROM card_table WHERE title LIKE :title")
     Card getCardByTitle(String title);
 
-    @Query("SELECT * FROM card_table")
-    LiveData<List<Card>> getAllCards();
+    @Query("SELECT * FROM card_table WHERE collectionId LIKE :collectionId")
+    LiveData<List<Card>> getAllCards(int collectionId);
 
     @Query("DELETE FROM card_table")
     void deleteAllCards();

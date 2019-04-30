@@ -10,12 +10,14 @@ import nickolaill.staniec.runeak.amagicalplace.Models.Card;
 import nickolaill.staniec.runeak.amagicalplace.Models.MagicDao;
 
 public class CardRepository {
+    private int collectionId;
     private MagicDao magicDao;
     private LiveData<List<Card>> allCards;
 
-    public CardRepository(Application app) {
+    public CardRepository(Application app, int collectionId) {
+        this.collectionId = collectionId;
         magicDao = CardDatabase.getInstance(app).magicDao();
-        allCards = magicDao.getAllCards();
+        allCards = magicDao.getAllCards(this.collectionId);
     }
 
     public void insert(Card card){

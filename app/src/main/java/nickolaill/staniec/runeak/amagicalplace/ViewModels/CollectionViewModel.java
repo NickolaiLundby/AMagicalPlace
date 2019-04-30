@@ -10,13 +10,13 @@ import java.util.List;
 import nickolaill.staniec.runeak.amagicalplace.Database.CardRepository;
 import nickolaill.staniec.runeak.amagicalplace.Models.Card;
 
-public class MainViewModel extends AndroidViewModel {
+public class CollectionViewModel extends AndroidViewModel {
     private CardRepository repository;
     private LiveData<List<Card>> allCards;
 
-    public MainViewModel(@NonNull Application application) {
+    public CollectionViewModel(@NonNull Application application, int id) {
         super(application);
-        repository = new CardRepository(application);
+        repository = new CardRepository(application, id);
         allCards = repository.getAllCards();
     }
 
