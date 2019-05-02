@@ -64,7 +64,9 @@ public class CollectionAdapter extends ListAdapter<Collection, CollectionAdapter
             buttonEdit.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    // Something here
+                    if (listener != null && getAdapterPosition() != RecyclerView.NO_POSITION) {
+                        listener.onButtonItemClick(getItem(getAdapterPosition()));
+                    }
                 }
             });
 
@@ -81,6 +83,7 @@ public class CollectionAdapter extends ListAdapter<Collection, CollectionAdapter
 
     public interface OnItemClickListener {
         void onItemClick(Collection collection);
+        void onButtonItemClick(Collection collection);
     }
 
     public void setOnItemClickListener(OnItemClickListener listener) {
