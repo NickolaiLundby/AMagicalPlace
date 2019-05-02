@@ -44,4 +44,7 @@ dependencies {
     // room components
     implementation "android.arch.persistence.room:runtime:$room_version"
     annotationProcessor "android.arch.persistence.room:compiler:$room_version"
+
+    // SDK for MTG API - https://github.com/MagicTheGathering/mtg-sdk-java
+    implementation 'io.magicthegathering:javasdk:0.0.14'
 }

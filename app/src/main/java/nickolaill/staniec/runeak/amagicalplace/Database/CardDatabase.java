@@ -7,9 +7,11 @@ import android.arch.persistence.room.RoomDatabase;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
+import android.util.Log;
 
 import java.util.List;
 
+import io.magicthegathering.javasdk.api.CardAPI;
 import nickolaill.staniec.runeak.amagicalplace.Models.Card;
 import nickolaill.staniec.runeak.amagicalplace.Models.Collection;
 import nickolaill.staniec.runeak.amagicalplace.Models.MagicDao;
@@ -55,6 +57,14 @@ public abstract class CardDatabase extends RoomDatabase {
             Collection collection2 = new Collection("Lightning", "It's not as shocking.");
             collection2.setCoId(321);
             magicDao.insertCollection(collection2);
+
+            io.magicthegathering.javasdk.resource.Card testCard = CardAPI.getCard(1);
+            Log.d("API", testCard.getName());
+
+            Card card0 = new Card(testCard, collection1.getCoId(), 1);
+            card0.setCollectionId(collection1.getCoId());
+            magicDao.insertCard(card0);
+
 
             Card card1 = new Card("Lightning Bolt", "Alpha", "Lightning Bolt does 3 damage to one target.");
             card1.setCollectionId(collection1.getCoId());
