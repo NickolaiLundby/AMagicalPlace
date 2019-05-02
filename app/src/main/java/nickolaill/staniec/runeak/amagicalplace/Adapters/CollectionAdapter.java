@@ -7,7 +7,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import nickolaill.staniec.runeak.amagicalplace.Models.Collection;
 import nickolaill.staniec.runeak.amagicalplace.R;
@@ -51,11 +53,20 @@ public class CollectionAdapter extends ListAdapter<Collection, CollectionAdapter
 
     class CollectionHolder extends RecyclerView.ViewHolder {
         private TextView textViewTitle, textViewDescription;
+        private Button buttonEdit;
 
         public CollectionHolder(@NonNull View itemView) {
             super(itemView);
             textViewTitle = itemView.findViewById(R.id.tv_collection_title);
             textViewDescription = itemView.findViewById(R.id.tv_collection_description);
+            buttonEdit = itemView.findViewById(R.id.button_collection_edit);
+
+            buttonEdit.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // Something here
+                }
+            });
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
