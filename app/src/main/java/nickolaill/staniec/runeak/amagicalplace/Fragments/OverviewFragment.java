@@ -2,17 +2,25 @@ package nickolaill.staniec.runeak.amagicalplace.Fragments;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -75,8 +83,63 @@ public class OverviewFragment extends Fragment {
 
                 startActivity(intent);
             }
+
+            @Override
+            public void onButtonItemClick(Collection collection) {
+                EditCollectionDialogBuilder(collection);
+            }
         });
 
         return v;
+    }
+
+    // TODO: Rewrite this method to use a LayoutInflater
+    // TODO: Design the dialogbox in .xml and use that to inflate the layout
+    private void EditCollectionDialogBuilder(final Collection collection){
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setTitle("Edit your collection");
+
+        LinearLayout layout = new LinearLayout(getContext());
+        layout.setOrientation(LinearLayout.VERTICAL);
+
+        final TextView titleInputText = new TextView(getContext());
+        titleInputText.setInputType(InputType.TYPE_CLASS_TEXT);
+        titleInputText.setText("Title:");
+        layout.addView(titleInputText);
+
+        final EditText titleInput = new EditText(getContext());
+        titleInput.setInputType(InputType.TYPE_CLASS_TEXT);
+        titleInput.setText(collection.getTitle());
+        layout.addView(titleInput);
+
+        final TextView descriptionInputText = new TextView(getContext());
+        descriptionInputText.setInputType(InputType.TYPE_CLASS_TEXT);
+        descriptionInputText.setText("Description:");
+        layout.addView(descriptionInputText);
+
+        final EditText descriptionInput = new EditText(getContext());
+        descriptionInput.setInputType(InputType.TYPE_CLASS_TEXT);
+        descriptionInput.setText(collection.getDescription());
+        layout.addView(descriptionInput);
+
+        builder.setView(layout);
+
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                collection.setTitle(titleInput.getText().toString());
+                collection.setDescription(descriptionInput.getText().toString());
+                viewModel.update(collection);
+            }
+        });
+
+        builder.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+
+        builder.show();
     }
 }
