@@ -1,15 +1,19 @@
 package nickolaill.staniec.runeak.amagicalplace.Adapters;
 
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.recyclerview.extensions.ListAdapter;
 import android.support.v7.util.DiffUtil;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.util.List;
 
 import nickolaill.staniec.runeak.amagicalplace.Models.Collection;
 import nickolaill.staniec.runeak.amagicalplace.R;
@@ -29,6 +33,11 @@ public class CollectionAdapter extends ListAdapter<Collection, CollectionAdapter
 
         @Override
         public boolean areContentsTheSame(@NonNull Collection oldItem, @NonNull Collection newItem) {
+            boolean theSame = oldItem.getTitle().equals(newItem.getTitle()) &&
+                    oldItem.getDescription().equals(newItem.getDescription());
+            Log.d("CollectionAdapter", "Title old: " +oldItem.getTitle() + " Description old: " + oldItem.getDescription()
+            + " Title new: " + newItem.getTitle() + " New Description: " + newItem.getDescription());
+            Log.d("CollectionAdapter", "areContentsTheSame: " +theSame);
             return oldItem.getTitle().equals(newItem.getTitle()) &&
                     oldItem.getDescription().equals(newItem.getDescription());
         }

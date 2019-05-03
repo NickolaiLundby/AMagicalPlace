@@ -57,7 +57,9 @@ public class Card {
         this.rarity = card.getRarity();
         this.type = card.getType();
         this.types = TextUtils.join(",",card.getTypes());
-        this.price = card.getOnlinePriceMid().doubleValue();
+        if(card.getOnlinePriceMid() != null){
+            this.price = card.getOnlinePriceMid().doubleValue();
+        }
 
         this.collectionId = collectionId;
         this.quantity = quantity;
