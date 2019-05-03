@@ -23,12 +23,6 @@ public class CardAdapter extends ListAdapter<Card, CardAdapter.CardHolder> {
         super(DIFF_CALLBACK);
     }
 
-    @Override
-    public void submitList(@Nullable List<Card> list) {
-        super.submitList(list);
-        notifyDataSetChanged();
-    }
-
     private static final DiffUtil.ItemCallback<Card> DIFF_CALLBACK = new DiffUtil.ItemCallback<Card>() {
         @Override
         public boolean areItemsTheSame(@NonNull Card oldItem, @NonNull Card newItem) {
