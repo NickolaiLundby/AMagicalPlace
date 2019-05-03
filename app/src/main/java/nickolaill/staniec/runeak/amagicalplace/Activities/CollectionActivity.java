@@ -27,7 +27,14 @@ public class CollectionActivity extends AppCompatActivity implements AddCardFrag
     }
 
     @Override
-    public void onCollectionFragmentInteraction(String todoTestStr) {
+    public void onCollectionFragmentAddInteraction(String todoTestStr) {
         // TODO: Handle actions from the CollectionFragment here
+        // TODO: Etc, fire up the add fragment.
+    }
+
+    @Override
+    public void onCollectionFragmentEditInterfaction(String todoTestStr) {
+        // TODO: Handle actions from the CollectionFragment here
+        // TODO: Etc, fire up the edit fragment.
     }
 }

@@ -57,6 +57,8 @@ public class CollectionFragment extends Fragment {
         buttonAddCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // TODO: Get rid of the below, and instead call mListener.onCollectionFragmentInteraction("hest");
+                // TODO: This call should be handled in the parent activity (CollectionActivity)
                 Intent intent = new Intent(getActivity(), CardActivity.class);
                 startActivityForResult(intent, Constants.ADD_CARD_REQUEST);
             }
@@ -96,6 +98,8 @@ public class CollectionFragment extends Fragment {
         adapter.setOnItemClickListener(new CardAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(Card card) {
+                // TODO: Get rid of the below. Instead call mListener.onCollectionFragmentEditInteraction("hest");
+                // TODO: This call should be handled in the parent activity (CollectionActivity)
                 Intent intent = new Intent(getActivity(), CardActivity.class);
                 intent.putExtra(Constants.EDIT_EXTRA_ID, card.getCaId());
                 intent.putExtra(Constants.EDIT_EXTRA_TITLE, card.getTitle());
@@ -109,6 +113,7 @@ public class CollectionFragment extends Fragment {
         return v;
     }
 
+    // TODO: This should all be moved out of the fragment, and into the collectionactivity, or maybe we can get rid of it altogether.
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -152,6 +157,7 @@ public class CollectionFragment extends Fragment {
 
     public interface CollectionFragmentListener {
         // TODO: Should take some meaningful parameter back to CollectionActivity.
-        void onCollectionFragmentInteraction(String todoTestStr);
+        void onCollectionFragmentAddInteraction(String todoTestStr);
+        void onCollectionFragmentEditInterfaction(String todoTestStr);
     }
 }
