@@ -33,6 +33,8 @@ import nickolaill.staniec.runeak.amagicalplace.ViewModels.CollectionViewModelFac
 import static android.app.Activity.RESULT_OK;
 
 public class CollectionFragment extends Fragment {
+    private CollectionFragmentListener mListener;
+
     private static final String ARG_COID = "collectionId";
     private int collectionId;
     private CollectionViewModel viewModel;
@@ -146,5 +148,10 @@ public class CollectionFragment extends Fragment {
             default:
                 break;
         }
+    }
+
+    public interface CollectionFragmentListener {
+        // TODO: Should take some meaningful parameter back to CollectionActivity.
+        void onCollectionFragmentInteraction(String todoTestStr);
     }
 }
