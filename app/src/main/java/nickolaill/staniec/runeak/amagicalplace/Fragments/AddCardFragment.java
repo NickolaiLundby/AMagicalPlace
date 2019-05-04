@@ -51,7 +51,8 @@ public class AddCardFragment extends Fragment implements AdapterView.OnItemSelec
 
         cardTitle = v.findViewById(R.id.add_card_et_cardtitle);
         seriesDropdown = v.findViewById(R.id.add_card_spinner_series);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(), R.array.magicseries, R.layout.support_simple_spinner_dropdown_item);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(), R.array.setsCodes, R.layout.support_simple_spinner_dropdown_item);
+        //ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(), R.array.magicseries, R.layout.support_simple_spinner_dropdown_item);
         adapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
         seriesDropdown.setAdapter(adapter);
         seriesDropdown.setOnItemSelectedListener(AddCardFragment.this);
