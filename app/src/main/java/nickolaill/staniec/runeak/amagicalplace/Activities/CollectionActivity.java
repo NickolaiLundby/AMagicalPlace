@@ -30,9 +30,20 @@ public class CollectionActivity extends AppCompatActivity implements AddCardFrag
     }
 
     @Override
-    public void onAddCardFragmentInteraction(Card card) {
+    public void onAddCardFragmentAddInteraction(Card card) {
         // TODO: Handle actions from the AddCardFragment here
         viewModel.insert(card);
+
+        // TODO: Then show the collection fragment again
+        CollectionFragment fragment = CollectionFragment.newInstance(getIntent().getIntExtra(Constants.COLLECTION_ID, -1));
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.collection_container, fragment)
+                .commit();
+    }
+
+    @Override
+    public void onAddCardFragmentCancelInteraction() {
+        // TODO: Handle actions from the AddCardFragment here
 
         // TODO: Then show the collection fragment again
         CollectionFragment fragment = CollectionFragment.newInstance(getIntent().getIntExtra(Constants.COLLECTION_ID, -1));

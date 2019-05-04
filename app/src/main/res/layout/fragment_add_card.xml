@@ -6,26 +6,94 @@
     tools:context=".Fragments.AddCardFragment">
 
     <TextView
-        android:id="@+id/add_card_tv_title"
+        android:id="@+id/add_card_tv_fragmenttitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Title"
+        android:text="Add a card to collection"
         android:textSize="16sp"
         android:layout_alignParentTop="true"
         android:layout_centerInParent="true"
-        android:layout_margin="16dp"
+        android:layout_margin="4dp"
         />
 
+    <TextView
+        android:id="@+id/add_card_tv_cardtitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Title:"
+        android:layout_below="@id/add_card_tv_fragmenttitle"
+        android:layout_margin="4dp"
+        android:padding="12dp"/>
+
+    <EditText
+        android:id="@+id/add_card_et_cardtitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/add_card_tv_cardtitle"
+        android:layout_toEndOf="@id/add_card_tv_cardtitle"
+        android:layout_alignTop="@id/add_card_tv_cardtitle"
+        android:layout_alignBottom="@id/add_card_tv_cardtitle"
+        android:inputType="text"
+        android:hint="Title to search for"/>
+
+    <TextView
+        android:id="@+id/add_card_tv_spinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/add_card_tv_cardtitle"
+        android:text="Series:"
+        android:padding="12dp"
+        android:layout_margin="4dp"/>
+
+    <Spinner
+        android:id="@+id/add_card_spinner_series"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/add_card_tv_spinner"
+        android:layout_alignTop="@id/add_card_tv_spinner"
+        android:layout_alignBottom="@id/add_card_tv_spinner"
+        android:spinnerMode="dropdown"/>
+
     <Button
-        android:id="@+id/add_card_button_return"
+        android:id="@+id/add_card_button_search"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/add_card_spinner_series"
+        android:layout_alignBottom="@id/add_card_spinner_series"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:text="Search"/>
+
+    <Button
+        android:id="@+id/add_card_button_add"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
-        android:layout_margin="16dp"
-        android:text="Return"
+        android:layout_margin="4dp"
+        android:text="Add" />
+
+    <Button
+        android:id="@+id/add_card_button_cancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="4dp"
+        android:text="Cancel" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/collection_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/add_card_spinner_series"
+        android:layout_above="@id/add_card_button_add"
+        android:layout_margin="4dp"
+        tools:listitem="@layout/card_item"
         />
 
 </RelativeLayout>
