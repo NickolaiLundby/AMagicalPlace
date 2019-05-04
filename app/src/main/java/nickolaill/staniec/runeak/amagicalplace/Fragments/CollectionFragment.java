@@ -112,6 +112,17 @@ public class CollectionFragment extends Fragment {
         return v;
     }
 
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof CollectionFragmentListener) {
+            mListener = (CollectionFragmentListener) context;
+        } else {
+            throw new RuntimeException(context.toString()
+                    + "has to implement the CollectionFragmentListener interface");
+        }
+    }
+
     // TODO: This should all be moved out of the fragment, and into the collectionactivity, or maybe we can get rid of it altogether.
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {

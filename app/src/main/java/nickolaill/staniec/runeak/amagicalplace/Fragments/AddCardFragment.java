@@ -17,12 +17,15 @@ import nickolaill.staniec.runeak.amagicalplace.R;
 
 public class AddCardFragment extends Fragment {
     private AddCardFragmentListener mListener;
+    private static final String ARG_COID = "collectionId";
+    private int collectionId;
     private TextView cardTitle;
     private Button returnButton;
 
-    public static AddCardFragment newInstance() {
+    public static AddCardFragment newInstance(int collectionId) {
         AddCardFragment fragment = new AddCardFragment();
         Bundle args = new Bundle();
+        args.putInt(ARG_COID, collectionId);
         // TODO: Any args needed should be put here.
         fragment.setArguments(args);
         return fragment;
@@ -41,15 +44,28 @@ public class AddCardFragment extends Fragment {
         returnButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mListener.onAddCardFragmentInteraction("Returning from AddCardFragment");
+                Card card = new Card("Kird Ape", "Alpha", "Monkey man.");
+                card.setCollectionId(collectionId);
+                mListener.onAddCardFragmentInteraction(card);
             }
         });
 
         return v;
     }
 
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof AddCardFragmentListener) {
+            mListener = (AddCardFragmentListener) context;
+        } else {
+            throw new RuntimeException(context.toString()
+                    + "has to implement the AddCardFragmentListener interface");
+        }
+    }
+
     public interface AddCardFragmentListener {
         // TODO: onAddCardFragmentInteraction should take Card card.
-        void onAddCardFragmentInteraction(String todoTestStr);
+        void onAddCardFragmentInteraction(Card card);
     }
 }
