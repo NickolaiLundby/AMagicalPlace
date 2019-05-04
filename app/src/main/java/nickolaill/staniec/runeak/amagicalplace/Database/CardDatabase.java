@@ -58,13 +58,14 @@ public abstract class CardDatabase extends RoomDatabase {
             collection2.setCoId(321);
             magicDao.insertCollection(collection2);
 
+            /*
             io.magicthegathering.javasdk.resource.Card testCard = CardAPI.getCard(1);
             Log.d("API", testCard.getName());
 
             Card card0 = new Card(testCard, collection1.getCoId(), 1);
             card0.setCollectionId(collection1.getCoId());
             magicDao.insertCard(card0);
-
+            */
 
             Card card1 = new Card("Lightning Bolt", "Alpha", "Lightning Bolt does 3 damage to one target.");
             card1.setCollectionId(collection1.getCoId());

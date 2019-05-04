@@ -4,7 +4,6 @@ import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -18,11 +17,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import java.util.Collection;
 import java.util.List;
 
-import nickolaill.staniec.runeak.amagicalplace.Activities.CardActivity;
-import nickolaill.staniec.runeak.amagicalplace.Activities.CollectionActivity;
 import nickolaill.staniec.runeak.amagicalplace.Adapters.CardAdapter;
 import nickolaill.staniec.runeak.amagicalplace.Models.Card;
 import nickolaill.staniec.runeak.amagicalplace.R;
@@ -33,6 +29,8 @@ import nickolaill.staniec.runeak.amagicalplace.ViewModels.CollectionViewModelFac
 import static android.app.Activity.RESULT_OK;
 
 public class CollectionFragment extends Fragment {
+    private CollectionFragmentListener mListener;
+
     private static final String ARG_COID = "collectionId";
     private int collectionId;
     private CollectionViewModel viewModel;
@@ -55,8 +53,9 @@ public class CollectionFragment extends Fragment {
         buttonAddCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), CardActivity.class);
-                startActivityForResult(intent, Constants.ADD_CARD_REQUEST);
+                // TODO: Get rid of the below, and instead call mListener.onCollectionFragmentInteraction("hest");
+                // TODO: This call should be handled in the parent activity (CollectionActivity)
+                mListener.onCollectionFragmentAddInteraction("hest");
             }
         });
 
@@ -94,13 +93,9 @@ public class CollectionFragment extends Fragment {
         adapter.setOnItemClickListener(new CardAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(Card card) {
-                Intent intent = new Intent(getActivity(), CardActivity.class);
-                intent.putExtra(Constants.EDIT_EXTRA_ID, card.getCaId());
-                intent.putExtra(Constants.EDIT_EXTRA_TITLE, card.getTitle());
-                intent.putExtra(Constants.EDIT_EXTRA_SERIES, card.getSeries());
-                intent.putExtra(Constants.EDIT_EXTRA_TEXT, card.getText());
-
-                startActivityForResult(intent, Constants.EDIT_CARD_REQUEST);
+                // TODO: Get rid of the below. Instead call mListener.onCollectionFragmentEditInteraction("hest");
+                // TODO: This call should be handled in the parent activity (CollectionActivity)
+                Toast.makeText(getActivity(), "EditCardFragment needs implementation", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -108,43 +103,19 @@ public class CollectionFragment extends Fragment {
     }
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        switch (requestCode) {
-            case Constants.ADD_CARD_REQUEST:
-                if (resultCode == RESULT_OK) {
-                    String title = data.getStringExtra(Constants.EDIT_EXTRA_TITLE);
-                    String series = data.getStringExtra(Constants.EDIT_EXTRA_SERIES);
-                    String text = data.getStringExtra(Constants.EDIT_EXTRA_TEXT);
-
-                    Card card = new Card(title, series, text);
-                    Toast.makeText(getActivity(), "Card saved", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(getActivity(), "Card not saved", Toast.LENGTH_SHORT).show();
-                }
-                break;
-            case Constants.EDIT_CARD_REQUEST:
-                if (resultCode == RESULT_OK) {
-                    String title = data.getStringExtra(Constants.EDIT_EXTRA_TITLE);
-                    String series = data.getStringExtra(Constants.EDIT_EXTRA_SERIES);
-                    String text = data.getStringExtra(Constants.EDIT_EXTRA_TEXT);
-
-                    int id = data.getIntExtra(Constants.EDIT_EXTRA_ID, -1);
-                    if (id == -1) {
-                        Toast.makeText(getActivity(), "Data corrupted", Toast.LENGTH_SHORT).show();
-                        return;
-                    }
-
-                    Card card = new Card(title, series, text);
-                    card.setCaId(id);
-
-                    viewModel.update(card);
-                    Toast.makeText(getActivity(), "Returned from EDIT", Toast.LENGTH_SHORT).show();
-                }
-                break;
-            default:
-                break;
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof CollectionFragmentListener) {
+            mListener = (CollectionFragmentListener) context;
+        } else {
+            throw new RuntimeException(context.toString()
+                    + "has to implement the CollectionFragmentListener interface");
         }
+    }
+
+    public interface CollectionFragmentListener {
+        // TODO: Should take some meaningful parameter back to CollectionActivity.
+        void onCollectionFragmentAddInteraction(String todoTestStr);
+        void onCollectionFragmentEditInterfaction(String todoTestStr);
     }
 }
