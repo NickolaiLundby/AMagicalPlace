@@ -38,12 +38,18 @@ public class AddCardFragment extends Fragment {
         cardTitle = v.findViewById(R.id.add_card_tv_title);
         returnButton = v.findViewById(R.id.add_card_button_return);
 
+        // Get arguments passed from Args Bundle
+        collectionId = getArguments().getInt(ARG_COID);
+        if (collectionId == -1)
+            return v;
+
         // TODO: A card should be received to be displayed.
         cardTitle.setText("This text should be replaced by card title");
 
         returnButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // TODO: A new card object should be generated based on the selection by the user.
                 Card card = new Card("Kird Ape", "Alpha", "Monkey man.");
                 card.setCollectionId(collectionId);
                 mListener.onAddCardFragmentInteraction(card);
