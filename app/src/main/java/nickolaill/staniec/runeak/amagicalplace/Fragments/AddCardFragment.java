@@ -18,6 +18,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.lang.reflect.Array;
+import android.widget.Button;
+import android.widget.TextView;
 
 import nickolaill.staniec.runeak.amagicalplace.Models.Card;
 import nickolaill.staniec.runeak.amagicalplace.R;
