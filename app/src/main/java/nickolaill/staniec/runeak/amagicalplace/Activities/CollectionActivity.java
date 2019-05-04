@@ -2,6 +2,7 @@ package nickolaill.staniec.runeak.amagicalplace.Activities;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import nickolaill.staniec.runeak.amagicalplace.Fragments.AddCardFragment;
 import nickolaill.staniec.runeak.amagicalplace.Fragments.CollectionFragment;
@@ -30,6 +31,11 @@ public class CollectionActivity extends AppCompatActivity implements AddCardFrag
     public void onCollectionFragmentAddInteraction(String todoTestStr) {
         // TODO: Handle actions from the CollectionFragment here
         // TODO: Etc, fire up the add fragment.
+        Toast.makeText(this, todoTestStr, Toast.LENGTH_SHORT).show();
+        AddCardFragment fragment = AddCardFragment.newInstance();
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.collection_container, fragment)
+                .commit();
     }
 
     @Override

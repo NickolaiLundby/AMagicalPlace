@@ -59,8 +59,7 @@ public class CollectionFragment extends Fragment {
             public void onClick(View v) {
                 // TODO: Get rid of the below, and instead call mListener.onCollectionFragmentInteraction("hest");
                 // TODO: This call should be handled in the parent activity (CollectionActivity)
-                Intent intent = new Intent(getActivity(), CardActivity.class);
-                startActivityForResult(intent, Constants.ADD_CARD_REQUEST);
+                mListener.onCollectionFragmentAddInteraction("hest");
             }
         });
 
