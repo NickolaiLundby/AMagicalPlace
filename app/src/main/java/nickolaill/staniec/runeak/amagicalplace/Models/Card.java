@@ -43,10 +43,10 @@ public class Card {
         this.text = text;
     }
 
-    public Card(io.magicthegathering.javasdk.resource.Card card, int collectionId, int quantity){
+    public Card(io.magicthegathering.javasdk.resource.Card card){
         this.multiverseId = card.getMultiverseid();
         this.title = card.getName();
-        this.series = card.getSet();
+        this.series = card.getSetName();
         this.text = card.getText();
         this.colorIdentity = TextUtils.join(",",card.getColorIdentity());
         this.colors  = TextUtils.join(",",card.getColors());
@@ -60,9 +60,6 @@ public class Card {
         if(card.getOnlinePriceMid() != null){
             this.price = card.getOnlinePriceMid().doubleValue();
         }
-
-        this.collectionId = collectionId;
-        this.quantity = quantity;
     }
 
     public void setTitle(String title) {

@@ -20,30 +20,40 @@
         android:id="@+id/add_card_tv_cardtitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Title:"
         android:layout_below="@id/add_card_tv_fragmenttitle"
         android:layout_margin="4dp"
-        android:padding="12dp"/>
+        android:layout_marginStart="4dp"
+        android:layout_marginLeft="4dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="4dp"
+        android:layout_marginRight="4dp"
+        android:padding="12dp"
+        android:text="@string/title" />
 
     <EditText
         android:id="@+id/add_card_et_cardtitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@id/add_card_tv_cardtitle"
-        android:layout_toEndOf="@id/add_card_tv_cardtitle"
         android:layout_alignTop="@id/add_card_tv_cardtitle"
         android:layout_alignBottom="@id/add_card_tv_cardtitle"
-        android:inputType="text"
-        android:hint="Title to search for"/>
+        android:layout_toEndOf="@id/add_card_tv_cardtitle"
+        android:layout_toRightOf="@id/add_card_tv_cardtitle"
+        android:hint="@string/title_to_search_for"
+        android:inputType="text" />
 
     <TextView
         android:id="@+id/add_card_tv_spinner"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/add_card_tv_cardtitle"
-        android:text="Series:"
+        android:layout_marginStart="4dp"
+        android:layout_marginLeft="4dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="4dp"
+        android:layout_marginRight="4dp"
+        android:layout_marginBottom="4dp"
         android:padding="12dp"
-        android:layout_margin="4dp"/>
+        android:text="@string/sets" />
 
     <Spinner
         android:id="@+id/add_card_spinner_series"
@@ -62,7 +72,7 @@
         android:layout_alignBottom="@id/add_card_spinner_series"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:text="Search"/>
+        android:text="@android:string/search_go" />
 
     <Button
         android:id="@+id/add_card_button_add"
@@ -87,7 +97,7 @@
         android:text="Cancel" />
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/collection_recycler_view"
+        android:id="@+id/add_card_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/add_card_spinner_series"

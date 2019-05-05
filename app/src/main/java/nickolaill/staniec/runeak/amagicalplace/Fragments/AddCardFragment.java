@@ -1,11 +1,16 @@
 package nickolaill.staniec.runeak.amagicalplace.Fragments;
 
+import android.arch.lifecycle.MutableLiveData;
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
-import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,12 +22,15 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.lang.reflect.Array;
-import android.widget.Button;
-import android.widget.TextView;
+import java.util.ArrayList;
+import java.util.List;
 
+import io.magicthegathering.javasdk.api.CardAPI;
+import nickolaill.staniec.runeak.amagicalplace.Adapters.CardAdapter;
 import nickolaill.staniec.runeak.amagicalplace.Models.Card;
 import nickolaill.staniec.runeak.amagicalplace.R;
+import nickolaill.staniec.runeak.amagicalplace.ViewModels.AddCardViewModel;
+import nickolaill.staniec.runeak.amagicalplace.ViewModels.AddCardViewModelFactory;
 
 public class AddCardFragment extends Fragment implements AdapterView.OnItemSelectedListener {
     private AddCardFragmentListener mListener;
@@ -33,6 +41,9 @@ public class AddCardFragment extends Fragment implements AdapterView.OnItemSelec
     private Spinner seriesDropdown;
     private Button addButton, cancelButton, searchButton;
     private Card cardToBeAdded;
+    //
+    private AddCardViewModel viewModel;
+    //private MutableLiveData<List<Card>> searchResults = new MutableLiveData<>();
 
     public static AddCardFragment newInstance(int collectionId) {
         AddCardFragment fragment = new AddCardFragment();
@@ -47,14 +58,39 @@ public class AddCardFragment extends Fragment implements AdapterView.OnItemSelec
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_add_card, container, false);
+
+        final CardAdapter adapter = new CardAdapter();
+        RecyclerView recyclerView = v.findViewById(R.id.add_card_recycler_view);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setAdapter(adapter);
+
+        viewModel = ViewModelProviders.of(this, new AddCardViewModelFactory(getActivity().getApplication(), new ArrayList<Card>())).get(AddCardViewModel.class);
+        viewModel.getAllCards().observe(this, new Observer<List<Card>>() {
+            @Override
+            public void onChanged(@Nullable List<Card> cards) {
+                adapter.submitList(cards);
+            }
+        });
+
+        /* Test thingy -- Should some selection logic be implemented here? */
+        adapter.setOnItemClickListener(new CardAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(Card card) {
+                //cardToBeAdded = card;
+                Toast.makeText(getActivity(), "Card pressed: " + cardToBeAdded.getTitle(), Toast.LENGTH_SHORT).show();
+            }
+        });
+
         fragmentTitle = v.findViewById(R.id.add_card_tv_fragmenttitle);
 
         cardTitle = v.findViewById(R.id.add_card_et_cardtitle);
         seriesDropdown = v.findViewById(R.id.add_card_spinner_series);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(), R.array.setsCodes, R.layout.support_simple_spinner_dropdown_item);
-        //ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(), R.array.magicseries, R.layout.support_simple_spinner_dropdown_item);
-        adapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
-        seriesDropdown.setAdapter(adapter);
+
+        ArrayAdapter<CharSequence> stringAdapter = ArrayAdapter.createFromResource(getContext(), R.array.magicsets, R.layout.support_simple_spinner_dropdown_item);
+
+        stringAdapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
+        seriesDropdown.setAdapter(stringAdapter);
         seriesDropdown.setOnItemSelectedListener(AddCardFragment.this);
 
         addButton = v.findViewById(R.id.add_card_button_add);
@@ -92,8 +128,9 @@ public class AddCardFragment extends Fragment implements AdapterView.OnItemSelec
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        // Can be deleted, right?
         String text = parent.getItemAtPosition(position).toString();
-        Toast.makeText(getActivity(), text, Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getActivity(), text, Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -130,6 +167,49 @@ public class AddCardFragment extends Fragment implements AdapterView.OnItemSelec
     }
 
     private void SearchButtonClicked(){
-        Toast.makeText(getActivity(), "Search button clicked", Toast.LENGTH_SHORT).show();
+        ArrayList<String> filter = new ArrayList<>();
+        String cardNameString = cardTitle.getText().toString();
+        if(cardNameString != null && !cardNameString.isEmpty()){
+            filter.add("name="+cardNameString);
+        }
+        String setNameString = seriesDropdown.getSelectedItem().toString();
+        if(setNameString != null && !setNameString.isEmpty()){
+            filter.add("setName="+setNameString);
+        }
+        if(filter.size()>0){
+            new APIAsyncTast().execute(filter);
+        } else {
+            Toast.makeText(getActivity(), R.string.no_search_terms, Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void onApiResult(List<io.magicthegathering.javasdk.resource.Card> cardList){
+        if(!cardList.isEmpty()){
+            List<Card> cardsRrsults = new ArrayList<>();
+            for (io.magicthegathering.javasdk.resource.Card c : cardList){
+                cardsRrsults.add(new Card(c));
+            }
+            viewModel.setAllCards(cardsRrsults);
+            //Toast.makeText(getActivity(), "First card: " + cardList.get(0).getName(), Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(getActivity(), R.string.no_result, Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private class APIAsyncTast extends AsyncTask< ArrayList<String>, Void, Void>{
+
+        private List<io.magicthegathering.javasdk.resource.Card> apiResults;
+
+        @Override
+        protected Void doInBackground(ArrayList<String>... arrayLists) {
+            apiResults = CardAPI.getAllCards(arrayLists[0]);
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            onApiResult(apiResults);
+        }
     }
 }
