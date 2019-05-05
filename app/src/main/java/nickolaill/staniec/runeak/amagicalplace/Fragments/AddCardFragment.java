@@ -31,7 +31,7 @@ import nickolaill.staniec.runeak.amagicalplace.R;
 import nickolaill.staniec.runeak.amagicalplace.ViewModels.AddCardViewModel;
 import nickolaill.staniec.runeak.amagicalplace.ViewModels.AddCardViewModelFactory;
 
-public class AddCardFragment extends Fragment implements AdapterView.OnItemSelectedListener {
+public class AddCardFragment extends Fragment{
     private AddCardFragmentListener mListener;
     private static final String ARG_COID = "collectionId";
     private int collectionId;
@@ -86,7 +86,6 @@ public class AddCardFragment extends Fragment implements AdapterView.OnItemSelec
 
         stringAdapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
         seriesDropdown.setAdapter(stringAdapter);
-        seriesDropdown.setOnItemSelectedListener(AddCardFragment.this);
 
         addButton = v.findViewById(R.id.add_card_button_add);
         cancelButton = v.findViewById(R.id.add_card_button_cancel);
@@ -119,16 +118,6 @@ public class AddCardFragment extends Fragment implements AdapterView.OnItemSelec
         });
 
         return v;
-    }
-
-    @Override
-    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
-    }
-
-    @Override
-    public void onNothingSelected(AdapterView<?> parent) {
-
     }
 
     @Override
