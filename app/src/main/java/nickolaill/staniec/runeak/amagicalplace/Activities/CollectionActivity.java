@@ -23,10 +23,16 @@ public class CollectionActivity extends AppCompatActivity implements AddCardFrag
 
         viewModel = ViewModelProviders.of(this, new CollectionViewModelFactory(getApplication(), getIntent().getIntExtra(Constants.COLLECTION_ID, -1))).get(CollectionViewModel.class);
 
-        CollectionFragment fragment = CollectionFragment.newInstance(getIntent().getIntExtra(Constants.COLLECTION_ID, -1));
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.collection_container, fragment)
-                .commit();
+        if (savedInstanceState == null) {
+            CollectionFragment fragment = CollectionFragment.newInstance(getIntent().getIntExtra(Constants.COLLECTION_ID, -1));
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.collection_container, fragment)
+                    .commit();
+        }
+        else {
+            // If there is a savedInstanceState that means there is a fragment, therefor
+            // we just leave this bracket empty, as this will automatically recreate the fragment(s)
+        }
     }
 
     @Override
