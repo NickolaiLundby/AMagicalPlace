@@ -1,6 +1,5 @@
 package nickolaill.staniec.runeak.amagicalplace.Fragments;
 
-import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
@@ -9,7 +8,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.view.menu.MenuView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -37,7 +35,6 @@ public class AddCardFragment extends Fragment implements AdapterView.OnItemSelec
     private AddCardFragmentListener mListener;
     private static final String ARG_COID = "collectionId";
     private int collectionId;
-    private TextView fragmentTitle;
     private EditText cardTitle;
     private Spinner seriesDropdown;
     private Button addButton, cancelButton, searchButton;
@@ -71,7 +68,7 @@ public class AddCardFragment extends Fragment implements AdapterView.OnItemSelec
                 adapter.submitList(cards);
             }
         });
-        
+
         adapter.setOnItemClickListener(new CardAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(Card card) {
@@ -81,8 +78,6 @@ public class AddCardFragment extends Fragment implements AdapterView.OnItemSelec
                 Toast.makeText(getActivity(), "Card selected: " + cardToBeAdded.getTitle(), Toast.LENGTH_SHORT).show();
             }
         });
-
-        fragmentTitle = v.findViewById(R.id.add_card_tv_fragmenttitle);
 
         cardTitle = v.findViewById(R.id.add_card_et_cardtitle);
         seriesDropdown = v.findViewById(R.id.add_card_spinner_series);
@@ -128,9 +123,7 @@ public class AddCardFragment extends Fragment implements AdapterView.OnItemSelec
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        // Can be deleted, right?
-        //String text = parent.getItemAtPosition(position).toString();
-        //Toast.makeText(getActivity(), text, Toast.LENGTH_SHORT).show();
+
     }
 
     @Override
@@ -190,7 +183,6 @@ public class AddCardFragment extends Fragment implements AdapterView.OnItemSelec
                 cardsRrsults.add(new Card(c));
             }
             viewModel.setAllCards(cardsRrsults);
-            //Toast.makeText(getActivity(), "First card: " + cardList.get(0).getName(), Toast.LENGTH_SHORT).show();
         } else {
             Toast.makeText(getActivity(), R.string.no_result, Toast.LENGTH_SHORT).show();
         }
