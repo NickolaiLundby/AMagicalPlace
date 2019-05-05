@@ -2,10 +2,12 @@
     <string name="app_name">A Magical Place</string>
     <string name="title">Title</string>
     <string name="text">Text</string>
-    <string name="series">Series</string>
+    <string name="sets">Sets</string>
+    <string name="title_to_search_for">Title to search for</string>
 
     <!-- TODO: All series should probably be checked if they work @ API -->
-    <string-array name="magicseries">
+    <string-array name="magicsets">
+        <item></item>
         <item>Aether Revolt</item>
         <item>Alara Reborn</item>
         <item>Alliances</item>
@@ -213,4 +215,220 @@
         <item>Worldwake</item>
         <item>Zendikar</item>
     </string-array>
+    <string name="no_search_terms">No search terms selected</string>
+    <string name="no_result">No results</string>
+
+    <!--
+        <string-array name="sets_and_codes">
+            <item> </item>
+            <item>	Aether Revolt	,	AER	</item>
+            <item>	Alara Reborn	,	ARB	</item>
+            <item>	Alliances	,	ALL	</item>
+            <item>	Alpha (Limited Edition)	,	LEA	</item>
+            <item>	Amonkhet	,	AKH	</item>
+            <item>	Amonkhet Invocations	,	MPS	</item>
+            <item>	Anthologies	,	ATH	</item>
+            <item>	Antiquities	,	ATQ	</item>
+            <item>	Apocalypse	,	APC	</item>
+            <item>	Arabian Nights	,	ARN	</item>
+            <item>	Archenemy	,	ARC	</item>
+            <item>	Archenemy: Nicol Bolas	,	E01	</item>
+            <item>	Avacyn Restored	,	AVR	</item>
+            <item>	Battle for Zendikar	,	BFZ	</item>
+            <item>	Battle Royale	,	BRB	</item>
+            <item>	Battlebond	,	BBD	</item>
+            <item>	Beatdown	,	BTD	</item>
+            <item>	Beta (Limited Edition)	,	LEB	</item>
+            <item>	Betrayers of Kamigawa	,	BOK	</item>
+            <item>	Born of the Gods	,	BNG	</item>
+            <item>	Challenger Decks	,	Q01	</item>
+            <item>	Challenger Decks 2019	,	Q02	</item>
+            <item>	Champions of Kamigawa	,	CHK	</item>
+            <item>	Chronicles	,	CHR	</item>
+            <item>	Coldsnap	,	CSP	</item>
+            <item>	Commander	,	CMD	</item>
+            <item>	Commander 2013	,	C13	</item>
+            <item>	Commander 2014	,	C14	</item>
+            <item>	Commander 2015	,	C15	</item>
+            <item>	Commander 2016	,	C16	</item>
+            <item>	Commander 2017	,	C17	</item>
+            <item>	Commander 2018	,	C18	</item>
+            <item>	Commander 2019	,	C19	</item>
+            <item>	Commander Anthology	,	CMA	</item>
+            <item>	Commander Anthology Volume II	,	CM2	</item>
+            <item>	Commander Theme Decks	,	TD0	</item>
+            <item>	Commander\'s Arsenal	,	CM1	</item>
+            <item>	Conflux	,	CON	</item>
+            <item>	Conspiracy	,	CNS	</item>
+            <item>	Conspiracy: Take the Crown	,	CN2	</item>
+            <item>	Core Set 2019	,	M19	</item>
+            <item>	Core Set 2020	,	M20	</item>
+            <item>	Dark Ascension	,	DKA	</item>
+            <item>	Darksteel	,	DST	</item>
+            <item>	Deckmasters 2001	,	DKM	</item>
+            <item>	Dissension	,	DIS	</item>
+            <item>	Dominaria	,	DOM	</item>
+            <item>	Dragon\'s Maze	,	DGM	</item>
+            <item>	Dragons of Tarkir	,	DTK	</item>
+            <item>	Duel Decks Anthology	,	DD3	</item>
+            <item>	Duel Decks: Ajani vs. Nicol Bolas	,	DDH	</item>
+            <item>	Duel Decks: Blessed vs. Cursed	,	DDQ	</item>
+            <item>	Duel Decks: Divine vs. Demonic	,	DDC	</item>
+            <item>	Duel Decks: Elspeth vs. Kiora	,	DDO	</item>
+            <item>	Duel Decks: Elspeth vs. Tezzeret	,	DDF	</item>
+            <item>	Duel Decks: Elves vs. Goblins	,	EVG	</item>
+            <item>	Duel Decks: Elves vs. Inventors	,	DDU	</item>
+            <item>	Duel Decks: Garruk vs. Liliana	,	DDD	</item>
+            <item>	Duel Decks: Heroes vs. Monsters	,	DDL	</item>
+            <item>	Duel Decks: Izzet vs. Golgari	,	DDJ	</item>
+            <item>	Duel Decks: Jace vs. Chandra	,	DD2	</item>
+            <item>	Duel Decks: Jace vs. Vraska	,	DDM	</item>
+            <item>	Duel Decks: Knights vs. Dragons	,	DDG	</item>
+            <item>	Duel Decks: Merfolk vs. Goblins	,	DDT	</item>
+            <item>	Duel Decks: Mind vs. Might	,	DDS	</item>
+            <item>	Duel Decks: Mirrodin Pure vs. New Phyrexia	,	TD2	</item>
+            <item>	Duel Decks: Nissa vs. Ob Nixilis	,	DDR	</item>
+            <item>	Duel Decks: Phyrexia vs. The Coalition	,	DDE	</item>
+            <item>	Duel Decks: Sorin vs. Tibalt	,	DDK	</item>
+            <item>	Duel Decks: Speed vs. Cunning	,	DDN	</item>
+            <item>	Duel Decks: Venser vs. Koth	,	DDI	</item>
+            <item>	Duel Decks: Zendikar vs. Eldrazi	,	DDP	</item>
+            <item>	Duels of the Planeswalkers	,	DPA	</item>
+            <item>	Eighth Edition	,	8ED	</item>
+            <item>	Eldritch Moon	,	EMN	</item>
+            <item>	Eternal Masters	,	EMA	</item>
+            <item>	Eventide	,	EVE	</item>
+            <item>	Exodus	,	EXO	</item>
+            <item>	Explorers of Ixalan	,	E02	</item>
+            <item>	Fallen Empires	,	FEM	</item>
+            <item>	Fate Reforged	,	FRF	</item>
+            <item>	Fifth Dawn	,	5DN	</item>
+            <item>	Fifth Edition	,	5ED	</item>
+            <item>	Fourth Edition	,	4ED	</item>
+            <item>	From the Vault: Angels	,	V15	</item>
+            <item>	From the Vault: Annihilation	,	V14	</item>
+            <item>	From the Vault: Dragons	,	DRB	</item>
+            <item>	From the Vault: Exiled	,	V09	</item>
+            <item>	From the Vault: Legends	,	V11	</item>
+            <item>	From the Vault: Lore	,	V16	</item>
+            <item>	From the Vault: Realms	,	V12	</item>
+            <item>	From the Vault: Relics	,	V10	</item>
+            <item>	From the Vault: Transform	,	V17	</item>
+            <item>	From the Vault: Twenty	,	V13	</item>
+            <item>	Future Sight	,	FUT	</item>
+            <item>	Game Night	,	GNT	</item>
+            <item>	Gatecrash	,	GTC	</item>
+            <item>	Global Series: Jiang Yanggu &amp; Mu Yanling	,	GS1	</item>
+            <item>	Guildpact	,	GPT	</item>
+            <item>	Guilds of Ravnica	,	GRN	</item>
+            <item>	Guilds of Ravnica Guild Kits	,	GK1	</item>
+            <item>	Guilds of Ravnica Mythic Edition	,	MED	</item>
+            <item>	Homelands	,	HML	</item>
+            <item>	Hour of Devastation	,	HOU	</item>
+            <item>	Ice Age	,	ICE	</item>
+            <item>	Iconic Masters	,	IMA	</item>
+            <item>	Innistrad	,	ISD	</item>
+            <item>	Invasion	,	INV	</item>
+            <item>	Ixalan	,	XLN	</item>
+            <item>	Journey into Nyx	,	JOU	</item>
+            <item>	Judgment	,	JUD	</item>
+            <item>	Kaladesh	,	KLD	</item>
+            <item>	Kaladesh Inventions	,	MPS	</item>
+            <item>	Khans of Tarkir	,	KTK	</item>
+            <item>	Legendary Cube	,	PZ1	</item>
+            <item>	Legends	,	LEG	</item>
+            <item>	Legions	,	LGN	</item>
+            <item>	Lorwyn	,	LRW	</item>
+            <item>	Magic 2010	,	M10	</item>
+            <item>	Magic 2011	,	M11	</item>
+            <item>	Magic 2012	,	M12	</item>
+            <item>	Magic 2013	,	M13	</item>
+            <item>	Magic 2014	,	M14	</item>
+            <item>	Magic 2015	,	M15	</item>
+            <item>	Magic Online Deck Series	,	TD0	</item>
+            <item>	Magic Origins	,	ORI	</item>
+            <item>	Masters 25	,	A25	</item>
+            <item>	Masters Edition	,	MED	</item>
+            <item>	Masters Edition II	,	ME2	</item>
+            <item>	Masters Edition III	,	ME3	</item>
+            <item>	Masters Edition IV	,	ME4	</item>
+            <item>	Mercadian Masques	,	MMQ	</item>
+            <item>	Mirage	,	MIR	</item>
+            <item>	Mirrodin	,	MRD	</item>
+            <item>	Mirrodin Besieged	,	MBS	</item>
+            <item>	Modern Event Deck	,	MD1	</item>
+            <item>	Modern Horizons	,	MH1	</item>
+            <item>	Modern Masters	,	MMA	</item>
+            <item>	Modern Masters 2015	,	MM2	</item>
+            <item>	Modern Masters 2017	,	MM3	</item>
+            <item>	Morningtide	,	MOR	</item>
+            <item>	Nemesis	,	NEM	</item>
+            <item>	New Phyrexia	,	NPH	</item>
+            <item>	Ninth Edition	,	9ED	</item>
+            <item>	Oath of the Gatewatch	,	OGW	</item>
+            <item>	Odyssey	,	ODY	</item>
+            <item>	Onslaught	,	ONS	</item>
+            <item>	Planar Chaos	,	PLC	</item>
+            <item>	Planechase	,	HOP	</item>
+            <item>	Planechase 2012	,	PC2	</item>
+            <item>	Planechase Anthology	,	PCA	</item>
+            <item>	Planeshift	,	PLS	</item>
+            <item>	Portal	,	POR	</item>
+            <item>	Portal Second Age	,	P02	</item>
+            <item>	Portal Three Kingdoms	,	PTK	</item>
+            <item>	Premium Deck Series: Fire &amp; Lightning	,	PD2	</item>
+            <item>	Premium Deck Series: Graveborn	,	PD3	</item>
+            <item>	Premium Deck Series: Slivers	,	H09	</item>
+            <item>	Prophecy	,	PCY	</item>
+            <item>	Ravnica Allegiance	,	RNA	</item>
+            <item>	Ravnica Allegiance Guild Kits	,	GK2	</item>
+            <item>	Ravnica Allegiance Mythic Edition	,	MED	</item>
+            <item>	Ravnica: City of Guilds	,	RAV	</item>
+            <item>	Return to Ravnica	,	RTR	</item>
+            <item>	Revised Edition	,	3ED	</item>
+            <item>	Rise of the Eldrazi	,	ROE	</item>
+            <item>	Rivals of Ixalan	,	RIX	</item>
+            <item>	Saviors of Kamigawa	,	SOK	</item>
+            <item>	Scars of Mirrodin	,	SOM	</item>
+            <item>	Scourge	,	SCG	</item>
+            <item>	Seventh Edition	,	7ED	</item>
+            <item>	Shadowmoor	,	SHM	</item>
+            <item>	Shadows over Innistrad	,	SOI	</item>
+            <item>	Shards of Alara	,	ALA	</item>
+            <item>	Signature Spellbook: Gideon	,	SS2	</item>
+            <item>	Signature Spellbook: Jace	,	SS1	</item>
+            <item>	Sixth Edition	,	6ED	</item>
+            <item>	Spellslinger Starter Kit	,	SK1	</item>
+            <item>	Starter 1999	,	S99	</item>
+            <item>	Starter 2000	,	S00	</item>
+            <item>	Stronghold	,	STH	</item>
+            <item>	Tempest	,	TMP	</item>
+            <item>	Tempest Remastered	,	TPR	</item>
+            <item>	Tenth Edition	,	10E	</item>
+            <item>	The Dark	,	DRK	</item>
+            <item>	Theros	,	THS	</item>
+            <item>	Time Spiral	,	TSP	</item>
+            <item>	Torment	,	TOR	</item>
+            <item>	Treasure Chests	,	PZ2	</item>
+            <item>	Ultimate Masters	,	UMA	</item>
+            <item>	Unglued	,	UGL	</item>
+            <item>	Unhinged	,	UNH	</item>
+            <item>	Unlimited Edition	,	2ED	</item>
+            <item>	Unstable	,	UST	</item>
+            <item>	Urza\'s Destiny	,	UDS	</item>
+            <item>	Urza\'s Legacy	,	ULG	</item>
+            <item>	Urza\'s Saga	,	USG	</item>
+            <item>	Vintage Masters	,	VMA	</item>
+            <item>	Visions	,	VIS	</item>
+            <item>	War of the Spark	,	WAR	</item>
+            <item>	War of the Spark Mythic Edition	,	MED	</item>
+            <item>	Weatherlight	,	WTH	</item>
+            <item>	Welcome Deck 2016	,	W16	</item>
+            <item>	Welcome Deck 2017	,	W17	</item>
+            <item>	Worldwake	,	WWK	</item>
+            <item>	Zendikar	,	ZEN	</item>
+            <item>	Zendikar Expeditions	,	EXP	</item>
+        </string-array>
+    -->
+
 </resources>
