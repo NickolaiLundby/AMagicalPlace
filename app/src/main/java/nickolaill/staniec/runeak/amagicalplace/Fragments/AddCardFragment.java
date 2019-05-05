@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.view.menu.MenuView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -41,9 +42,7 @@ public class AddCardFragment extends Fragment implements AdapterView.OnItemSelec
     private Spinner seriesDropdown;
     private Button addButton, cancelButton, searchButton;
     private Card cardToBeAdded;
-    //
     private AddCardViewModel viewModel;
-    //private MutableLiveData<List<Card>> searchResults = new MutableLiveData<>();
 
     public static AddCardFragment newInstance(int collectionId) {
         AddCardFragment fragment = new AddCardFragment();
@@ -57,7 +56,7 @@ public class AddCardFragment extends Fragment implements AdapterView.OnItemSelec
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_add_card, container, false);
+        final View v = inflater.inflate(R.layout.fragment_add_card, container, false);
 
         final CardAdapter adapter = new CardAdapter();
         RecyclerView recyclerView = v.findViewById(R.id.add_card_recycler_view);
@@ -72,13 +71,14 @@ public class AddCardFragment extends Fragment implements AdapterView.OnItemSelec
                 adapter.submitList(cards);
             }
         });
-
-        /* Test thingy -- Should some selection logic be implemented here? */
+        
         adapter.setOnItemClickListener(new CardAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(Card card) {
-                //cardToBeAdded = card;
-                Toast.makeText(getActivity(), "Card pressed: " + cardToBeAdded.getTitle(), Toast.LENGTH_SHORT).show();
+                card.setCollectionId(collectionId);
+                card.setQuantity(1);
+                cardToBeAdded = card;
+                Toast.makeText(getActivity(), "Card selected: " + cardToBeAdded.getTitle(), Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -129,7 +129,7 @@ public class AddCardFragment extends Fragment implements AdapterView.OnItemSelec
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         // Can be deleted, right?
-        String text = parent.getItemAtPosition(position).toString();
+        //String text = parent.getItemAtPosition(position).toString();
         //Toast.makeText(getActivity(), text, Toast.LENGTH_SHORT).show();
     }
 
