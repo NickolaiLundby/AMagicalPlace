@@ -93,9 +93,8 @@ public class CollectionFragment extends Fragment {
         adapter.setOnItemClickListener(new CardAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(Card card) {
-                // TODO: Get rid of the below. Instead call mListener.onCollectionFragmentEditInteraction("hest");
-                // TODO: This call should be handled in the parent activity (CollectionActivity)
-                Toast.makeText(getActivity(), "EditCardFragment needs implementation", Toast.LENGTH_SHORT).show();
+                // TODO: The card clicked should be sent as argument instead.
+                mListener.onCollectionFragmentDetailInterfaction("Hest");
             }
         });
 
@@ -116,6 +115,6 @@ public class CollectionFragment extends Fragment {
     public interface CollectionFragmentListener {
         // TODO: Should take some meaningful parameter back to CollectionActivity.
         void onCollectionFragmentAddInteraction(String todoTestStr);
-        void onCollectionFragmentEditInterfaction(String todoTestStr);
+        void onCollectionFragmentDetailInterfaction(String todoTestStr);
     }
 }

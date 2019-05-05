@@ -15,14 +15,28 @@ import nickolaill.staniec.runeak.amagicalplace.ViewModels.CollectionViewModelFac
 
 public class CollectionActivity extends AppCompatActivity implements AddCardFragment.AddCardFragmentListener, CollectionFragment.CollectionFragmentListener {
     private CollectionViewModel viewModel;
+    private boolean mTwoPane;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_collection);
-
         viewModel = ViewModelProviders.of(this, new CollectionViewModelFactory(getApplication(), getIntent().getIntExtra(Constants.COLLECTION_ID, -1))).get(CollectionViewModel.class);
 
+        if(findViewById(R.id.wide_collection_container)  != null){
+            mTwoPane = true;
+        } else {
+            mTwoPane = false;
+        }
+
+        if (mTwoPane) {
+            twoPaneCreation(savedInstanceState);
+        } else {
+            singlePaneCreation(savedInstanceState);
+        }
+    }
+
+    private void singlePaneCreation(Bundle savedInstanceState){
         if (savedInstanceState == null) {
             CollectionFragment fragment = CollectionFragment.newInstance(getIntent().getIntExtra(Constants.COLLECTION_ID, -1));
             getSupportFragmentManager().beginTransaction()
@@ -35,16 +49,39 @@ public class CollectionActivity extends AppCompatActivity implements AddCardFrag
         }
     }
 
+    private void twoPaneCreation(Bundle savedInstanceState) {
+        if (savedInstanceState == null) {
+            CollectionFragment collectionFragment = CollectionFragment.newInstance(getIntent().getIntExtra(Constants.COLLECTION_ID, -1));
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.wide_collection_fragment_container, collectionFragment)
+                    .commit();
+            AddCardFragment addCardFragment = AddCardFragment.newInstance(getIntent().getIntExtra(Constants.COLLECTION_ID, -1));
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.wide_card_fragment_container, addCardFragment)
+                    .commit();
+        }
+        else {
+            // If there is a savedInstanceState that means there is a fragment, therefor
+            // we just leave this bracket empty, as this will automatically recreate the fragment(s
+        }
+    }
+
     @Override
     public void onAddCardFragmentAddInteraction(Card card) {
         // TODO: Handle actions from the AddCardFragment here
         viewModel.insert(card);
 
         // TODO: Then show the collection fragment again
-        CollectionFragment fragment = CollectionFragment.newInstance(getIntent().getIntExtra(Constants.COLLECTION_ID, -1));
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.collection_container, fragment)
-                .commit();
+        if (mTwoPane) {
+            // In twoPane we should always be showing the collection on the left side.
+        }
+        else {
+            CollectionFragment collectionFragment = CollectionFragment.newInstance(getIntent().getIntExtra(Constants.COLLECTION_ID, -1));
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.collection_container, collectionFragment)
+                    .commit();
+        }
+
     }
 
     @Override
@@ -52,25 +89,47 @@ public class CollectionActivity extends AppCompatActivity implements AddCardFrag
         // TODO: Handle actions from the AddCardFragment here
 
         // TODO: Then show the collection fragment again
-        CollectionFragment fragment = CollectionFragment.newInstance(getIntent().getIntExtra(Constants.COLLECTION_ID, -1));
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.collection_container, fragment)
-                .commit();
+        if (mTwoPane) {
+            // In twoPane we should always be showing the collection on the left side.
+        }
+        else {
+            CollectionFragment fragment = CollectionFragment.newInstance(getIntent().getIntExtra(Constants.COLLECTION_ID, -1));
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.collection_container, fragment)
+                    .commit();
+        }
     }
 
     @Override
     public void onCollectionFragmentAddInteraction(String todoTestStr) {
         // TODO: Handle actions from the CollectionFragment here
+
         // TODO: Etc, fire up the add fragment.
-        AddCardFragment fragment = AddCardFragment.newInstance(getIntent().getIntExtra(Constants.COLLECTION_ID, -1));
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.collection_container, fragment)
-                .commit();
+        if (mTwoPane) {
+            AddCardFragment fragment = AddCardFragment.newInstance(getIntent().getIntExtra(Constants.COLLECTION_ID, -1));
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.wide_card_fragment_container, fragment)
+                    .commit();
+        }
+        else {
+            AddCardFragment fragment = AddCardFragment.newInstance(getIntent().getIntExtra(Constants.COLLECTION_ID, -1));
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.collection_container, fragment)
+                    .commit();
+        }
     }
 
     @Override
-    public void onCollectionFragmentEditInterfaction(String todoTestStr) {
-        // TODO: Handle actions from the CollectionFragment here
-        // TODO: Etc, fire up the edit fragment.
+    public void onCollectionFragmentDetailInterfaction(String todoTestStr) {
+        // TODO: Handle actions from the CollectionFragment here -> The received paramenter should be Card instead.
+
+        // TODO: Get rid of the below, and fire up the DetailCardFragment instead.
+        if (mTwoPane) {
+            Toast.makeText(this, "DetailCardFragment needs implementation in twoPaneView", Toast.LENGTH_SHORT).show();
+        }
+        else {
+            Toast.makeText(this, "DetailCardFragment needs implementation in singlePaneView", Toast.LENGTH_SHORT).show();
+        }
+
     }
 }
