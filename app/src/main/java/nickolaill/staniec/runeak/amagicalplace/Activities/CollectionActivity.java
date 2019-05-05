@@ -15,13 +15,18 @@ import nickolaill.staniec.runeak.amagicalplace.ViewModels.CollectionViewModelFac
 
 public class CollectionActivity extends AppCompatActivity implements AddCardFragment.AddCardFragmentListener, CollectionFragment.CollectionFragmentListener {
     private CollectionViewModel viewModel;
+    private boolean mTwoPane;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_collection);
-
         viewModel = ViewModelProviders.of(this, new CollectionViewModelFactory(getApplication(), getIntent().getIntExtra(Constants.COLLECTION_ID, -1))).get(CollectionViewModel.class);
+
+        if(findViewById(R.id.wide_collection_container)  != null){
+            mTwoPane = true;
+        }
+        // TODO: Act differently depending on mTwoPane
 
         if (savedInstanceState == null) {
             CollectionFragment fragment = CollectionFragment.newInstance(getIntent().getIntExtra(Constants.COLLECTION_ID, -1));
