@@ -10,6 +10,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -130,7 +131,6 @@ public class AddCardFragment extends Fragment{
     }
 
     public interface AddCardFragmentListener {
-        // TODO: onAddCardFragmentInteraction should take Card card.
         void onAddCardFragmentAddInteraction(Card card);
         void onAddCardFragmentCancelInteraction();
     }
@@ -157,31 +157,42 @@ public class AddCardFragment extends Fragment{
             filter.add("setName="+setNameString);
         }
         if(filter.size()>0){
-            new APIAsyncTast().execute(filter);
+            new APIAsyncTask().execute(filter);
         } else {
             Toast.makeText(getActivity(), R.string.no_search_terms, Toast.LENGTH_SHORT).show();
         }
     }
 
     private void onApiResult(List<io.magicthegathering.javasdk.resource.Card> cardList){
-        if(!cardList.isEmpty()){
-            List<Card> cardsRrsults = new ArrayList<>();
-            for (io.magicthegathering.javasdk.resource.Card c : cardList){
-                cardsRrsults.add(new Card(c));
+        if(cardList != null){
+            if(!cardList.isEmpty()){
+                List<Card> cardsRrsults = new ArrayList<>();
+                for (io.magicthegathering.javasdk.resource.Card c : cardList){
+                    cardsRrsults.add(new Card(c));
+                }
+                viewModel.setAllCards(cardsRrsults);
+            } else {
+                Toast.makeText(getActivity(), R.string.no_result, Toast.LENGTH_SHORT).show();
             }
-            viewModel.setAllCards(cardsRrsults);
         } else {
-            Toast.makeText(getActivity(), R.string.no_result, Toast.LENGTH_SHORT).show();
+            Log.e("Error", "APIAsyncTask return null");
         }
+
     }
 
-    private class APIAsyncTast extends AsyncTask< ArrayList<String>, Void, Void>{
+    private class APIAsyncTask extends AsyncTask< ArrayList<String>, Void, Void>{
 
         private List<io.magicthegathering.javasdk.resource.Card> apiResults;
 
         @Override
         protected Void doInBackground(ArrayList<String>... arrayLists) {
-            apiResults = CardAPI.getAllCards(arrayLists[0]);
+            try {
+                apiResults = CardAPI.getAllCards(arrayLists[0]);
+            } catch (Exception e) {
+                Log.e("Error", e.getMessage());
+                e.printStackTrace();
+            }
+
             return null;
         }
 
