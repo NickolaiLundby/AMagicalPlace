@@ -89,7 +89,7 @@ public class CollectionFragment extends Fragment {
             @Override
             public void onItemClick(Card card) {
                 // TODO: The card clicked should be sent as argument instead.
-                mListener.onCollectionFragmentDetailInteraction("Hest");
+                mListener.onCollectionFragmentDetailInteraction(card);
             }
         });
 
@@ -110,6 +110,6 @@ public class CollectionFragment extends Fragment {
     public interface CollectionFragmentListener {
         // TODO: Should take some meaningful parameter back to CollectionActivity.
         void onCollectionFragmentAddInteraction(String todoTestStr);
-        void onCollectionFragmentDetailInteraction(String todoTestStr);
+        void onCollectionFragmentDetailInteraction(Card card);
     }
 }

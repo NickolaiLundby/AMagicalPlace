@@ -14,7 +14,7 @@ import nickolaill.staniec.runeak.amagicalplace.Utilities.Constants;
 import nickolaill.staniec.runeak.amagicalplace.ViewModels.CollectionViewModel;
 import nickolaill.staniec.runeak.amagicalplace.ViewModels.CollectionViewModelFactory;
 
-public class CollectionActivity extends AppCompatActivity implements AddCardFragment.AddCardFragmentListener, CollectionFragment.CollectionFragmentListener {
+public class CollectionActivity extends AppCompatActivity implements AddCardFragment.AddCardFragmentListener, CollectionFragment.CollectionFragmentListener, CardDetailFragment.CardDetailFragmentListener {
     private CollectionViewModel viewModel;
     private boolean mTwoPane;
 
@@ -121,20 +121,39 @@ public class CollectionActivity extends AppCompatActivity implements AddCardFrag
     }
 
     @Override
-    public void onCollectionFragmentDetailInteraction(String todoTestStr) {
+    public void onCollectionFragmentDetailInteraction(Card card) {
         // TODO: Handle actions from the CollectionFragment here -> The received paramenter should be Card instead.
 
         // TODO: Get rid of the below, and fire up the DetailCardFragment instead.
         if (mTwoPane) {
-            Toast.makeText(this, "DetailCardFragment needs implementation in twoPaneView", Toast.LENGTH_SHORT).show();
+            CardDetailFragment fragment = CardDetailFragment.newInstance(card);
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.wide_card_fragment_container, fragment)
+                    .commit();
         }
         else {
             //Toast.makeText(this, "DetailCardFragment needs implementation in singlePaneView", Toast.LENGTH_SHORT).show();
-            CardDetailFragment fragment = CardDetailFragment.newInstance(getIntent().getIntExtra(Constants.CARD_ID, -1));
+            CardDetailFragment fragment = CardDetailFragment.newInstance(card);
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.collection_container, fragment)
                     .commit();
         }
 
+    }
+
+    @Override
+    public void onCardDetailFragmentCancelInteraction() {
+        // TODO: Handle actions from the CardDetailFragment here
+
+        // TODO: Then show the collection fragment again
+        if (mTwoPane) {
+            // In twoPane we should always be showing the collection on the left side.
+        }
+        else {
+            CollectionFragment fragment = CollectionFragment.newInstance(getIntent().getIntExtra(Constants.COLLECTION_ID, -1));
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.collection_container, fragment)
+                    .commit();
+        }
     }
 }

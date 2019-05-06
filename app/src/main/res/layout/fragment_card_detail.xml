@@ -20,7 +20,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageView
+    <WebView
         android:id="@+id/imgCard"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -31,8 +31,7 @@
         android:layout_marginRight="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtTitleCard"
-        tools:srcCompat="@tools:sample/avatars" />
+        app:layout_constraintTop_toBottomOf="@+id/txtTitleCard" />
 
     <TextView
         android:id="@+id/txtPriceText"

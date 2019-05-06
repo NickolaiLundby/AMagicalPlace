@@ -4,6 +4,8 @@ import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.ForeignKey;
 import android.arch.persistence.room.Index;
 import android.arch.persistence.room.PrimaryKey;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
@@ -13,7 +15,7 @@ import static android.arch.persistence.room.ForeignKey.CASCADE;
 
 @Entity(tableName = "card_table", foreignKeys = {@ForeignKey(entity= Collection.class,parentColumns = "coId",childColumns = "collectionId", onDelete = CASCADE)
 }, indices = {@Index(value = {"caId"}, unique = true)})
-public class Card {
+public class Card implements Parcelable {
 
     @PrimaryKey(autoGenerate = true)
     private int caId;
@@ -197,4 +199,62 @@ public class Card {
     public void setColorIdentity(String colorIdentity) {
         this.colorIdentity = colorIdentity;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(this.caId);
+        dest.writeInt(this.quantity);
+        dest.writeInt(this.collectionId);
+        dest.writeInt(this.multiverseId);
+        dest.writeString(this.title);
+        dest.writeString(this.series);
+        dest.writeString(this.text);
+        dest.writeDouble(this.price);
+        dest.writeString(this.types);
+        dest.writeString(this.type);
+        dest.writeString(this.rarity);
+        dest.writeString(this.toughness);
+        dest.writeString(this.power);
+        dest.writeString(this.manaCoast);
+        dest.writeString(this.imageUrl);
+        dest.writeString(this.colors);
+        dest.writeString(this.colorIdentity);
+    }
+
+    protected Card(Parcel in) {
+        this.caId = in.readInt();
+        this.quantity = in.readInt();
+        this.collectionId = in.readInt();
+        this.multiverseId = in.readInt();
+        this.title = in.readString();
+        this.series = in.readString();
+        this.text = in.readString();
+        this.price = in.readDouble();
+        this.types = in.readString();
+        this.type = in.readString();
+        this.rarity = in.readString();
+        this.toughness = in.readString();
+        this.power = in.readString();
+        this.manaCoast = in.readString();
+        this.imageUrl = in.readString();
+        this.colors = in.readString();
+        this.colorIdentity = in.readString();
+    }
+
+    public static final Parcelable.Creator<Card> CREATOR = new Parcelable.Creator<Card>() {
+        @Override
+        public Card createFromParcel(Parcel source) {
+            return new Card(source);
+        }
+
+        @Override
+        public Card[] newArray(int size) {
+            return new Card[size];
+        }
+    };
 }
