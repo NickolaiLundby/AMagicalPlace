@@ -6,4 +6,9 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="edit_collection_dialog">Edit collection</string>
+    <string name="edit_collection_title">Title:</string>
+    <string name="edit_collection_description">Description:</string>
+    <string name="insert_collection_title">Insert title here</string>
+    <string name="insert_collection_description">Insert description here</string>
 </resources>

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="10dp">
+
+    <!--> Edit collection dialog layout id <-->
+    <TableLayout
+        android:id="@+id/editCollectionDialogId"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <!--> Edit collection dialog <-->
+        <TableRow>
+            <TextView
+                android:id="@+id/textView_editCollectionDialog"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/edit_collection_dialog"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
+        </TableRow>
+
+        <!--> Edit collection dialog Title <-->
+        <TableRow>
+
+            <TextView
+                android:id="@+id/textView_editCollectionDialogTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/edit_collection_title" />
+
+            <EditText
+                android:id="@+id/editText_editCollectionDialogTitle"
+                android:layout_width="280dp"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:text="@string/insert_collection_title" />
+        </TableRow>
+
+        <!--> Edit collection dialog Description <-->
+        <TableRow>
+            <TextView
+                android:id="@+id/textView_editCollectionDialogDescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/edit_collection_description"/>
+            <EditText
+                android:id="@+id/editText_editCollectionDialogDescription"
+                android:layout_width="280dp"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:text="@string/insert_collection_description"/>
+        </TableRow>
+    </TableLayout>
+</LinearLayout>

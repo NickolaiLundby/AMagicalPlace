@@ -2,15 +2,33 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "6ff0f4957cdeadf1cd2001b955794770",
+    "identityHash": "5b52fd6794cb05c98c5f632d8527db46",
     "entities": [
       {
         "tableName": "card_table",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`caId` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `title` TEXT, `series` TEXT, `text` TEXT, `quantity` INTEGER NOT NULL, `collectionId` INTEGER NOT NULL, FOREIGN KEY(`collectionId`) REFERENCES `collection_table`(`coId`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`caId` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `quantity` INTEGER NOT NULL, `collectionId` INTEGER NOT NULL, `multiverseId` INTEGER NOT NULL, `title` TEXT, `series` TEXT, `text` TEXT, `price` REAL NOT NULL, `types` TEXT, `type` TEXT, `rarity` TEXT, `toughness` TEXT, `power` TEXT, `manaCoast` TEXT, `imageUrl` TEXT, `colors` TEXT, `colorIdentity` TEXT, FOREIGN KEY(`collectionId`) REFERENCES `collection_table`(`coId`) ON UPDATE NO ACTION ON DELETE CASCADE )",
         "fields": [
           {
             "fieldPath": "caId",
             "columnName": "caId",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "quantity",
+            "columnName": "quantity",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "collectionId",
+            "columnName": "collectionId",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "multiverseId",
+            "columnName": "multiverseId",
             "affinity": "INTEGER",
             "notNull": true
           },
@@ -33,16 +51,64 @@
             "notNull": false
           },
           {
-            "fieldPath": "quantity",
-            "columnName": "quantity",
-            "affinity": "INTEGER",
+            "fieldPath": "price",
+            "columnName": "price",
+            "affinity": "REAL",
             "notNull": true
           },
           {
-            "fieldPath": "collectionId",
-            "columnName": "collectionId",
-            "affinity": "INTEGER",
-            "notNull": true
+            "fieldPath": "types",
+            "columnName": "types",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "type",
+            "columnName": "type",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "rarity",
+            "columnName": "rarity",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "toughness",
+            "columnName": "toughness",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "power",
+            "columnName": "power",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "manaCoast",
+            "columnName": "manaCoast",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "imageUrl",
+            "columnName": "imageUrl",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "colors",
+            "columnName": "colors",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "colorIdentity",
+            "columnName": "colorIdentity",
+            "affinity": "TEXT",
+            "notNull": false
           }
         ],
         "primaryKey": {
@@ -119,7 +185,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"6ff0f4957cdeadf1cd2001b955794770\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"5b52fd6794cb05c98c5f632d8527db46\")"
     ]
   }
 }
