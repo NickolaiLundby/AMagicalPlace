@@ -96,41 +96,25 @@ public class OverviewFragment extends Fragment {
     // TODO: Rewrite this method to use a LayoutInflater
     // TODO: Design the dialogbox in .xml and use that to inflate the layout
     private void EditCollectionDialogBuilder(final Collection collection){
+        LayoutInflater mLayout = LayoutInflater.from(getContext());
+        final View dialogView = mLayout.inflate(R.layout.edit_collection_dialog, null);
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-        builder.setTitle("Edit your collection");
+        builder.setView(dialogView);
 
-        LinearLayout layout = new LinearLayout(getContext());
-        layout.setOrientation(LinearLayout.VERTICAL);
+        //Edit collection dialog set/get title
+        final EditText editTitle = dialogView.findViewById(R.id.editText_editCollectionDialogTitle);
+        editTitle.setText(collection.getTitle());
 
-        final TextView titleInputText = new TextView(getContext());
-        titleInputText.setInputType(InputType.TYPE_CLASS_TEXT);
-        titleInputText.setText("Title:");
-        layout.addView(titleInputText);
-
-        final EditText titleInput = new EditText(getContext());
-        titleInput.setInputType(InputType.TYPE_CLASS_TEXT);
-        titleInput.setText(collection.getTitle());
-        layout.addView(titleInput);
-
-        final TextView descriptionInputText = new TextView(getContext());
-        descriptionInputText.setInputType(InputType.TYPE_CLASS_TEXT);
-        descriptionInputText.setText("Description:");
-        layout.addView(descriptionInputText);
-
-        final EditText descriptionInput = new EditText(getContext());
-        descriptionInput.setInputType(InputType.TYPE_CLASS_TEXT);
-        descriptionInput.setText(collection.getDescription());
-        layout.addView(descriptionInput);
-
-        builder.setView(layout);
+        //Edit collection dialog set/get description
+        final EditText editDescription = dialogView.findViewById(R.id.editText_editCollectionDialogDescription);
+        editDescription.setText(collection.getDescription());
 
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-
-                Collection col = new Collection(titleInput.getText().toString(), descriptionInput.getText().toString());
-                col.setCoId(collection.getCoId());
-                viewModel.update(col);
+                collection.setTitle(editTitle.getText().toString());
+                collection.setDescription(editDescription.getText().toString());
+                viewModel.update(collection);
             }
         });
 
