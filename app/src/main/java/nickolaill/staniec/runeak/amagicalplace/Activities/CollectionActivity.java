@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.widget.Toast;
 
 import nickolaill.staniec.runeak.amagicalplace.Fragments.AddCardFragment;
+import nickolaill.staniec.runeak.amagicalplace.Fragments.CardDetailFragment;
 import nickolaill.staniec.runeak.amagicalplace.Fragments.CollectionFragment;
 import nickolaill.staniec.runeak.amagicalplace.Models.Card;
 import nickolaill.staniec.runeak.amagicalplace.R;
@@ -120,7 +121,7 @@ public class CollectionActivity extends AppCompatActivity implements AddCardFrag
     }
 
     @Override
-    public void onCollectionFragmentDetailInterfaction(String todoTestStr) {
+    public void onCollectionFragmentDetailInteraction(String todoTestStr) {
         // TODO: Handle actions from the CollectionFragment here -> The received paramenter should be Card instead.
 
         // TODO: Get rid of the below, and fire up the DetailCardFragment instead.
@@ -128,7 +129,11 @@ public class CollectionActivity extends AppCompatActivity implements AddCardFrag
             Toast.makeText(this, "DetailCardFragment needs implementation in twoPaneView", Toast.LENGTH_SHORT).show();
         }
         else {
-            Toast.makeText(this, "DetailCardFragment needs implementation in singlePaneView", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this, "DetailCardFragment needs implementation in singlePaneView", Toast.LENGTH_SHORT).show();
+            CardDetailFragment fragment = CardDetailFragment.newInstance(getIntent().getIntExtra(Constants.CARD_ID, -1));
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.collection_container, fragment)
+                    .commit();
         }
 
     }

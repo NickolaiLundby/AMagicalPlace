@@ -3,7 +3,6 @@ package nickolaill.staniec.runeak.amagicalplace.Fragments;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -15,18 +14,14 @@ import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import java.util.List;
 
 import nickolaill.staniec.runeak.amagicalplace.Adapters.CardAdapter;
 import nickolaill.staniec.runeak.amagicalplace.Models.Card;
 import nickolaill.staniec.runeak.amagicalplace.R;
-import nickolaill.staniec.runeak.amagicalplace.Utilities.Constants;
 import nickolaill.staniec.runeak.amagicalplace.ViewModels.CollectionViewModel;
 import nickolaill.staniec.runeak.amagicalplace.ViewModels.CollectionViewModelFactory;
-
-import static android.app.Activity.RESULT_OK;
 
 public class CollectionFragment extends Fragment {
     private CollectionFragmentListener mListener;
@@ -94,7 +89,7 @@ public class CollectionFragment extends Fragment {
             @Override
             public void onItemClick(Card card) {
                 // TODO: The card clicked should be sent as argument instead.
-                mListener.onCollectionFragmentDetailInterfaction("Hest");
+                mListener.onCollectionFragmentDetailInteraction("Hest");
             }
         });
 
@@ -115,6 +110,6 @@ public class CollectionFragment extends Fragment {
     public interface CollectionFragmentListener {
         // TODO: Should take some meaningful parameter back to CollectionActivity.
         void onCollectionFragmentAddInteraction(String todoTestStr);
-        void onCollectionFragmentDetailInterfaction(String todoTestStr);
+        void onCollectionFragmentDetailInteraction(String todoTestStr);
     }
 }
