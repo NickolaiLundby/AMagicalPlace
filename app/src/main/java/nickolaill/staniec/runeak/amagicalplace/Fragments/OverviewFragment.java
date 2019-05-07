@@ -112,9 +112,9 @@ public class OverviewFragment extends Fragment {
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                collection.setTitle(editTitle.getText().toString());
-                collection.setDescription(editDescription.getText().toString());
-                viewModel.update(collection);
+                Collection col = new Collection(editTitle.getText().toString(), editDescription.getText().toString());
+                col.setCoId(collection.getCoId());
+                viewModel.update(col);
             }
         });
 
