@@ -3,7 +3,6 @@ package nickolaill.staniec.runeak.amagicalplace.Activities;
 import android.arch.lifecycle.ViewModelProviders;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.widget.Toast;
 
 import nickolaill.staniec.runeak.amagicalplace.Fragments.AddCardFragment;
 import nickolaill.staniec.runeak.amagicalplace.Fragments.CardDetailFragment;
@@ -102,7 +101,7 @@ public class CollectionActivity extends AppCompatActivity implements AddCardFrag
     }
 
     @Override
-    public void onCollectionFragmentAddInteraction(String todoTestStr) {
+    public void onCollectionFragmentAddInteraction() {
         // TODO: Handle actions from the CollectionFragment here
 
         // TODO: Etc, fire up the add fragment.

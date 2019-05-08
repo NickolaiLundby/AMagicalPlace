@@ -5,11 +5,15 @@
     <string name="text">Text</string>
     <string name="sets">Sets</string>
     <string name="title_to_search_for">Title to search for</string>
-    <string name="edit_collection_dialog">Edit collection</string>
-    <string name="edit_collection_title">Title:</string>
-    <string name="edit_collection_description">Description:</string>
-    <string name="insert_collection_title">Insert title here</string>
-    <string name="insert_collection_description">Insert description here</string>
+    <string name="no_search_terms">No search terms selected</string>
+    <string name="no_result">No results</string>
+    <string name="price">Price:</string>
+    <string name="overview_dialog_et_title_hint">Title here</string>
+    <string name="overview_dialog_et_description_hint">Description here</string>
+    <string name="overview_dialog_tv_title">Title:</string>
+    <string name="overview_dialog_tv_description">Description:</string>
+    <string name="edit_collection">Edit Collection</string>
+    <string name="add_collection">Add Collection</string>
 
     <!-- TODO: All series should probably be checked if they work @ API -->
     <string-array name="magicsets">
@@ -221,9 +225,6 @@
         <item>Worldwake</item>
         <item>Zendikar</item>
     </string-array>
-    <string name="no_search_terms">No search terms selected</string>
-    <string name="no_result">No results</string>
-    <string name="price">Price:</string>
 
     <!--
         <string-array name="sets_and_codes">

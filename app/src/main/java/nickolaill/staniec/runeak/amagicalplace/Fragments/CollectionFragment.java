@@ -48,9 +48,7 @@ public class CollectionFragment extends Fragment {
         buttonAddCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO: Get rid of the below, and instead call mListener.onCollectionFragmentInteraction("hest");
-                // TODO: This call should be handled in the parent activity (CollectionActivity)
-                mListener.onCollectionFragmentAddInteraction("hest");
+                mListener.onCollectionFragmentAddInteraction();
             }
         });
 
@@ -109,7 +107,7 @@ public class CollectionFragment extends Fragment {
 
     public interface CollectionFragmentListener {
         // TODO: Should take some meaningful parameter back to CollectionActivity.
-        void onCollectionFragmentAddInteraction(String todoTestStr);
+        void onCollectionFragmentAddInteraction();
         void onCollectionFragmentDetailInteraction(Card card);
     }
 }
