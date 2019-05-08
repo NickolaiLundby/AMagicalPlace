@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/overview_dialog_id"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <!--> Overview dialog top: Edit Collection / Add Collection <-->
+    <TableRow>
+        <TextView
+            android:id="@+id/overview_dialog_tv_top"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Top Placeholder"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
+    </TableRow>
+
+    <!--> Overview dialog title <-->
+    <TableRow>
+
+        <TextView
+            android:id="@+id/overview_dialog_tv_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/overview_dialog_tv_title" />
+
+        <EditText
+            android:id="@+id/overview_dialog_et_title"
+            android:layout_width="280dp"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:hint="@string/overview_dialog_et_title_hint"
+            android:autofillHints="@string/overview_dialog_et_title_hint"/>
+    </TableRow>
+
+    <!--> Overview dialog description <-->
+    <TableRow>
+        <TextView
+            android:id="@+id/overview_dialog_tv_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/overview_dialog_tv_description"/>
+
+        <EditText
+            android:id="@+id/overview_dialog_et_description"
+            android:layout_width="280dp"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:hint="@string/overview_dialog_et_description_hint"
+            android:autofillHints="@string/overview_dialog_et_description_hint"/>
+    </TableRow>
+</TableLayout>

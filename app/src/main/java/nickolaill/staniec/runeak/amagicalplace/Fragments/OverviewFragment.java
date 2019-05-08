@@ -8,17 +8,16 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
-import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,6 +32,7 @@ import nickolaill.staniec.runeak.amagicalplace.ViewModels.OverviewViewModel;
 
 
 public class OverviewFragment extends Fragment {
+    private OverviewFragmentListener mListener;
     private OverviewViewModel viewModel;
 
     public static OverviewFragment newInstance(){
@@ -48,6 +48,14 @@ public class OverviewFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_overview, container, false);
         final CollectionAdapter adapter = new CollectionAdapter();
+
+        FloatingActionButton buttonAddCard = v.findViewById(R.id.button_add_collection);
+        buttonAddCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                OverviewDialogBuilder(null);
+            }
+        });
 
         RecyclerView recyclerView = v.findViewById(R.id.overview_recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -86,35 +94,65 @@ public class OverviewFragment extends Fragment {
 
             @Override
             public void onButtonItemClick(Collection collection) {
-                EditCollectionDialogBuilder(collection);
+                OverviewDialogBuilder(collection);
             }
         });
 
         return v;
     }
 
-    // TODO: Rewrite this method to use a LayoutInflater
-    // TODO: Design the dialogbox in .xml and use that to inflate the layout
-    private void EditCollectionDialogBuilder(final Collection collection){
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof OverviewFragmentListener) {
+            mListener = (OverviewFragmentListener) context;
+        } else {
+            throw new RuntimeException(context.toString()
+                    + "has to implement the OverviewFragmentListener interface");
+        }
+    }
+
+    // TODO: Rewrite this be a fragment, so that is may persist on screen orientation
+    private void OverviewDialogBuilder(final Collection collection){
         LayoutInflater mLayout = LayoutInflater.from(getContext());
-        final View dialogView = mLayout.inflate(R.layout.edit_collection_dialog, null);
+        final View dialogView = mLayout.inflate(R.layout.overview_dialog, null);
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         builder.setView(dialogView);
 
-        //Edit collection dialog set/get title
-        final EditText editTitle = dialogView.findViewById(R.id.editText_editCollectionDialogTitle);
-        editTitle.setText(collection.getTitle());
+        // Find objects
+        final TextView tvTop = dialogView.findViewById(R.id.overview_dialog_tv_top);
+        final EditText collectionTitle = dialogView.findViewById(R.id.overview_dialog_et_title);
+        final EditText collectionDescription = dialogView.findViewById(R.id.overview_dialog_et_description);
 
-        //Edit collection dialog set/get description
-        final EditText editDescription = dialogView.findViewById(R.id.editText_editCollectionDialogDescription);
-        editDescription.setText(collection.getDescription());
+        // Set objects
+        if(collection == null) {
+            // Means we're adding a collection
+            tvTop.setText(getResources().getText(R.string.add_collection));
+        } else {
+            // Means we're editing a collection
+            tvTop.setText(getResources().getText(R.string.edit_collection));
+            collectionTitle.setText(collection.getTitle());
+            collectionDescription.setText(collection.getDescription());
+        }
 
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                Collection col = new Collection(editTitle.getText().toString(), editDescription.getText().toString());
-                col.setCoId(collection.getCoId());
-                viewModel.update(col);
+                if(collection == null) {
+                    // Means we're adding a collection
+                    if(collectionTitle.getText().toString().isEmpty() ||
+                            collectionDescription.getText().toString().isEmpty()){
+                        Toast.makeText(getActivity(), "Fill in both title and description!", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    Collection collection = new Collection(collectionTitle.getText().toString(), collectionDescription.getText().toString());
+                    mListener.onOverviewFragmentAddCollectionOk(collection);
+                } else {
+                    // Means we're editing a collection
+                    Collection col = new Collection(collectionTitle.getText().toString(), collectionDescription.getText().toString());
+                    col.setCoId(collection.getCoId());
+                    mListener.onOverviewFragmentEditCollectionOk(col);
+                }
             }
         });
 
@@ -126,5 +164,10 @@ public class OverviewFragment extends Fragment {
         });
 
         builder.show();
+    }
+
+    public interface OverviewFragmentListener {
+        void onOverviewFragmentEditCollectionOk(Collection collection);
+        void onOverviewFragmentAddCollectionOk(Collection collection);
     }
 }
