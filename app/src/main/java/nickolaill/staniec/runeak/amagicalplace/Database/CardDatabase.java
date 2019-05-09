@@ -55,18 +55,17 @@ public abstract class CardDatabase extends RoomDatabase {
             magicDao.insertCollection(collection1);
 
             Collection collection2 = new Collection("Lightning", "It's not as shocking.");
-            collection2.setCoId(321);
             magicDao.insertCollection(collection2);
 
-            /*
+
             io.magicthegathering.javasdk.resource.Card testCard = CardAPI.getCard(1);
-            Log.d("API", testCard.getName());
 
-            Card card0 = new Card(testCard, collection1.getCoId(), 1);
+            Card card0 = new Card(testCard);
             card0.setCollectionId(collection1.getCoId());
+            card0.setQuantity(1);
             magicDao.insertCard(card0);
-            */
 
+            /*
             Card card1 = new Card("Lightning Bolt", "Alpha", "Lightning Bolt does 3 damage to one target.");
             card1.setCollectionId(collection1.getCoId());
             magicDao.insertCard(card1);
@@ -78,6 +77,7 @@ public abstract class CardDatabase extends RoomDatabase {
             Card card3 = new Card("Lightning Bolt", "Magic 2011", "Lightning Bolt deals 3 damage to target creature or player.");
             card3.setCollectionId(collection2.getCoId());
             magicDao.insertCard(card3);
+            */
 
             return null;
         }

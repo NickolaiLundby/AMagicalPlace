@@ -197,8 +197,6 @@ public class AddCardFragment extends Fragment{
         @Override
         protected Boolean doInBackground(ArrayList<String>... arrayLists) {
 
-            Log.d("Internet", ""+isOnline());
-
             if(isOnline()){
                 try {
                     apiResults = CardAPI.getAllCards(arrayLists[0]);

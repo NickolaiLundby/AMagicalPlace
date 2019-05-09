@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "5b52fd6794cb05c98c5f632d8527db46",
+    "identityHash": "190f4e8ead23247ed0cd680d269cde26",
     "entities": [
       {
         "tableName": "card_table",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`caId` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `quantity` INTEGER NOT NULL, `collectionId` INTEGER NOT NULL, `multiverseId` INTEGER NOT NULL, `title` TEXT, `series` TEXT, `text` TEXT, `price` REAL NOT NULL, `types` TEXT, `type` TEXT, `rarity` TEXT, `toughness` TEXT, `power` TEXT, `manaCoast` TEXT, `imageUrl` TEXT, `colors` TEXT, `colorIdentity` TEXT, FOREIGN KEY(`collectionId`) REFERENCES `collection_table`(`coId`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`caId` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `quantity` INTEGER NOT NULL, `collectionId` INTEGER NOT NULL, `multiverseId` INTEGER NOT NULL, `title` TEXT, `series` TEXT, `text` TEXT, `types` TEXT, `type` TEXT, `rarity` TEXT, `toughness` TEXT, `power` TEXT, `manaCoast` TEXT, `imageUrl` TEXT, `colors` TEXT, `colorIdentity` TEXT, FOREIGN KEY(`collectionId`) REFERENCES `collection_table`(`coId`) ON UPDATE NO ACTION ON DELETE CASCADE )",
         "fields": [
           {
             "fieldPath": "caId",
@@ -49,12 +49,6 @@
             "columnName": "text",
             "affinity": "TEXT",
             "notNull": false
-          },
-          {
-            "fieldPath": "price",
-            "columnName": "price",
-            "affinity": "REAL",
-            "notNull": true
           },
           {
             "fieldPath": "types",
@@ -185,7 +179,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"5b52fd6794cb05c98c5f632d8527db46\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"190f4e8ead23247ed0cd680d269cde26\")"
     ]
   }
 }
