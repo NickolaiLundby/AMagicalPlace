@@ -24,6 +24,10 @@ public class CardRepository {
         new InsertCardAsyncTask(magicDao).execute(card);
     }
 
+    public void insertCardFromApi(Card card){
+        new InsertCardFromApiAsyncTask(magicDao).execute(card);
+    }
+
     public void update(Card card){
         new UpdateCardAsyncTask(magicDao).execute(card);
     }
@@ -92,6 +96,26 @@ public class CardRepository {
         @Override
         protected Void doInBackground(Void... voids) {
             magicDao.deleteAllCards();
+            return null;
+        }
+    }
+
+    private class InsertCardFromApiAsyncTask extends AsyncTask<Card, Void, Void> {
+        private MagicDao magicDao;
+
+        private InsertCardFromApiAsyncTask(MagicDao magicDao) {
+            this.magicDao = magicDao;
+        }
+
+        @Override
+        protected Void doInBackground(Card... cards) {
+            Card existingCard = magicDao.getCardByCollectionAndMultiverseId(cards[0].getCollectionId(), cards[0].getMultiverseId());
+            if(existingCard == null){
+                insert(cards[0]);
+            } else {
+                existingCard.setQuantity(existingCard.getQuantity()+1);
+                update(existingCard);
+            }
             return null;
         }
     }
