@@ -53,7 +53,7 @@ public class CollectionActivity extends AppCompatActivity implements AddCardFrag
         if (savedInstanceState == null) {
             CollectionFragment collectionFragment = CollectionFragment.newInstance(getIntent().getIntExtra(Constants.COLLECTION_ID, -1));
             getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.wide_collection_fragment_container, collectionFragment)
+                    .replace(R.id.collection_container, collectionFragment)
                     .commit();
             AddCardFragment addCardFragment = AddCardFragment.newInstance(getIntent().getIntExtra(Constants.COLLECTION_ID, -1));
             getSupportFragmentManager().beginTransaction()
