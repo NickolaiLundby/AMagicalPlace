@@ -111,10 +111,10 @@ public class CardRepository {
         protected Void doInBackground(Card... cards) {
             Card existingCard = magicDao.getCardByCollectionAndMultiverseId(cards[0].getCollectionId(), cards[0].getMultiverseId());
             if(existingCard == null){
-                insert(cards[0]);
+                magicDao.insertCard(cards[0]);
             } else {
                 existingCard.setQuantity(existingCard.getQuantity()+1);
-                update(existingCard);
+                magicDao.updateCard(existingCard);
             }
             return null;
         }
