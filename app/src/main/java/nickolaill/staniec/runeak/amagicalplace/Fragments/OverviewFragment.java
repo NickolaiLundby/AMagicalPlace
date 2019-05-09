@@ -4,7 +4,6 @@ import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -23,11 +22,9 @@ import android.widget.Toast;
 
 import java.util.List;
 
-import nickolaill.staniec.runeak.amagicalplace.Activities.CollectionActivity;
 import nickolaill.staniec.runeak.amagicalplace.Adapters.CollectionAdapter;
 import nickolaill.staniec.runeak.amagicalplace.Models.Collection;
 import nickolaill.staniec.runeak.amagicalplace.R;
-import nickolaill.staniec.runeak.amagicalplace.Utilities.Constants;
 import nickolaill.staniec.runeak.amagicalplace.ViewModels.OverviewViewModel;
 
 
@@ -86,10 +83,7 @@ public class OverviewFragment extends Fragment {
         adapter.setOnItemClickListener(new CollectionAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(Collection collection) {
-                Intent intent = new Intent(getActivity(), CollectionActivity.class);
-                intent.putExtra(Constants.COLLECTION_ID, collection.getCoId());
-
-                startActivity(intent);
+                mListener.onOverviewFragmentClickCollection(collection.getCoId());
             }
 
             @Override
@@ -115,7 +109,7 @@ public class OverviewFragment extends Fragment {
     // TODO: Rewrite this be a fragment, so that is may persist on screen orientation
     private void OverviewDialogBuilder(final Collection collection){
         LayoutInflater mLayout = LayoutInflater.from(getContext());
-        final View dialogView = mLayout.inflate(R.layout.overview_dialog, null);
+        final View dialogView = mLayout.inflate(R.layout.dialog_overview, null);
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         builder.setView(dialogView);
 
@@ -169,5 +163,6 @@ public class OverviewFragment extends Fragment {
     public interface OverviewFragmentListener {
         void onOverviewFragmentEditCollectionOk(Collection collection);
         void onOverviewFragmentAddCollectionOk(Collection collection);
+        void onOverviewFragmentClickCollection(int id);
     }
 }

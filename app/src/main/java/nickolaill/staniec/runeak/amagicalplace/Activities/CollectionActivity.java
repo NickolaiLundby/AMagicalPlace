@@ -23,7 +23,7 @@ public class CollectionActivity extends AppCompatActivity implements AddCardFrag
         setContentView(R.layout.activity_collection);
         viewModel = ViewModelProviders.of(this, new CollectionViewModelFactory(getApplication(), getIntent().getIntExtra(Constants.COLLECTION_ID, -1))).get(CollectionViewModel.class);
 
-        if(findViewById(R.id.wide_collection_container)  != null){
+        if(findViewById(R.id.wide_collection_container) != null){
             mTwoPane = true;
         } else {
             mTwoPane = false;
@@ -38,9 +38,9 @@ public class CollectionActivity extends AppCompatActivity implements AddCardFrag
 
     private void singlePaneCreation(Bundle savedInstanceState){
         if (savedInstanceState == null) {
-            CollectionFragment fragment = CollectionFragment.newInstance(getIntent().getIntExtra(Constants.COLLECTION_ID, -1));
+            CollectionFragment collectionFragment = CollectionFragment.newInstance(getIntent().getIntExtra(Constants.COLLECTION_ID, -1), false);
             getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.collection_container, fragment)
+                    .replace(R.id.collection_container, collectionFragment, Constants.TAG_FRAGMENT_COLLECTION)
                     .commit();
         }
         else {
@@ -51,13 +51,13 @@ public class CollectionActivity extends AppCompatActivity implements AddCardFrag
 
     private void twoPaneCreation(Bundle savedInstanceState) {
         if (savedInstanceState == null) {
-            CollectionFragment collectionFragment = CollectionFragment.newInstance(getIntent().getIntExtra(Constants.COLLECTION_ID, -1));
+            CollectionFragment collectionFragment = CollectionFragment.newInstance(getIntent().getIntExtra(Constants.COLLECTION_ID, -1), false);
             getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.wide_collection_fragment_container, collectionFragment)
+                    .replace(R.id.collection_container, collectionFragment, Constants.TAG_FRAGMENT_COLLECTION)
                     .commit();
             AddCardFragment addCardFragment = AddCardFragment.newInstance(getIntent().getIntExtra(Constants.COLLECTION_ID, -1));
             getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.wide_card_fragment_container, addCardFragment)
+                    .replace(R.id.wide_card_fragment_container, addCardFragment, Constants.TAG_FRAGMENT_ADDCARD)
                     .commit();
         }
         else {
@@ -76,9 +76,9 @@ public class CollectionActivity extends AppCompatActivity implements AddCardFrag
             // In twoPane we should always be showing the collection on the left side.
         }
         else {
-            CollectionFragment collectionFragment = CollectionFragment.newInstance(getIntent().getIntExtra(Constants.COLLECTION_ID, -1));
+            CollectionFragment collectionFragment = CollectionFragment.newInstance(getIntent().getIntExtra(Constants.COLLECTION_ID, -1), false);
             getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.collection_container, collectionFragment)
+                    .replace(R.id.collection_container, collectionFragment, Constants.TAG_FRAGMENT_COLLECTION)
                     .commit();
         }
 
@@ -93,9 +93,9 @@ public class CollectionActivity extends AppCompatActivity implements AddCardFrag
             // In twoPane we should always be showing the collection on the left side.
         }
         else {
-            CollectionFragment fragment = CollectionFragment.newInstance(getIntent().getIntExtra(Constants.COLLECTION_ID, -1));
+            CollectionFragment collectionFragment = CollectionFragment.newInstance(getIntent().getIntExtra(Constants.COLLECTION_ID, -1), false);
             getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.collection_container, fragment)
+                    .replace(R.id.collection_container, collectionFragment, Constants.TAG_FRAGMENT_COLLECTION)
                     .commit();
         }
     }
@@ -106,15 +106,15 @@ public class CollectionActivity extends AppCompatActivity implements AddCardFrag
 
         // TODO: Etc, fire up the add fragment.
         if (mTwoPane) {
-            AddCardFragment fragment = AddCardFragment.newInstance(getIntent().getIntExtra(Constants.COLLECTION_ID, -1));
+            AddCardFragment addCardFragment = AddCardFragment.newInstance(getIntent().getIntExtra(Constants.COLLECTION_ID, -1));
             getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.wide_card_fragment_container, fragment)
+                    .replace(R.id.wide_card_fragment_container, addCardFragment, Constants.TAG_FRAGMENT_ADDCARD)
                     .commit();
         }
         else {
-            AddCardFragment fragment = AddCardFragment.newInstance(getIntent().getIntExtra(Constants.COLLECTION_ID, -1));
+            AddCardFragment addCardFragment = AddCardFragment.newInstance(getIntent().getIntExtra(Constants.COLLECTION_ID, -1));
             getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.collection_container, fragment)
+                    .replace(R.id.collection_container, addCardFragment, Constants.TAG_FRAGMENT_ADDCARD)
                     .commit();
         }
     }
@@ -125,16 +125,16 @@ public class CollectionActivity extends AppCompatActivity implements AddCardFrag
 
         // TODO: Get rid of the below, and fire up the DetailCardFragment instead.
         if (mTwoPane) {
-            CardDetailFragment fragment = CardDetailFragment.newInstance(card);
+            CardDetailFragment cardDetailFragment = CardDetailFragment.newInstance(card);
             getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.wide_card_fragment_container, fragment)
+                    .replace(R.id.wide_card_fragment_container, cardDetailFragment, Constants.TAG_FRAGMENT_CARDDETAIL)
                     .commit();
         }
         else {
             //Toast.makeText(this, "DetailCardFragment needs implementation in singlePaneView", Toast.LENGTH_SHORT).show();
-            CardDetailFragment fragment = CardDetailFragment.newInstance(card);
+            CardDetailFragment cardDetailFragment = CardDetailFragment.newInstance(card);
             getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.collection_container, fragment)
+                    .replace(R.id.collection_container, cardDetailFragment, Constants.TAG_FRAGMENT_CARDDETAIL)
                     .commit();
         }
 
@@ -149,9 +149,9 @@ public class CollectionActivity extends AppCompatActivity implements AddCardFrag
             // In twoPane we should always be showing the collection on the left side.
         }
         else {
-            CollectionFragment fragment = CollectionFragment.newInstance(getIntent().getIntExtra(Constants.COLLECTION_ID, -1));
+            CollectionFragment collectionFragment = CollectionFragment.newInstance(getIntent().getIntExtra(Constants.COLLECTION_ID, -1), false);
             getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.collection_container, fragment)
+                    .replace(R.id.collection_container, collectionFragment, Constants.TAG_FRAGMENT_COLLECTION)
                     .commit();
         }
     }

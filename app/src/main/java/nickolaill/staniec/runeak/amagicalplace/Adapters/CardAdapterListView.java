@@ -1,7 +1,6 @@
 package nickolaill.staniec.runeak.amagicalplace.Adapters;
 
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v7.recyclerview.extensions.ListAdapter;
 import android.support.v7.util.DiffUtil;
 import android.support.v7.widget.RecyclerView;
@@ -10,16 +9,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-
-import java.util.List;
-
 import nickolaill.staniec.runeak.amagicalplace.Models.Card;
 import nickolaill.staniec.runeak.amagicalplace.R;
 
-public class CardAdapter extends ListAdapter<Card, CardAdapter.CardHolder> {
+public class CardAdapterListView extends ListAdapter<Card, CardAdapterListView.CardHolder> {
     private OnItemClickListener listener;
 
-    public CardAdapter(){
+    public CardAdapterListView(){
         super(DIFF_CALLBACK);
     }
 
@@ -39,7 +35,7 @@ public class CardAdapter extends ListAdapter<Card, CardAdapter.CardHolder> {
 
     public CardHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View itemView = LayoutInflater.from(viewGroup.getContext())
-                .inflate(R.layout.card_item, viewGroup, false);
+                .inflate(R.layout.item_card_list, viewGroup, false);
         return new CardHolder(itemView);
     }
 

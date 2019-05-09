@@ -1,13 +1,11 @@
 package nickolaill.staniec.runeak.amagicalplace.Utilities;
 
 public class Constants {
-    public static final int ADD_CARD_REQUEST = 1221;
-    public static final int EDIT_CARD_REQUEST = 1222;
 
     public static final String COLLECTION_ID = "nickolaill.staniec.runeak.amagicalplace.COLLECTION_ID";
 
-    public static final String EDIT_EXTRA_TITLE = "nickolaill.staniec.runeak.amagicalplace.EDIT_EXTRA_TITLE";
-    public static final String EDIT_EXTRA_SERIES = "nickolaill.staniec.runeak.amagicalplace.EDIT_EXTRA_SERIES";
-    public static final String EDIT_EXTRA_TEXT = "nickolaill.staniec.runeak.amagicalplace.EDIT_EXTRA_TEXT";
-    public static final String EDIT_EXTRA_ID = "nickolaill.staniec.runeak.amagicalplace.EDIT_EXTRA_ID";
+    // FRAGMENT TAGS
+    public static final String TAG_FRAGMENT_COLLECTION = "nickolaill.staniec.runeak.amagicalplace.COLLECTION_FRAGMENT_TAG";
+    public static final String TAG_FRAGMENT_ADDCARD = "nickolaill.staniec.runeak.amagicalplace.ADDCARD_FRAGMENT_TAG";
+    public static final String TAG_FRAGMENT_CARDDETAIL = "nickolaill.staniec.runeak.amagicalplace.CARDDETAIL_FRAGMENT_TAG";
 }
