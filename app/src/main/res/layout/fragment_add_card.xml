@@ -103,7 +103,7 @@
         android:layout_below="@id/add_card_spinner_series"
         android:layout_above="@id/add_card_button_add"
         android:layout_margin="4dp"
-        tools:listitem="@layout/card_item"
+        tools:listitem="@layout/item_card_list"
         />
 
 </RelativeLayout>

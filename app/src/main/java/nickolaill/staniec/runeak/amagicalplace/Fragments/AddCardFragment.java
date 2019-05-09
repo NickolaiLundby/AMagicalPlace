@@ -24,7 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.magicthegathering.javasdk.api.CardAPI;
-import nickolaill.staniec.runeak.amagicalplace.Adapters.CardAdapter;
+import nickolaill.staniec.runeak.amagicalplace.Adapters.CardAdapterListView;
 import nickolaill.staniec.runeak.amagicalplace.Models.Card;
 import nickolaill.staniec.runeak.amagicalplace.R;
 import nickolaill.staniec.runeak.amagicalplace.ViewModels.AddCardViewModel;
@@ -54,7 +54,7 @@ public class AddCardFragment extends Fragment{
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View v = inflater.inflate(R.layout.fragment_add_card, container, false);
 
-        final CardAdapter adapter = new CardAdapter();
+        final CardAdapterListView adapter = new CardAdapterListView();
         RecyclerView recyclerView = v.findViewById(R.id.add_card_recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setHasFixedSize(true);
@@ -68,7 +68,7 @@ public class AddCardFragment extends Fragment{
             }
         });
 
-        adapter.setOnItemClickListener(new CardAdapter.OnItemClickListener() {
+        adapter.setOnItemClickListener(new CardAdapterListView.OnItemClickListener() {
             @Override
             public void onItemClick(Card card) {
                 card.setCollectionId(collectionId);

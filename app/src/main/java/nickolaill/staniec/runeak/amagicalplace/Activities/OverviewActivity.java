@@ -1,12 +1,14 @@
 package nickolaill.staniec.runeak.amagicalplace.Activities;
 
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import nickolaill.staniec.runeak.amagicalplace.Fragments.OverviewFragment;
 import nickolaill.staniec.runeak.amagicalplace.Models.Collection;
 import nickolaill.staniec.runeak.amagicalplace.R;
+import nickolaill.staniec.runeak.amagicalplace.Utilities.Constants;
 import nickolaill.staniec.runeak.amagicalplace.ViewModels.OverviewViewModel;
 
 public class OverviewActivity extends AppCompatActivity implements OverviewFragment.OverviewFragmentListener {
@@ -39,5 +41,13 @@ public class OverviewActivity extends AppCompatActivity implements OverviewFragm
     @Override
     public void onOverviewFragmentAddCollectionOk(Collection collection) {
         viewModel.insert(collection);
+    }
+
+    @Override
+    public void onOverviewFragmentClickCollection(int id) {
+        Intent intent = new Intent(this, CollectionActivity.class);
+        intent.putExtra(Constants.COLLECTION_ID, id);
+
+        startActivity(intent);
     }
 }
