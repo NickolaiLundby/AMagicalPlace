@@ -44,10 +44,17 @@ public class OverviewActivity extends AppCompatActivity implements OverviewFragm
     }
 
     @Override
+    public void onOverviewFragmentDeleteCollectionOk(Collection collection) {
+        viewModel.delete(collection);
+    }
+
+    @Override
     public void onOverviewFragmentClickCollection(int id) {
         Intent intent = new Intent(this, CollectionActivity.class);
         intent.putExtra(Constants.COLLECTION_ID, id);
 
         startActivity(intent);
     }
+
+
 }
