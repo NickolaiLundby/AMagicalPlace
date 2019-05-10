@@ -27,7 +27,6 @@ public class Card implements Parcelable {
     private String title;
     private String series;
     private String text;
-    private double price;
     private String types;
     private String type;
     private String rarity;
@@ -38,12 +37,7 @@ public class Card implements Parcelable {
     private String colors;
     private String colorIdentity;
 
-    // Should be deleted
-    public Card(String title, String series, String text){
-        this.title = title;
-        this.series = series;
-        this.text = text;
-    }
+    public Card(){}
 
     public Card(io.magicthegathering.javasdk.resource.Card card){
         this.multiverseId = card.getMultiverseid();
@@ -59,9 +53,6 @@ public class Card implements Parcelable {
         this.rarity = card.getRarity();
         this.type = card.getType();
         this.types = TextUtils.join(",",card.getTypes());
-        if(card.getOnlinePriceMid() != null){
-            this.price = card.getOnlinePriceMid().doubleValue();
-        }
     }
 
     public void setTitle(String title) {
@@ -118,14 +109,6 @@ public class Card implements Parcelable {
 
     public void setMultiverseId(int multiverseId) {
         this.multiverseId = multiverseId;
-    }
-
-    public double getPrice() {
-        return price;
-    }
-
-    public void setPrice(double price) {
-        this.price = price;
     }
 
     public String getTypes() {
@@ -214,7 +197,6 @@ public class Card implements Parcelable {
         dest.writeString(this.title);
         dest.writeString(this.series);
         dest.writeString(this.text);
-        dest.writeDouble(this.price);
         dest.writeString(this.types);
         dest.writeString(this.type);
         dest.writeString(this.rarity);
@@ -234,7 +216,6 @@ public class Card implements Parcelable {
         this.title = in.readString();
         this.series = in.readString();
         this.text = in.readString();
-        this.price = in.readDouble();
         this.types = in.readString();
         this.type = in.readString();
         this.rarity = in.readString();

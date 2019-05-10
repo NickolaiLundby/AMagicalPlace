@@ -20,6 +20,10 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import java.io.IOException;
+import java.net.InetSocketAddress;
+import java.net.Socket;
+import java.net.SocketAddress;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -172,6 +176,7 @@ public class AddCardFragment extends Fragment{
                 }
                 viewModel.setAllCards(cardsRrsults);
             } else {
+                //TODO: better way of showing there is no result
                 Toast.makeText(getActivity(), R.string.no_result, Toast.LENGTH_SHORT).show();
             }
         } else {
@@ -180,26 +185,53 @@ public class AddCardFragment extends Fragment{
 
     }
 
-    private class APIAsyncTask extends AsyncTask< ArrayList<String>, Void, Void>{
+    private void onNoInternetConnection(){
+        //TODO: better way of showing if connected
+        Toast.makeText(getActivity(), R.string.no_internet_connection, Toast.LENGTH_SHORT).show();
+    }
+
+    private class APIAsyncTask extends AsyncTask< ArrayList<String>, Void, Boolean>{
 
         private List<io.magicthegathering.javasdk.resource.Card> apiResults;
 
         @Override
-        protected Void doInBackground(ArrayList<String>... arrayLists) {
-            try {
-                apiResults = CardAPI.getAllCards(arrayLists[0]);
-            } catch (Exception e) {
-                Log.e("Error", e.getMessage());
-                e.printStackTrace();
-            }
+        protected Boolean doInBackground(ArrayList<String>... arrayLists) {
 
-            return null;
+            if(isOnline()){
+                try {
+                    apiResults = CardAPI.getAllCards(arrayLists[0]);
+                } catch (Exception e) {
+                    Log.e("Error", e.getMessage());
+                    e.printStackTrace();
+                }
+                return true;
+            } else {
+                return false;
+            }
         }
 
         @Override
-        protected void onPostExecute(Void aVoid) {
-            super.onPostExecute(aVoid);
-            onApiResult(apiResults);
+        protected void onPostExecute(Boolean isOnline) {
+            super.onPostExecute(isOnline);
+            if(isOnline)
+                onApiResult(apiResults);
+            else
+                onNoInternetConnection();
         }
+    }
+
+
+    //https://stackoverflow.com/a/27312494
+    private boolean isOnline() {
+        try {
+            int timeoutMs = 1500;
+            Socket sock = new Socket();
+            SocketAddress sockaddr = new InetSocketAddress("8.8.8.8", 53);
+
+            sock.connect(sockaddr, timeoutMs);
+            sock.close();
+
+            return true;
+        } catch (IOException e) { return false; }
     }
 }

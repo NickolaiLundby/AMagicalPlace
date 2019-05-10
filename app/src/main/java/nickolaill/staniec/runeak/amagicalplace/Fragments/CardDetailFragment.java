@@ -53,7 +53,7 @@ public class CardDetailFragment extends Fragment {
         txtTextCard.setText(card.getText());
 
         txtPriceValue = v.findViewById(R.id.txtPriceValue);
-        txtPriceValue.setText(""+card.getPrice());
+        txtPriceValue.setText("");
 
         btnReturn = v.findViewById(R.id.btnReturn);
         btnReturn.setOnClickListener(new View.OnClickListener() {
