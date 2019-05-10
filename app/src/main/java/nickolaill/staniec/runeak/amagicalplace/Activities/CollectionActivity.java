@@ -126,14 +126,14 @@ public class CollectionActivity extends AppCompatActivity implements AddCardFrag
 
         // TODO: Get rid of the below, and fire up the DetailCardFragment instead.
         if (mTwoPane) {
-            CardDetailFragment fragment = CardDetailFragment.newInstance(card);
+            CardDetailFragment fragment = CardDetailFragment.newInstance(card, true);
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.wide_card_fragment_container, fragment)
                     .commit();
         }
         else {
             //Toast.makeText(this, "DetailCardFragment needs implementation in singlePaneView", Toast.LENGTH_SHORT).show();
-            CardDetailFragment fragment = CardDetailFragment.newInstance(card);
+            CardDetailFragment fragment = CardDetailFragment.newInstance(card, false);
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.collection_container, fragment)
                     .commit();
