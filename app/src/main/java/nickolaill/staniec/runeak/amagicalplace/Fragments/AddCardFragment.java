@@ -80,6 +80,18 @@ public class AddCardFragment extends Fragment{
                 cardToBeAdded = card;
                 Toast.makeText(getActivity(), "Card selected: " + cardToBeAdded.getTitle(), Toast.LENGTH_SHORT).show();
             }
+
+            @Override
+            public void onIncreaseItemClick(Card card) {
+                // Since quantity should always be 0, the visibility is in the adapter set to gone
+                // and this button will never show in this fragment. Hence empty implementation
+            }
+
+            @Override
+            public void onDecreaseItemClick(Card card) {
+                // Since quantity should always be 0, the visibility is in the adapter set to gone
+                // and this button will never show in this fragment. Hence empty implementation
+            }
         });
 
         cardTitle = v.findViewById(R.id.add_card_et_cardtitle);

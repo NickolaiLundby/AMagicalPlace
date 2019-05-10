@@ -7,6 +7,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import nickolaill.staniec.runeak.amagicalplace.Models.Card;
@@ -42,9 +44,16 @@ public class CardAdapterListView extends ListAdapter<Card, CardAdapterListView.C
     @Override
     public void onBindViewHolder(@NonNull CardHolder cardHolder, int i) {
         Card card = getItem(i);
-        cardHolder.textViewTitle.setText(card.getTitle());
+        cardHolder.textViewCardName.setText(card.getTitle());
         cardHolder.textViewSeries.setText(card.getSeries());
-        cardHolder.textViewText.setText(card.getText());
+        cardHolder.textViewCardType.setText(card.getType());
+        if(card.getQuantity() != 0) {
+            cardHolder.textViewQuantity.setText(String.valueOf(card.getQuantity()));
+        }
+        else{
+            cardHolder.buttonIncreaseQuantity.setVisibility(View.GONE);
+            cardHolder.buttonDecreaseQuantity.setVisibility(View.GONE);
+        }
     }
 
     public Card getCardAt(int position){
@@ -52,13 +61,15 @@ public class CardAdapterListView extends ListAdapter<Card, CardAdapterListView.C
     }
 
     class CardHolder extends RecyclerView.ViewHolder {
-        private TextView textViewTitle, textViewSeries, textViewText;
+        private TextView textViewCardName, textViewSeries, textViewCardType, textViewQuantity;
+        private ImageButton buttonIncreaseQuantity, buttonDecreaseQuantity;
 
         public CardHolder(@NonNull View itemView) {
             super(itemView);
-            textViewTitle = itemView.findViewById(R.id.text_view_title);
+            textViewCardName = itemView.findViewById(R.id.text_view_card_name);
             textViewSeries = itemView.findViewById(R.id.text_view_series);
-            textViewText = itemView.findViewById(R.id.text_view_text);
+            textViewCardType = itemView.findViewById(R.id.text_view_card_type);
+            textViewQuantity = itemView.findViewById(R.id.text_view_quantity);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -68,11 +79,32 @@ public class CardAdapterListView extends ListAdapter<Card, CardAdapterListView.C
                     }
                 }
             });
+
+            buttonIncreaseQuantity = itemView.findViewById(R.id.button_increase_quantity);
+            buttonDecreaseQuantity = itemView.findViewById(R.id.button_decrease_quantity);
+            buttonIncreaseQuantity.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (listener != null && getAdapterPosition() != RecyclerView.NO_POSITION) {
+                        listener.onIncreaseItemClick(getItem(getAdapterPosition()));
+                    }
+                }
+            });
+            buttonDecreaseQuantity.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (listener != null && getAdapterPosition() != RecyclerView.NO_POSITION) {
+                        listener.onDecreaseItemClick(getItem(getAdapterPosition()));
+                    }
+                }
+            });
         }
     }
 
     public interface OnItemClickListener {
         void onItemClick(Card card);
+        void onIncreaseItemClick(Card card);
+        void onDecreaseItemClick(Card card);
     }
 
     public void setOnItemClickListener(OnItemClickListener listener) {
