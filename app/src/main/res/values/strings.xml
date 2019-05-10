@@ -225,7 +225,11 @@
         <item>Worldwake</item>
         <item>Zendikar</item>
     </string-array>
+
+    <string name="no_search_terms">No search terms selected</string>
+    <string name="no_result">No results</string>
     <string name="no_internet_connection">No internet connection</string>
+
 
     <!--
         <string-array name="sets_and_codes">

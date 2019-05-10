@@ -206,7 +206,6 @@ public class AddCardFragment extends Fragment{
 
         private List<io.magicthegathering.javasdk.resource.Card> apiResults;
 
-        @Override
         protected Boolean doInBackground(ArrayList<String>... arrayLists) {
 
             if(isOnline()){
@@ -220,6 +219,7 @@ public class AddCardFragment extends Fragment{
             } else {
                 return false;
             }
+
         }
 
         @Override
