@@ -14,10 +14,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <service
-            android:name=".Services.DataService"
-            android:enabled="true"
-            android:exported="true"></service>
 
         <activity android:name=".Activities.CollectionActivity" />
         <activity

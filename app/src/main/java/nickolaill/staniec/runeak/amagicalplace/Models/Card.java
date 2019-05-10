@@ -4,6 +4,7 @@ import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.ForeignKey;
 import android.arch.persistence.room.Index;
 import android.arch.persistence.room.PrimaryKey;
+import android.net.Uri;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
@@ -36,6 +37,7 @@ public class Card implements Parcelable {
     private String imageUrl;
     private String colors;
     private String colorIdentity;
+    private Uri imageUri;
 
     public Card(){}
 
@@ -181,6 +183,14 @@ public class Card implements Parcelable {
 
     public void setColorIdentity(String colorIdentity) {
         this.colorIdentity = colorIdentity;
+    }
+
+    public Uri getImageUri() {
+        return imageUri;
+    }
+
+    public void setImageUri(Uri imageUri) {
+        this.imageUri = imageUri;
     }
 
     @Override

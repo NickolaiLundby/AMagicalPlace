@@ -232,7 +232,6 @@ public class AddCardFragment extends Fragment{
         }
     }
 
-
     //https://stackoverflow.com/a/27312494
     private boolean isOnline() {
         try {

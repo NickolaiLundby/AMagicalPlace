@@ -28,7 +28,7 @@ public class CardDetailFragment extends Fragment {
     private static final String ARG_CARD = "card";
     private TextView txtTitleCard, txtTextCard, txtPriceValue;
     private Button btnReturn;
-    private WebView imgCard;
+    private ImageView imgCard;
     private Card card;
 
     public static CardDetailFragment newInstance(Card card) {
@@ -64,7 +64,7 @@ public class CardDetailFragment extends Fragment {
         });
 
         imgCard = v.findViewById(R.id.imgCard);
-        imgCard.loadDataWithBaseURL(card.getImageUrl(), "<html><center><img src=\"" + card.getImageUrl()+"\"></html>","text/html","utf-8","");
+        imgCard.setImageURI(card.getImageUri());
 
         return v;
     }
