@@ -20,11 +20,15 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import java.io.IOException;
+import java.net.InetSocketAddress;
+import java.net.Socket;
+import java.net.SocketAddress;
 import java.util.ArrayList;
 import java.util.List;
 
 import io.magicthegathering.javasdk.api.CardAPI;
-import nickolaill.staniec.runeak.amagicalplace.Adapters.CardAdapter;
+import nickolaill.staniec.runeak.amagicalplace.Adapters.CardAdapterListView;
 import nickolaill.staniec.runeak.amagicalplace.Models.Card;
 import nickolaill.staniec.runeak.amagicalplace.R;
 import nickolaill.staniec.runeak.amagicalplace.ViewModels.AddCardViewModel;
@@ -54,7 +58,7 @@ public class AddCardFragment extends Fragment{
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View v = inflater.inflate(R.layout.fragment_add_card, container, false);
 
-        final CardAdapter adapter = new CardAdapter();
+        final CardAdapterListView adapter = new CardAdapterListView();
         RecyclerView recyclerView = v.findViewById(R.id.add_card_recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setHasFixedSize(true);
@@ -68,13 +72,25 @@ public class AddCardFragment extends Fragment{
             }
         });
 
-        adapter.setOnItemClickListener(new CardAdapter.OnItemClickListener() {
+        adapter.setOnItemClickListener(new CardAdapterListView.OnItemClickListener() {
             @Override
             public void onItemClick(Card card) {
                 card.setCollectionId(collectionId);
                 card.setQuantity(1);
                 cardToBeAdded = card;
                 Toast.makeText(getActivity(), "Card selected: " + cardToBeAdded.getTitle(), Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onIncreaseItemClick(Card card) {
+                // Since quantity should always be 0, the visibility is in the adapter set to gone
+                // and this button will never show in this fragment. Hence empty implementation
+            }
+
+            @Override
+            public void onDecreaseItemClick(Card card) {
+                // Since quantity should always be 0, the visibility is in the adapter set to gone
+                // and this button will never show in this fragment. Hence empty implementation
             }
         });
 
@@ -172,6 +188,7 @@ public class AddCardFragment extends Fragment{
                 }
                 viewModel.setAllCards(cardsRrsults);
             } else {
+                //TODO: better way of showing there is no result
                 Toast.makeText(getActivity(), R.string.no_result, Toast.LENGTH_SHORT).show();
             }
         } else {
@@ -180,26 +197,53 @@ public class AddCardFragment extends Fragment{
 
     }
 
-    private class APIAsyncTask extends AsyncTask< ArrayList<String>, Void, Void>{
+    private void onNoInternetConnection(){
+        //TODO: better way of showing if connected
+        Toast.makeText(getActivity(), R.string.no_internet_connection, Toast.LENGTH_SHORT).show();
+    }
+
+    private class APIAsyncTask extends AsyncTask< ArrayList<String>, Void, Boolean>{
 
         private List<io.magicthegathering.javasdk.resource.Card> apiResults;
 
-        @Override
-        protected Void doInBackground(ArrayList<String>... arrayLists) {
-            try {
-                apiResults = CardAPI.getAllCards(arrayLists[0]);
-            } catch (Exception e) {
-                Log.e("Error", e.getMessage());
-                e.printStackTrace();
+        protected Boolean doInBackground(ArrayList<String>... arrayLists) {
+
+            if(isOnline()){
+                try {
+                    apiResults = CardAPI.getAllCards(arrayLists[0]);
+                } catch (Exception e) {
+                    Log.e("Error", e.getMessage());
+                    e.printStackTrace();
+                }
+                return true;
+            } else {
+                return false;
             }
 
-            return null;
         }
 
         @Override
-        protected void onPostExecute(Void aVoid) {
-            super.onPostExecute(aVoid);
-            onApiResult(apiResults);
+        protected void onPostExecute(Boolean isOnline) {
+            super.onPostExecute(isOnline);
+            if(isOnline)
+                onApiResult(apiResults);
+            else
+                onNoInternetConnection();
         }
+    }
+
+
+    //https://stackoverflow.com/a/27312494
+    private boolean isOnline() {
+        try {
+            int timeoutMs = 1500;
+            Socket sock = new Socket();
+            SocketAddress sockaddr = new InetSocketAddress("8.8.8.8", 53);
+
+            sock.connect(sockaddr, timeoutMs);
+            sock.close();
+
+            return true;
+        } catch (IOException e) { return false; }
     }
 }
