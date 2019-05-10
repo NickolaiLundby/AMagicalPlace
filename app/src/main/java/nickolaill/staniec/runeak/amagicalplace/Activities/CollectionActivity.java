@@ -3,6 +3,7 @@ package nickolaill.staniec.runeak.amagicalplace.Activities;
 import android.arch.lifecycle.ViewModelProviders;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import nickolaill.staniec.runeak.amagicalplace.Fragments.AddCardFragment;
 import nickolaill.staniec.runeak.amagicalplace.Fragments.CardDetailFragment;
@@ -138,6 +139,23 @@ public class CollectionActivity extends AppCompatActivity implements AddCardFrag
                     .commit();
         }
 
+    }
+
+    @Override
+    public void onCollectionFragmentIncreaseQuantity(Card card) {
+        card.setQuantity(card.getQuantity() + 1);
+        viewModel.update(card);
+    }
+
+    @Override
+    public void onCollectionFragmentDecreaseQuantity(Card card) {
+        if(card.getQuantity() == 1){
+            viewModel.delete(card);
+        }
+        else{
+            card.setQuantity(card.getQuantity() - 1);
+            viewModel.update(card);
+        }
     }
 
     @Override

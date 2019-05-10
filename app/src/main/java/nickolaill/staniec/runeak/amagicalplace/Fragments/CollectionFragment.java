@@ -117,6 +117,16 @@ public class CollectionFragment extends Fragment {
                 public void onItemClick(Card card) {
                     mListener.onCollectionFragmentDetailInteraction(card);
                 }
+
+                @Override
+                public void onIncreaseItemClick(Card card) {
+                    mListener.onCollectionFragmentIncreaseQuantity(card);
+                }
+
+                @Override
+                public void onDecreaseItemClick(Card card) {
+                    mListener.onCollectionFragmentDecreaseQuantity(card);
+                }
             });
         }
         else if(recyclerView.getAdapter() instanceof CardAdapterGridView){
@@ -146,6 +156,8 @@ public class CollectionFragment extends Fragment {
         // TODO: Should take some meaningful parameter back to CollectionActivity.
         void onCollectionFragmentAddInteraction();
         void onCollectionFragmentDetailInteraction(Card card);
+        void onCollectionFragmentIncreaseQuantity(Card card);
+        void onCollectionFragmentDecreaseQuantity(Card card);
     }
 
     @Override
