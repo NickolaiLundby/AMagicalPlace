@@ -1,5 +1,6 @@
 package nickolaill.staniec.runeak.amagicalplace.Adapters;
 
+import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.recyclerview.extensions.ListAdapter;
 import android.support.v7.util.DiffUtil;
@@ -16,6 +17,7 @@ import nickolaill.staniec.runeak.amagicalplace.R;
 
 public class CardAdapterListView extends ListAdapter<Card, CardAdapterListView.CardHolder> {
     private OnItemClickListener listener;
+    private int selectedPosition = -1;
 
     public CardAdapterListView(){
         super(DIFF_CALLBACK);
@@ -42,11 +44,30 @@ public class CardAdapterListView extends ListAdapter<Card, CardAdapterListView.C
     }
 
     @Override
-    public void onBindViewHolder(@NonNull CardHolder cardHolder, int i) {
+    public void onBindViewHolder(@NonNull final CardHolder cardHolder, final int i) {
         Card card = getItem(i);
         cardHolder.textViewCardName.setText(card.getTitle());
         cardHolder.textViewSeries.setText(card.getSeries());
         cardHolder.textViewCardType.setText(card.getType());
+
+        //Highlights the selected item
+        if(selectedPosition == i) {
+            cardHolder.itemView.setBackgroundColor(Color.parseColor("#808080"));
+        }
+        else {
+            cardHolder.itemView.setBackgroundColor(Color.parseColor("#FFFFFF"));
+        }
+
+        //Applies the selected item to the property: selectedPosition
+        cardHolder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                selectedPosition = i;
+                listener.onItemClick(getItem(i));
+                notifyDataSetChanged();
+            }
+        });
+
         if(card.getQuantity() != 0) {
             cardHolder.textViewQuantity.setText(String.valueOf(card.getQuantity()));
         }
@@ -64,7 +85,7 @@ public class CardAdapterListView extends ListAdapter<Card, CardAdapterListView.C
         private TextView textViewCardName, textViewSeries, textViewCardType, textViewQuantity;
         private ImageButton buttonIncreaseQuantity, buttonDecreaseQuantity;
 
-        public CardHolder(@NonNull View itemView) {
+        public CardHolder(@NonNull final View itemView) {
             super(itemView);
             textViewCardName = itemView.findViewById(R.id.text_view_card_name);
             textViewSeries = itemView.findViewById(R.id.text_view_series);
@@ -74,7 +95,7 @@ public class CardAdapterListView extends ListAdapter<Card, CardAdapterListView.C
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (listener != null && getAdapterPosition() != RecyclerView.NO_POSITION) {
+                    if(listener != null && getAdapterPosition() != RecyclerView.NO_POSITION){
                         listener.onItemClick(getItem(getAdapterPosition()));
                     }
                 }
