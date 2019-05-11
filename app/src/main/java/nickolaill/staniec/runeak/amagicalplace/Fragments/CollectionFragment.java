@@ -72,7 +72,9 @@ public class CollectionFragment extends Fragment {
         if(gridView) {
             recyclerView.setLayoutManager(new GridLayoutManager(getActivity(),3));
             recyclerView.setHasFixedSize(true);
-            recyclerView.setAdapter(new CardAdapterGridView());
+            CardAdapterGridView adapter = new CardAdapterGridView();
+            adapter.setViewModel(this.viewModel);
+            recyclerView.setAdapter(adapter);
         } else {
             recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
             recyclerView.setHasFixedSize(true);

@@ -1,16 +1,27 @@
 package nickolaill.staniec.runeak.amagicalplace.Activities;
 
 import android.arch.lifecycle.ViewModelProviders;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Toast;
+
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.InputStream;
 
 import nickolaill.staniec.runeak.amagicalplace.Fragments.AddCardFragment;
 import nickolaill.staniec.runeak.amagicalplace.Fragments.CardDetailFragment;
 import nickolaill.staniec.runeak.amagicalplace.Fragments.CollectionFragment;
 import nickolaill.staniec.runeak.amagicalplace.Models.Card;
+import nickolaill.staniec.runeak.amagicalplace.Models.MagicDao;
 import nickolaill.staniec.runeak.amagicalplace.R;
 import nickolaill.staniec.runeak.amagicalplace.Utilities.Constants;
+import nickolaill.staniec.runeak.amagicalplace.Utilities.CustomVolleyRequest;
+import nickolaill.staniec.runeak.amagicalplace.Utilities.StorageUtils;
 import nickolaill.staniec.runeak.amagicalplace.ViewModels.CollectionViewModel;
 import nickolaill.staniec.runeak.amagicalplace.ViewModels.CollectionViewModelFactory;
 
@@ -125,6 +136,7 @@ public class CollectionActivity extends AppCompatActivity implements AddCardFrag
         // TODO: Handle actions from the CollectionFragment here -> The received paramenter should be Card instead.
 
         // TODO: Get rid of the below, and fire up the DetailCardFragment instead.
+
         if (mTwoPane) {
             CardDetailFragment fragment = CardDetailFragment.newInstance(card, true);
             getSupportFragmentManager().beginTransaction()

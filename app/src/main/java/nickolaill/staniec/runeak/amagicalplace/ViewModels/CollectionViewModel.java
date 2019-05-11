@@ -24,6 +24,10 @@ public class CollectionViewModel extends AndroidViewModel {
         repository.insertCardFromApi(card);
     }
 
+    public void updateImage(Card card){
+        repository.updateImage(card);
+    }
+
     public void update(Card card) {
         repository.update(card);
     }

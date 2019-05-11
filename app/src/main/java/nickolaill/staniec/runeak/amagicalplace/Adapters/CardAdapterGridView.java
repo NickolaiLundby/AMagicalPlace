@@ -1,21 +1,33 @@
 package nickolaill.staniec.runeak.amagicalplace.Adapters;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.recyclerview.extensions.ListAdapter;
 import android.support.v7.util.DiffUtil;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import java.io.File;
 
 import nickolaill.staniec.runeak.amagicalplace.Models.Card;
+import nickolaill.staniec.runeak.amagicalplace.Models.Collection;
 import nickolaill.staniec.runeak.amagicalplace.R;
 import nickolaill.staniec.runeak.amagicalplace.Utilities.StorageUtils;
+import nickolaill.staniec.runeak.amagicalplace.ViewModels.CollectionViewModel;
 
 public class CardAdapterGridView extends ListAdapter<Card, CardAdapterGridView.CardHolder> {
     private OnItemClickListener listener;
+    private CollectionViewModel viewModel;
+
+    public void setViewModel(CollectionViewModel viewModel) {
+        this.viewModel = viewModel;
+    }
 
     public CardAdapterGridView(){
         super(DIFF_CALLBACK);
@@ -46,7 +58,20 @@ public class CardAdapterGridView extends ListAdapter<Card, CardAdapterGridView.C
         Card card = getItem(i);
         cardHolder.textViewCardName.setText(card.getTitle());
         if(StorageUtils.isExternalStorageReadable())
-            cardHolder.imageView.setImageURI(card.getImageUri());
+            //Checking if Cards Image URI is there and pointing to a file
+            if(card.getImageUri() != null){
+                File file = new File(card.getImageUri().getPath());
+                if(file.exists())
+                    cardHolder.imageView.setImageURI(card.getImageUri());
+                else{
+                    Log.d("img", "no image");
+                    card.setImageUri(null);
+                    viewModel.updateImage(card);
+                }
+            } else {
+                Log.d("img", "no uri");
+                viewModel.updateImage(card);
+            }
     }
 
     public Card getCardAt(int position){
@@ -80,4 +105,7 @@ public class CardAdapterGridView extends ListAdapter<Card, CardAdapterGridView.C
     public void setOnItemClickListener(CardAdapterGridView.OnItemClickListener listener) {
         this.listener = listener;
     }
+
+
+
 }
