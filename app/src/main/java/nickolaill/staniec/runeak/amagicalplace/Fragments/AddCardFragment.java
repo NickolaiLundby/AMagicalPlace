@@ -31,6 +31,7 @@ import io.magicthegathering.javasdk.api.CardAPI;
 import nickolaill.staniec.runeak.amagicalplace.Adapters.CardAdapterListView;
 import nickolaill.staniec.runeak.amagicalplace.Models.Card;
 import nickolaill.staniec.runeak.amagicalplace.R;
+import nickolaill.staniec.runeak.amagicalplace.Utilities.StorageUtils;
 import nickolaill.staniec.runeak.amagicalplace.ViewModels.AddCardViewModel;
 import nickolaill.staniec.runeak.amagicalplace.ViewModels.AddCardViewModelFactory;
 
@@ -78,7 +79,6 @@ public class AddCardFragment extends Fragment{
                 card.setCollectionId(collectionId);
                 card.setQuantity(1);
                 cardToBeAdded = card;
-                Toast.makeText(getActivity(), "Card selected: " + cardToBeAdded.getTitle(), Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -158,7 +158,10 @@ public class AddCardFragment extends Fragment{
             return;
         }
         else {
-            mListener.onAddCardFragmentAddInteraction(cardToBeAdded);
+            if(StorageUtils.isExternalStorageWritable())
+                mListener.onAddCardFragmentAddInteraction(cardToBeAdded);
+            else
+                Toast.makeText(getActivity(), "External storage not writable", Toast.LENGTH_SHORT).show();
         }
     }
 

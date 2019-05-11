@@ -22,6 +22,7 @@ import java.io.InputStream;
 
 import nickolaill.staniec.runeak.amagicalplace.Models.Card;
 import nickolaill.staniec.runeak.amagicalplace.R;
+import nickolaill.staniec.runeak.amagicalplace.Utilities.StorageUtils;
 
 public class CardDetailFragment extends Fragment {
     private CardDetailFragmentListener mListener;
@@ -64,7 +65,8 @@ public class CardDetailFragment extends Fragment {
         });
 
         imgCard = v.findViewById(R.id.imgCard);
-        imgCard.setImageURI(card.getImageUri());
+        if(StorageUtils.isExternalStorageReadable())
+            imgCard.setImageURI(card.getImageUri());
 
         return v;
     }
