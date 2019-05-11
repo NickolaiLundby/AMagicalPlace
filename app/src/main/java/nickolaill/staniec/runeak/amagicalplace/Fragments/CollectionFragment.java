@@ -13,6 +13,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -70,7 +71,7 @@ public class CollectionFragment extends Fragment {
 
         final RecyclerView recyclerView = v.findViewById(R.id.collection_recycler_view);
         if(gridView) {
-            recyclerView.setLayoutManager(new GridLayoutManager(getActivity(),3));
+            recyclerView.setLayoutManager(new GridLayoutManager(getActivity(),getSpandCount()));
             recyclerView.setHasFixedSize(true);
             recyclerView.setAdapter(new CardAdapterGridView());
         } else {
@@ -187,5 +188,12 @@ public class CollectionFragment extends Fragment {
         ft.attach(frg);
         ft.commit();
         return super.onOptionsItemSelected(item);
+    }
+
+    private int getSpandCount(){
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        getActivity().getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        int width = displayMetrics.widthPixels;
+        return width/Constants.imageWidth;
     }
 }

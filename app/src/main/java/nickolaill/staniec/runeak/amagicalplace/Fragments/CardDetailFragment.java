@@ -29,7 +29,6 @@ public class CardDetailFragment extends Fragment {
     private CardDetailFragmentListener mListener;
     private static final String ARG_CARD = "card";
     private static final String ARG_MODE = "mode";
-    private TextView txtTitleCard, txtTextCard;
     private Button btnReturn;
     private ImageView imgCard;
     private Card card;
@@ -62,13 +61,6 @@ public class CardDetailFragment extends Fragment {
         } else {
             v= inflater.inflate(R.layout.fragment_card_detail_portrait, container, false);
         }
-
-        txtTitleCard = v.findViewById(R.id.txtTitleCard);
-        txtTitleCard.setText(card.getTitle());
-
-        txtTextCard = v.findViewById(R.id.txtTextCard);
-
-        txtTextCard.setText(card.getTypes());
 
         btnReturn = v.findViewById(R.id.btnReturn);
         btnReturn.setOnClickListener(new View.OnClickListener() {
