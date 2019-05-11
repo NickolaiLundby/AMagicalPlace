@@ -14,6 +14,7 @@
     <string name="overview_dialog_tv_description">Description:</string>
     <string name="edit_collection">Edit Collection</string>
     <string name="add_collection">Add Collection</string>
+    <string name="no_internet_connection">No internet connection</string>
 
     <!-- TODO: All series should probably be checked if they work @ API -->
     <string-array name="magicsets">
@@ -225,10 +226,6 @@
         <item>Worldwake</item>
         <item>Zendikar</item>
     </string-array>
-
-    <string name="no_search_terms">No search terms selected</string>
-    <string name="no_result">No results</string>
-    <string name="no_internet_connection">No internet connection</string>
 
 
     <!--

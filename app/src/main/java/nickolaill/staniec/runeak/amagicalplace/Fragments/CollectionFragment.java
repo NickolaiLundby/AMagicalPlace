@@ -19,13 +19,14 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-
+import android.widget.Toast;
 import java.util.List;
 
 import nickolaill.staniec.runeak.amagicalplace.Adapters.CardAdapterGridView;
 import nickolaill.staniec.runeak.amagicalplace.Adapters.CardAdapterListView;
 import nickolaill.staniec.runeak.amagicalplace.Models.Card;
 import nickolaill.staniec.runeak.amagicalplace.R;
+import nickolaill.staniec.runeak.amagicalplace.Utilities.Constants;
 import nickolaill.staniec.runeak.amagicalplace.ViewModels.CollectionViewModel;
 import nickolaill.staniec.runeak.amagicalplace.ViewModels.CollectionViewModelFactory;
 
