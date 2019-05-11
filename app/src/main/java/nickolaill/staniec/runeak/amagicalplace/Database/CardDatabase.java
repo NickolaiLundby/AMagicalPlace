@@ -4,6 +4,7 @@ import android.arch.persistence.db.SupportSQLiteDatabase;
 import android.arch.persistence.room.Database;
 import android.arch.persistence.room.Room;
 import android.arch.persistence.room.RoomDatabase;
+import android.arch.persistence.room.TypeConverters;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
@@ -17,6 +18,7 @@ import nickolaill.staniec.runeak.amagicalplace.Models.Collection;
 import nickolaill.staniec.runeak.amagicalplace.Models.MagicDao;
 
 @Database(entities = {Card.class, Collection.class}, version = 1)
+@TypeConverters({Converters.class})
 public abstract class CardDatabase extends RoomDatabase {
     private static CardDatabase instance;
 
@@ -57,7 +59,7 @@ public abstract class CardDatabase extends RoomDatabase {
             Collection collection2 = new Collection("Lightning", "It's not as shocking.");
             magicDao.insertCollection(collection2);
 
-
+            /*
             io.magicthegathering.javasdk.resource.Card testCard = CardAPI.getCard(1);
 
             Card card0 = new Card(testCard);

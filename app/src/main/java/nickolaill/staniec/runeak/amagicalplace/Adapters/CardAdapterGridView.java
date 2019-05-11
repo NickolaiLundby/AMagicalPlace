@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import nickolaill.staniec.runeak.amagicalplace.Models.Card;
 import nickolaill.staniec.runeak.amagicalplace.R;
+import nickolaill.staniec.runeak.amagicalplace.Utilities.StorageUtils;
 
 public class CardAdapterGridView extends ListAdapter<Card, CardAdapterGridView.CardHolder> {
     private OnItemClickListener listener;
@@ -44,7 +45,8 @@ public class CardAdapterGridView extends ListAdapter<Card, CardAdapterGridView.C
     public void onBindViewHolder(@NonNull CardHolder cardHolder, int i) {
         Card card = getItem(i);
         cardHolder.textViewCardName.setText(card.getTitle());
-        // TODO: Set the card imageview
+        if(StorageUtils.isExternalStorageReadable())
+            cardHolder.imageView.setImageURI(card.getImageUri());
     }
 
     public Card getCardAt(int position){

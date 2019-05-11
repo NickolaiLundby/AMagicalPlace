@@ -28,6 +28,9 @@ android {
 dependencies {
     def lifecycle_version = "1.1.1"
     def room_version = "1.1.1"
+    def volley_version = "1.1.1"
+    def magic_sdk_version = "0.0.14"
+
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'com.android.support:appcompat-v7:28.0.0'
     implementation 'com.android.support:design:28.0.0'
@@ -47,5 +50,8 @@ dependencies {
     annotationProcessor "android.arch.persistence.room:compiler:$room_version"
 
     // SDK for MTG API - https://github.com/MagicTheGathering/mtg-sdk-java
-    implementation 'io.magicthegathering:javasdk:0.0.14'
+    implementation "io.magicthegathering:javasdk:$magic_sdk_version"
+
+    // Volley
+    implementation "com.android.volley:volley:$volley_version"
 }

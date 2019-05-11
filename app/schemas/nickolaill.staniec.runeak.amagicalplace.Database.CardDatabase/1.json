@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "190f4e8ead23247ed0cd680d269cde26",
+    "identityHash": "5ba5fdf33f2961c68ba9773fa9d37ba5",
     "entities": [
       {
         "tableName": "card_table",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`caId` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `quantity` INTEGER NOT NULL, `collectionId` INTEGER NOT NULL, `multiverseId` INTEGER NOT NULL, `title` TEXT, `series` TEXT, `text` TEXT, `types` TEXT, `type` TEXT, `rarity` TEXT, `toughness` TEXT, `power` TEXT, `manaCoast` TEXT, `imageUrl` TEXT, `colors` TEXT, `colorIdentity` TEXT, FOREIGN KEY(`collectionId`) REFERENCES `collection_table`(`coId`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`caId` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `quantity` INTEGER NOT NULL, `collectionId` INTEGER NOT NULL, `multiverseId` INTEGER NOT NULL, `title` TEXT, `series` TEXT, `text` TEXT, `types` TEXT, `type` TEXT, `rarity` TEXT, `toughness` TEXT, `power` TEXT, `manaCoast` TEXT, `imageUrl` TEXT, `colors` TEXT, `colorIdentity` TEXT, `imageUri` TEXT, FOREIGN KEY(`collectionId`) REFERENCES `collection_table`(`coId`) ON UPDATE NO ACTION ON DELETE CASCADE )",
         "fields": [
           {
             "fieldPath": "caId",
@@ -103,6 +103,12 @@
             "columnName": "colorIdentity",
             "affinity": "TEXT",
             "notNull": false
+          },
+          {
+            "fieldPath": "imageUri",
+            "columnName": "imageUri",
+            "affinity": "TEXT",
+            "notNull": false
           }
         ],
         "primaryKey": {
@@ -179,7 +185,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"190f4e8ead23247ed0cd680d269cde26\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"5ba5fdf33f2961c68ba9773fa9d37ba5\")"
     ]
   }
 }
