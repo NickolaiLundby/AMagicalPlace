@@ -8,4 +8,5 @@ public class Constants {
     public static final String TAG_FRAGMENT_COLLECTION = "nickolaill.staniec.runeak.amagicalplace.COLLECTION_FRAGMENT_TAG";
     public static final String TAG_FRAGMENT_ADDCARD = "nickolaill.staniec.runeak.amagicalplace.ADDCARD_FRAGMENT_TAG";
     public static final String TAG_FRAGMENT_CARDDETAIL = "nickolaill.staniec.runeak.amagicalplace.CARDDETAIL_FRAGMENT_TAG";
+
 }

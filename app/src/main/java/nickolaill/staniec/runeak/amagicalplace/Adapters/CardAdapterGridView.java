@@ -44,7 +44,6 @@ public class CardAdapterGridView extends ListAdapter<Card, CardAdapterGridView.C
     @Override
     public void onBindViewHolder(@NonNull CardHolder cardHolder, int i) {
         Card card = getItem(i);
-        cardHolder.textViewCardName.setText(card.getTitle());
         if(StorageUtils.isExternalStorageReadable())
             cardHolder.imageView.setImageURI(card.getImageUri());
     }
@@ -54,12 +53,10 @@ public class CardAdapterGridView extends ListAdapter<Card, CardAdapterGridView.C
     }
 
     class CardHolder extends RecyclerView.ViewHolder {
-        private TextView textViewCardName;
         private ImageView imageView;
 
         public CardHolder(@NonNull View itemView) {
             super(itemView);
-            textViewCardName = itemView.findViewById(R.id.text_view_card_name);
             imageView = itemView.findViewById(R.id.image_view_card);
 
             itemView.setOnClickListener(new View.OnClickListener() {

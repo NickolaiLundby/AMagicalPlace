@@ -13,6 +13,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -70,7 +71,13 @@ public class CollectionFragment extends Fragment {
 
         final RecyclerView recyclerView = v.findViewById(R.id.collection_recycler_view);
         if(gridView) {
-            recyclerView.setLayoutManager(new GridLayoutManager(getActivity(),3));
+            DisplayMetrics displayMetrics = getContext().getResources().getDisplayMetrics();
+            float dpHeight = displayMetrics.heightPixels / displayMetrics.density;
+            float dpWidth = displayMetrics.widthPixels / displayMetrics.density;
+            int spanCount = (int)dpWidth / 180;
+            if(spanCount < 3)
+                spanCount = 3;
+            recyclerView.setLayoutManager(new GridLayoutManager(getActivity(),spanCount));
             recyclerView.setHasFixedSize(true);
             recyclerView.setAdapter(new CardAdapterGridView());
         } else {
