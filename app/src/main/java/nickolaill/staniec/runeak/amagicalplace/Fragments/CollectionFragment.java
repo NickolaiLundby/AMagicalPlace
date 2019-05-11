@@ -79,7 +79,9 @@ public class CollectionFragment extends Fragment {
                 spanCount = 3;
             recyclerView.setLayoutManager(new GridLayoutManager(getActivity(),spanCount));
             recyclerView.setHasFixedSize(true);
-            recyclerView.setAdapter(new CardAdapterGridView());
+            CardAdapterGridView adapter = new CardAdapterGridView();
+            adapter.setViewModel(this.viewModel);
+            recyclerView.setAdapter(adapter);
         } else {
             recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
             recyclerView.setHasFixedSize(true);

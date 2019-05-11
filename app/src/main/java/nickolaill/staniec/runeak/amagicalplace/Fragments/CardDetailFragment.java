@@ -13,16 +13,23 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.android.volley.NetworkResponse;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.Volley;
+
+import java.io.ByteArrayInputStream;
+import java.io.File;
 import java.io.InputStream;
 
 import nickolaill.staniec.runeak.amagicalplace.Models.Card;
 import nickolaill.staniec.runeak.amagicalplace.R;
+import nickolaill.staniec.runeak.amagicalplace.Utilities.CustomVolleyRequest;
 import nickolaill.staniec.runeak.amagicalplace.Utilities.StorageUtils;
 
 public class CardDetailFragment extends Fragment {
@@ -33,6 +40,7 @@ public class CardDetailFragment extends Fragment {
     private ImageView imgCard;
     private Card card;
     private boolean mode;
+    private RequestQueue requestQueue;
 
     public static CardDetailFragment newInstance(Card card, boolean mode) {
         CardDetailFragment fragment = new CardDetailFragment();
@@ -47,6 +55,8 @@ public class CardDetailFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View v;
+
+        requestQueue = Volley.newRequestQueue(getActivity().getBaseContext());
 
         mode = getArguments().getBoolean(ARG_MODE);
         card = getArguments().getParcelable(ARG_CARD);
@@ -71,8 +81,21 @@ public class CardDetailFragment extends Fragment {
         });
 
         imgCard = v.findViewById(R.id.imgCard);
+        //Check URI
         if(StorageUtils.isExternalStorageReadable())
-            imgCard.setImageURI(card.getImageUri());
+            if(card.getImageUri() != null){
+                File file = new File(card.getImageUri().getPath());
+                if(!file.exists()){
+                    Log.d("img", "no image");
+                    new AddImageAsyncTask().execute(card);
+                } else{
+                    imgCard.setImageURI(card.getImageUri());
+                }
+
+            } else {
+                Log.d("img", "no uri");
+                new AddImageAsyncTask().execute(card);
+            }
 
         return v;
     }
@@ -90,5 +113,35 @@ public class CardDetailFragment extends Fragment {
 
     public interface CardDetailFragmentListener {
         void onCardDetailFragmentCancelInteraction();
+    }
+
+    private class AddImageAsyncTask extends AsyncTask<Card, Void, Void> {
+
+        @Override
+        protected Void doInBackground(Card... cards) {
+            final Card card = cards[0];
+            CustomVolleyRequest volleyRequest = new CustomVolleyRequest(convertHttpToHttps(card.getImageUrl()), new Response.Listener<NetworkResponse>() {
+                @Override
+                public void onResponse(NetworkResponse response) {
+                    InputStream is = new ByteArrayInputStream(response.data);
+                    Bitmap b = BitmapFactory.decodeStream(is);
+                    imgCard.setImageBitmap(b);
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+
+                }
+            });
+
+            // Add ImageRequest to the RequestQueue
+            requestQueue.add(volleyRequest);
+
+            return null;
+        }
+    }
+
+    private String convertHttpToHttps(String uri){
+        return uri.replace("http://", "https://");
     }
 }

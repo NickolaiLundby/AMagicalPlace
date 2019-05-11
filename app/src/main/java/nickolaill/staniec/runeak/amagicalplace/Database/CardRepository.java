@@ -7,7 +7,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.AsyncTask;
-import android.os.Environment;
 import android.util.Log;
 
 import com.android.volley.NetworkResponse;
@@ -51,6 +50,10 @@ public class CardRepository {
 
     public void update(Card card){
         new UpdateCardAsyncTask(magicDao).execute(card);
+    }
+
+    public void updateImage(Card card){
+        new AddImageAsyncTask(magicDao).execute(card);
     }
 
     public void delete(Card card){
@@ -139,7 +142,7 @@ public class CardRepository {
                     public void onResponse(NetworkResponse response) {
                         InputStream is = new ByteArrayInputStream(response.data);
                         Bitmap b = BitmapFactory.decodeStream(is);
-                        saveImageToExternalStorage(b, card, magicDao);
+                        saveImageToExternalStorage(false, b, card, magicDao);
                     }
                 }, new Response.ErrorListener() {
                     @Override
@@ -158,16 +161,49 @@ public class CardRepository {
         }
     }
 
-    private void saveImageToExternalStorage(Bitmap bitmap, Card card, MagicDao magicDao){
-        new SaveImageToStorageTask(card, context.getExternalFilesDir(Environment.DIRECTORY_PICTURES), magicDao).execute(bitmap);
+    private class AddImageAsyncTask extends AsyncTask<Card, Void, Void> {
+        private MagicDao magicDao;
+
+        private AddImageAsyncTask(MagicDao magicDao) {
+            this.magicDao = magicDao;
+        }
+
+        @Override
+        protected Void doInBackground(Card... cards) {
+            final Card card = cards[0];
+            CustomVolleyRequest volleyRequest = new CustomVolleyRequest(convertHttpToHttps(card.getImageUrl()), new Response.Listener<NetworkResponse>() {
+                @Override
+                public void onResponse(NetworkResponse response) {
+                    InputStream is = new ByteArrayInputStream(response.data);
+                    Bitmap b = BitmapFactory.decodeStream(is);
+                    saveImageToExternalStorage( true, b, card, magicDao);
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+
+                }
+            });
+
+            // Add ImageRequest to the RequestQueue
+            requestQueue.add(volleyRequest);
+
+            return null;
+        }
+    }
+
+    private void saveImageToExternalStorage(Boolean existingCard, Bitmap bitmap, Card card, MagicDao magicDao){
+        new SaveImageToStorageTask(existingCard, card, context.getCacheDir(), magicDao).execute(bitmap);
     }
 
     private class SaveImageToStorageTask extends AsyncTask<Bitmap, Void, Void> {
+        private boolean existingCard;
         private Card card;
         private File parentFile;
         private MagicDao magicDao;
 
-        private SaveImageToStorageTask(Card card, File parentFile, MagicDao magicDao){
+        private SaveImageToStorageTask(boolean existingCard, Card card, File parentFile, MagicDao magicDao){
+            this.existingCard = existingCard;
             this.card = card;
             this.parentFile = parentFile;
             this.magicDao = magicDao;
@@ -176,15 +212,15 @@ public class CardRepository {
         @Override
         protected Void doInBackground(Bitmap... bitmaps) {
             boolean success = true;
-            String dirFileName = "DIR_" + collectionId;
+            //String dirFileName = "DIR_" + collectionId;
             String imageFileName = "JPEG_" + card.getMultiverseId() + ".jpg";
 
-            File dir = new File(parentFile, dirFileName);
-            if(!dir.exists())
-                success = dir.mkdirs();
+            //File dir = new File(parentFile, dirFileName);
+            //if(!dir.exists())
+            //    success = dir.mkdirs();
 
             if(success){
-                File imageFile = new File(dir, imageFileName);
+                File imageFile = new File(parentFile, imageFileName);
 
                 try{
                     imageFile.createNewFile();
@@ -197,7 +233,10 @@ public class CardRepository {
                     e.printStackTrace();
                 }
             }
-            magicDao.insertCard(card);
+            if(existingCard)
+                magicDao.updateCard(card);
+            else
+                magicDao.insertCard(card);
             return null;
         }
     }
