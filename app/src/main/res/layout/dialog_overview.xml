@@ -12,7 +12,7 @@
             android:id="@+id/overview_dialog_tv_top"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Top Placeholder"
+            android:text="@string/top_placeholder"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
     </TableRow>
 

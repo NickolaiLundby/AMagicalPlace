@@ -16,6 +16,7 @@ import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -161,24 +162,38 @@ public class OverviewFragment extends Fragment {
     }
 
     private void OverviewDialogDeletionAlert(final RecyclerView.ViewHolder viewHolder, final CollectionAdapter adapter) {
-        new AlertDialog.Builder(viewHolder.itemView.getContext())
-                .setMessage("Are you sure?")
-                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        mListener.onOverviewFragmentDeleteCollectionOk(adapter.getCollectionAt(viewHolder.getAdapterPosition()));
-                        dialog.cancel();
-                    }
-                })
-                .setNegativeButton("No", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        adapter.notifyItemChanged(viewHolder.getAdapterPosition());
-                        dialog.cancel();
-                    }
-                })
-                .create()
-                .show();
+        LayoutInflater mLayout = LayoutInflater.from(getContext());
+        final View dialogView = mLayout.inflate(R.layout.dialog_overview_deletion, null);
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setView(dialogView);
+
+        //Find objects
+        final Button btnYes = dialogView.findViewById(R.id.overview_dialog_btn_yes);
+        final Button btnNo = dialogView.findViewById(R.id.overview_dialog_btn_no);
+
+        //Creates the alert dialog
+        //This allows the custom buttons to close dialog
+        final AlertDialog dialog = builder.create();
+
+        //Button yes
+        btnYes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mListener.onOverviewFragmentDeleteCollectionOk(adapter.getCollectionAt(viewHolder.getAdapterPosition()));
+                dialog.cancel();
+            }
+        });
+
+        //Button no
+        btnNo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                adapter.notifyItemChanged(viewHolder.getAdapterPosition());
+                dialog.cancel();
+            }
+        });
+
+        dialog.show();
     }
 
     public interface OverviewFragmentListener {
