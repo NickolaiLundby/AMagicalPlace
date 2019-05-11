@@ -1,5 +1,6 @@
 package nickolaill.staniec.runeak.amagicalplace.Adapters;
 
+import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.recyclerview.extensions.ListAdapter;
 import android.support.v7.util.DiffUtil;
@@ -7,7 +8,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -16,9 +16,12 @@ import nickolaill.staniec.runeak.amagicalplace.R;
 
 public class CardAdapterListView extends ListAdapter<Card, CardAdapterListView.CardHolder> {
     private OnItemClickListener listener;
+    private int selectedPosition = -1;
+    private boolean collectionFragment = false;
 
-    public CardAdapterListView(){
+    public CardAdapterListView(boolean collectionFragment){
         super(DIFF_CALLBACK);
+        this.collectionFragment = collectionFragment;
     }
 
     private static final DiffUtil.ItemCallback<Card> DIFF_CALLBACK = new DiffUtil.ItemCallback<Card>() {
@@ -42,12 +45,28 @@ public class CardAdapterListView extends ListAdapter<Card, CardAdapterListView.C
     }
 
     @Override
-    public void onBindViewHolder(@NonNull CardHolder cardHolder, int i) {
+    public void onBindViewHolder(@NonNull final CardHolder cardHolder, int i) {
         Card card = getItem(i);
         cardHolder.textViewCardName.setText(card.getTitle());
         cardHolder.textViewSeries.setText(card.getSeries());
         cardHolder.textViewCardType.setText(card.getType());
-        if(card.getQuantity() != 0) {
+
+        if(selectedPosition == i)
+            cardHolder.itemView.setBackgroundColor(Color.parseColor("#808080"));
+        else
+            cardHolder.itemView.setBackgroundColor(Color.parseColor("#FFFFFF"));
+
+        cardHolder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                selectedPosition = cardHolder.getAdapterPosition();
+                listener.onItemClick(getItem(cardHolder.getAdapterPosition()));
+                // TODO: The below line hurts performance. Is there a better way?
+                notifyDataSetChanged();
+            }
+        });
+
+        if(collectionFragment) {
             cardHolder.textViewQuantity.setText(String.valueOf(card.getQuantity()));
         }
         else{
@@ -64,7 +83,7 @@ public class CardAdapterListView extends ListAdapter<Card, CardAdapterListView.C
         private TextView textViewCardName, textViewSeries, textViewCardType, textViewQuantity;
         private ImageButton buttonIncreaseQuantity, buttonDecreaseQuantity;
 
-        public CardHolder(@NonNull View itemView) {
+        private CardHolder(@NonNull final View itemView) {
             super(itemView);
             textViewCardName = itemView.findViewById(R.id.text_view_card_name);
             textViewSeries = itemView.findViewById(R.id.text_view_series);
@@ -74,7 +93,7 @@ public class CardAdapterListView extends ListAdapter<Card, CardAdapterListView.C
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (listener != null && getAdapterPosition() != RecyclerView.NO_POSITION) {
+                    if(listener != null && getAdapterPosition() != RecyclerView.NO_POSITION){
                         listener.onItemClick(getItem(getAdapterPosition()));
                     }
                 }
