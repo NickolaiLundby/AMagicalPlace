@@ -75,8 +75,8 @@ public class OverviewFragment extends Fragment {
             }
 
             @Override
-            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int i) {
-                viewModel.delete(adapter.getCollectionAt(viewHolder.getAdapterPosition()));
+            public void onSwiped(@NonNull final RecyclerView.ViewHolder viewHolder, int i) {
+                OverviewDialogDeletionAlert(viewHolder, adapter);
             }
         }).attachToRecyclerView(recyclerView);
 
@@ -160,9 +160,31 @@ public class OverviewFragment extends Fragment {
         builder.show();
     }
 
+    private void OverviewDialogDeletionAlert(final RecyclerView.ViewHolder viewHolder, final CollectionAdapter adapter) {
+        new AlertDialog.Builder(viewHolder.itemView.getContext())
+                .setMessage("Are you sure?")
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        mListener.onOverviewFragmentDeleteCollectionOk(adapter.getCollectionAt(viewHolder.getAdapterPosition()));
+                        dialog.cancel();
+                    }
+                })
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        adapter.notifyItemChanged(viewHolder.getAdapterPosition());
+                        dialog.cancel();
+                    }
+                })
+                .create()
+                .show();
+    }
+
     public interface OverviewFragmentListener {
         void onOverviewFragmentEditCollectionOk(Collection collection);
         void onOverviewFragmentAddCollectionOk(Collection collection);
         void onOverviewFragmentClickCollection(int id);
+        void onOverviewFragmentDeleteCollectionOk(Collection collection);
     }
 }

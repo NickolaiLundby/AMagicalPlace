@@ -41,7 +41,6 @@ public class AddCardFragment extends Fragment{
     private int collectionId;
     private EditText cardTitle;
     private Spinner seriesDropdown;
-    private Button addButton, cancelButton, searchButton;
     private Card cardToBeAdded;
     private AddCardViewModel viewModel;
 
@@ -59,7 +58,7 @@ public class AddCardFragment extends Fragment{
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View v = inflater.inflate(R.layout.fragment_add_card, container, false);
 
-        final CardAdapterListView adapter = new CardAdapterListView();
+        final CardAdapterListView adapter = new CardAdapterListView(false);
         RecyclerView recyclerView = v.findViewById(R.id.add_card_recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setHasFixedSize(true);
@@ -76,9 +75,10 @@ public class AddCardFragment extends Fragment{
         adapter.setOnItemClickListener(new CardAdapterListView.OnItemClickListener() {
             @Override
             public void onItemClick(Card card) {
-                card.setCollectionId(collectionId);
-                card.setQuantity(1);
                 cardToBeAdded = card;
+                cardToBeAdded.setCollectionId(collectionId);
+                cardToBeAdded.setQuantity(1);
+
             }
 
             @Override
@@ -102,9 +102,9 @@ public class AddCardFragment extends Fragment{
         stringAdapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
         seriesDropdown.setAdapter(stringAdapter);
 
-        addButton = v.findViewById(R.id.add_card_button_add);
-        cancelButton = v.findViewById(R.id.add_card_button_cancel);
-        searchButton = v.findViewById(R.id.add_card_button_search);
+        Button addButton = v.findViewById(R.id.add_card_button_add);
+        Button cancelButton = v.findViewById(R.id.add_card_button_cancel);
+        Button searchButton = v.findViewById(R.id.add_card_button_search);
 
         // Get arguments passed from Args Bundle
         collectionId = getArguments().getInt(ARG_COID);
@@ -209,7 +209,6 @@ public class AddCardFragment extends Fragment{
 
         private List<io.magicthegathering.javasdk.resource.Card> apiResults;
 
-        @Override
         protected Boolean doInBackground(ArrayList<String>... arrayLists) {
 
             if(isOnline()){
@@ -223,6 +222,7 @@ public class AddCardFragment extends Fragment{
             } else {
                 return false;
             }
+
         }
 
         @Override

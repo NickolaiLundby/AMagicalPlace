@@ -20,7 +20,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
-
 import java.util.List;
 
 import nickolaill.staniec.runeak.amagicalplace.Adapters.CardAdapterGridView;
@@ -77,7 +76,7 @@ public class CollectionFragment extends Fragment {
         } else {
             recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
             recyclerView.setHasFixedSize(true);
-            recyclerView.setAdapter(new CardAdapterListView());
+            recyclerView.setAdapter(new CardAdapterListView(true));
         }
 
         viewModel = ViewModelProviders.of(this, new CollectionViewModelFactory(getActivity().getApplication(), collectionId)).get(CollectionViewModel.class);
