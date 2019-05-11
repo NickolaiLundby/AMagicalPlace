@@ -175,19 +175,4 @@ public class CollectionActivity extends AppCompatActivity implements AddCardFrag
         }
     }
 
-    @Override
-    public void onCardDetailFragmentCancelInteraction() {
-        // TODO: Handle actions from the CardDetailFragment here
-
-        // TODO: Then show the collection fragment again
-        if (mTwoPane) {
-            // In twoPane we should always be showing the collection on the left side.
-        }
-        else {
-            CollectionFragment fragment = CollectionFragment.newInstance(getIntent().getIntExtra(Constants.COLLECTION_ID, -1));
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.collection_container, fragment)
-                    .commit();
-        }
-    }
 }
