@@ -9,6 +9,4 @@ public class Constants {
     public static final String TAG_FRAGMENT_ADDCARD = "nickolaill.staniec.runeak.amagicalplace.ADDCARD_FRAGMENT_TAG";
     public static final String TAG_FRAGMENT_CARDDETAIL = "nickolaill.staniec.runeak.amagicalplace.CARDDETAIL_FRAGMENT_TAG";
 
-    //Image pixel width
-    public static final int imageWidth=223;
 }

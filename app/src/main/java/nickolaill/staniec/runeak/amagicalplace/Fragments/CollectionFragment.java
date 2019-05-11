@@ -71,7 +71,13 @@ public class CollectionFragment extends Fragment {
 
         final RecyclerView recyclerView = v.findViewById(R.id.collection_recycler_view);
         if(gridView) {
-            recyclerView.setLayoutManager(new GridLayoutManager(getActivity(),getSpandCount()));
+            DisplayMetrics displayMetrics = getContext().getResources().getDisplayMetrics();
+            float dpHeight = displayMetrics.heightPixels / displayMetrics.density;
+            float dpWidth = displayMetrics.widthPixels / displayMetrics.density;
+            int spanCount = (int)dpWidth / 180;
+            if(spanCount < 3)
+                spanCount = 3;
+            recyclerView.setLayoutManager(new GridLayoutManager(getActivity(),spanCount));
             recyclerView.setHasFixedSize(true);
             recyclerView.setAdapter(new CardAdapterGridView());
         } else {
@@ -188,12 +194,5 @@ public class CollectionFragment extends Fragment {
         ft.attach(frg);
         ft.commit();
         return super.onOptionsItemSelected(item);
-    }
-
-    private int getSpandCount(){
-        DisplayMetrics displayMetrics = new DisplayMetrics();
-        getActivity().getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-        int width = displayMetrics.widthPixels;
-        return width/Constants.imageWidth;
     }
 }
