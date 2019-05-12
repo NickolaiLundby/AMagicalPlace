@@ -8,6 +8,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -30,6 +31,7 @@ import java.io.InputStream;
 import nickolaill.staniec.runeak.amagicalplace.Models.Card;
 import nickolaill.staniec.runeak.amagicalplace.R;
 import nickolaill.staniec.runeak.amagicalplace.Utilities.CustomVolleyRequest;
+import nickolaill.staniec.runeak.amagicalplace.Utilities.InternetUtils;
 import nickolaill.staniec.runeak.amagicalplace.Utilities.StorageUtils;
 
 public class CardDetailFragment extends Fragment {
@@ -81,21 +83,18 @@ public class CardDetailFragment extends Fragment {
         });
 
         imgCard = v.findViewById(R.id.imgCard);
-        //Check URI
-        if(StorageUtils.isExternalStorageReadable())
-            if(card.getImageUri() != null){
-                File file = new File(card.getImageUri().getPath());
-                if(!file.exists()){
-                    Log.d("img", "no image");
-                    new AddImageAsyncTask().execute(card);
-                } else{
-                    imgCard.setImageURI(card.getImageUri());
-                }
-
-            } else {
-                Log.d("img", "no uri");
-                new AddImageAsyncTask().execute(card);
-            }
+        if(StorageUtils.isUriValid(card.getImageUri())){
+            imgCard.setImageURI(card.getImageUri());
+        } else if(InternetUtils.isOnline()) {
+            new AddImageAsyncTask().execute(card);
+        } else {
+            imgCard.requestLayout();
+            ConstraintLayout.LayoutParams lp = (ConstraintLayout.LayoutParams) imgCard.getLayoutParams();
+            lp.matchConstraintPercentWidth = (float)0.2;
+            lp.matchConstraintPercentHeight = (float)0.2;
+            imgCard.setLayoutParams(lp);
+            imgCard.setImageDrawable(getResources().getDrawable(R.drawable.no_signal));
+        }
 
         return v;
     }

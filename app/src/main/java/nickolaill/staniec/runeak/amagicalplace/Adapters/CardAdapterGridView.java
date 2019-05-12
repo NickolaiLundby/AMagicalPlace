@@ -18,6 +18,7 @@ import java.io.File;
 import nickolaill.staniec.runeak.amagicalplace.Models.Card;
 import nickolaill.staniec.runeak.amagicalplace.Models.Collection;
 import nickolaill.staniec.runeak.amagicalplace.R;
+import nickolaill.staniec.runeak.amagicalplace.Utilities.InternetUtils;
 import nickolaill.staniec.runeak.amagicalplace.Utilities.StorageUtils;
 import nickolaill.staniec.runeak.amagicalplace.ViewModels.CollectionViewModel;
 
@@ -56,21 +57,14 @@ public class CardAdapterGridView extends ListAdapter<Card, CardAdapterGridView.C
     @Override
     public void onBindViewHolder(@NonNull CardHolder cardHolder, int i) {
         Card card = getItem(i);
-        if(StorageUtils.isExternalStorageReadable())
-            //Checking if Cards Image URI is there and pointing to a file
-            if(card.getImageUri() != null){
-                File file = new File(card.getImageUri().getPath());
-                if(file.exists())
-                    cardHolder.imageView.setImageURI(card.getImageUri());
-                else{
-                    Log.d("img", "no image");
-                    card.setImageUri(null);
-                    viewModel.updateImage(card);
-                }
-            } else {
-                Log.d("img", "no uri");
+        if(StorageUtils.isUriValid(card.getImageUri())){
+            cardHolder.imageView.setImageURI(card.getImageUri());
+        } else {
+            if(InternetUtils.isOnline()){
+                card.setImageUri(null);
                 viewModel.updateImage(card);
             }
+        }
     }
 
     public Card getCardAt(int position){
