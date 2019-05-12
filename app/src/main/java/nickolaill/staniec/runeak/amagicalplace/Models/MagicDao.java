@@ -36,8 +36,8 @@ public interface MagicDao {
     @Query("SELECT * FROM card_table WHERE collectionId LIKE :collectionId AND multiverseId LIKE :multiverseId")
     Card getCardByCollectionAndMultiverseId(int collectionId, int multiverseId);
 
-    @Query("SELECT * FROM card_table WHERE title LIKE :title")
-    Card getCardByTitle(String title);
+    @Query("SELECT * FROM card_table WHERE multiverseId LIKE :multiverseId")
+    List<Card> getCardsByMultiverseId(int multiverseId);
 
     @Query("SELECT * FROM card_table WHERE collectionId LIKE :collectionId")
     LiveData<List<Card>> getAllCards(int collectionId);

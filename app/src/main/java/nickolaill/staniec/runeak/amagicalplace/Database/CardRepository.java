@@ -221,12 +221,8 @@ public class CardRepository {
         @Override
         protected Void doInBackground(Bitmap... bitmaps) {
             boolean success = true;
-            //String dirFileName = "DIR_" + collectionId;
-            String imageFileName = createFileName(card.getMultiverseId());
 
-            //File dir = new File(parentFile, dirFileName);
-            //if(!dir.exists())
-            //    success = dir.mkdirs();
+            String imageFileName = createFileName(card.getMultiverseId());
 
             if(success){
                 File imageFile = new File(parentFile, imageFileName);
@@ -251,26 +247,30 @@ public class CardRepository {
     }
 
     private void deleteImageFromExternalStorage(Card card){
-        new DeleteImageFromStorageTask(card).execute();
+        new DeleteImageFromStorageTask(magicDao).execute(card);
     }
 
-    private class DeleteImageFromStorageTask extends AsyncTask<Void, Void, Void>{
-        private Card card;
+    private class DeleteImageFromStorageTask extends AsyncTask<Card, Void, Void>{
+        private MagicDao magicDao;
 
-        private DeleteImageFromStorageTask(Card card){
-            this.card = card;
+        private DeleteImageFromStorageTask(MagicDao magicDao){
+            this.magicDao = magicDao;
         }
+
         @Override
-        protected Void doInBackground(Void... voids) {
-            try{
-                File file = new File(card.getImageUri().toString());
-                boolean deleted = file.delete();
-                if(deleted)
-                    Log.d("EXTERNAL_STORAGE", card.getTitle() + " deleted from storage");
-                else
-                    Log.d("EXTERNAL STORAGE", card.getTitle() + " was NOT deleted");
-            } catch (Exception e) {
-                Log.e("EXTERNAL_STORAGE", "Exception while deleting file " + e.getMessage());
+        protected Void doInBackground(Card... cards) {
+            List<Card> c = magicDao.getCardsByMultiverseId(cards[0].getMultiverseId());
+            if(c.isEmpty()){
+                try{
+                    File file = new File(cards[0].getImageUri().toString());
+                    boolean deleted = file.delete();
+                    if(deleted)
+                        Log.d("EXTERNAL_STORAGE", cards[0].getTitle() + " deleted from storage");
+                    else
+                        Log.d("EXTERNAL STORAGE", cards[0].getTitle() + " was NOT deleted");
+                } catch (Exception e) {
+                    Log.e("EXTERNAL_STORAGE", "Exception while deleting file " + e.getMessage());
+                }
             }
             return null;
         }
