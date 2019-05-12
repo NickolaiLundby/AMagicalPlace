@@ -73,7 +73,9 @@
         android:layout_alignBottom="@id/add_card_spinner_series"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:text="@android:string/search_go" />
+        android:text="@android:string/search_go"
+        android:textStyle="bold"
+        android:background="@drawable/button_add"/>
 
     <Button
         android:id="@+id/add_card_button_add"
@@ -85,6 +87,7 @@
         android:layout_alignParentBottom="true"
         android:layout_margin="4dp"
         android:text="Add"
+        android:textStyle="bold"
         android:background="@drawable/button_add"/>
 
     <Button
@@ -97,6 +100,7 @@
         android:layout_alignParentBottom="true"
         android:layout_margin="4dp"
         android:text="Cancel"
+        android:textStyle="bold"
         android:background="@drawable/button_cancel"/>
 
     <android.support.v7.widget.RecyclerView
