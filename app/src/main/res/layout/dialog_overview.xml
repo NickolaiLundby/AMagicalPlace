@@ -4,7 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="15dp"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@color/dialogBackground">
 
     <!--> Overview dialog top: Edit Collection / Add Collection <-->
     <TableRow>
@@ -13,6 +14,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/top_placeholder"
+            android:textColor="@color/colorWhite"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
     </TableRow>
 
@@ -23,15 +25,18 @@
             android:id="@+id/overview_dialog_tv_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/overview_dialog_tv_title" />
+            android:text="@string/overview_dialog_tv_title"
+            android:textColor="@color/colorWhite"/>
 
         <EditText
             android:id="@+id/overview_dialog_et_title"
             android:layout_width="280dp"
             android:layout_height="wrap_content"
             android:inputType="text"
+            android:textColor="@color/colorWhite"
+            android:backgroundTint="@color/colorWhite"
             android:hint="@string/overview_dialog_et_title_hint"
-            android:autofillHints="@string/overview_dialog_et_title_hint"/>
+            android:autofillHints="@string/overview_dialog_et_title_hint" />
     </TableRow>
 
     <!--> Overview dialog description <-->
@@ -40,7 +45,8 @@
             android:id="@+id/overview_dialog_tv_description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/overview_dialog_tv_description"/>
+            android:text="@string/overview_dialog_tv_description"
+            android:textColor="@color/colorWhite"/>
 
         <EditText
             android:id="@+id/overview_dialog_et_description"
@@ -48,6 +54,8 @@
             android:layout_height="wrap_content"
             android:inputType="text"
             android:hint="@string/overview_dialog_et_description_hint"
-            android:autofillHints="@string/overview_dialog_et_description_hint"/>
+            android:autofillHints="@string/overview_dialog_et_description_hint"
+            android:textColor="@color/colorWhite"
+            android:backgroundTint="@color/colorWhite"/>
     </TableRow>
 </TableLayout>
