@@ -67,7 +67,7 @@ public class CollectionActivity extends AppCompatActivity implements AddCardFrag
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.collection_container, collectionFragment, Constants.TAG_FRAGMENT_COLLECTION)
                     .commit();
-            AddCardFragment addCardFragment = AddCardFragment.newInstance(getIntent().getIntExtra(Constants.COLLECTION_ID, -1));
+            AddCardFragment addCardFragment = AddCardFragment.newInstance(getIntent().getIntExtra(Constants.COLLECTION_ID, -1), true);
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.wide_card_fragment_container, addCardFragment, Constants.TAG_FRAGMENT_ADDCARD)
                     .commit();
@@ -118,13 +118,13 @@ public class CollectionActivity extends AppCompatActivity implements AddCardFrag
 
         // TODO: Etc, fire up the add fragment.
         if (mTwoPane) {
-            AddCardFragment addCardFragment = AddCardFragment.newInstance(getIntent().getIntExtra(Constants.COLLECTION_ID, -1));
+            AddCardFragment addCardFragment = AddCardFragment.newInstance(getIntent().getIntExtra(Constants.COLLECTION_ID, -1), true);
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.wide_card_fragment_container, addCardFragment, Constants.TAG_FRAGMENT_ADDCARD)
                     .commit();
         }
         else {
-            AddCardFragment addCardFragment = AddCardFragment.newInstance(getIntent().getIntExtra(Constants.COLLECTION_ID, -1));
+            AddCardFragment addCardFragment = AddCardFragment.newInstance(getIntent().getIntExtra(Constants.COLLECTION_ID, -1), false);
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.collection_container, addCardFragment, Constants.TAG_FRAGMENT_ADDCARD)
                     .commit();
