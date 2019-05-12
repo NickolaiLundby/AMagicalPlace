@@ -31,6 +31,7 @@ import io.magicthegathering.javasdk.api.CardAPI;
 import nickolaill.staniec.runeak.amagicalplace.Adapters.CardAdapterListView;
 import nickolaill.staniec.runeak.amagicalplace.Models.Card;
 import nickolaill.staniec.runeak.amagicalplace.R;
+import nickolaill.staniec.runeak.amagicalplace.Utilities.InternetUtils;
 import nickolaill.staniec.runeak.amagicalplace.Utilities.StorageUtils;
 import nickolaill.staniec.runeak.amagicalplace.ViewModels.AddCardViewModel;
 import nickolaill.staniec.runeak.amagicalplace.ViewModels.AddCardViewModelFactory;
@@ -211,7 +212,7 @@ public class AddCardFragment extends Fragment{
 
         protected Boolean doInBackground(ArrayList<String>... arrayLists) {
 
-            if(isOnline()){
+            if(InternetUtils.isOnline()){
                 try {
                     apiResults = CardAPI.getAllCards(arrayLists[0]);
                 } catch (Exception e) {
@@ -235,17 +236,4 @@ public class AddCardFragment extends Fragment{
         }
     }
 
-    //https://stackoverflow.com/a/27312494
-    private boolean isOnline() {
-        try {
-            int timeoutMs = 1500;
-            Socket sock = new Socket();
-            SocketAddress sockaddr = new InetSocketAddress("8.8.8.8", 53);
-
-            sock.connect(sockaddr, timeoutMs);
-            sock.close();
-
-            return true;
-        } catch (IOException e) { return false; }
-    }
 }

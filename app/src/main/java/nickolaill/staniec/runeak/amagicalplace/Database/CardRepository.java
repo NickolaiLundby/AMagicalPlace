@@ -136,23 +136,32 @@ public class CardRepository {
         protected Void doInBackground(Card... cards) {
             Card existingCard = magicDao.getCardByCollectionAndMultiverseId(cards[0].getCollectionId(), cards[0].getMultiverseId());
             if(existingCard == null){
-                final Card card = cards[0];
-                CustomVolleyRequest volleyRequest = new CustomVolleyRequest(convertHttpToHttps(card.getImageUrl()), new Response.Listener<NetworkResponse>() {
-                    @Override
-                    public void onResponse(NetworkResponse response) {
-                        InputStream is = new ByteArrayInputStream(response.data);
-                        Bitmap b = BitmapFactory.decodeStream(is);
-                        saveImageToExternalStorage(false, b, card, magicDao);
-                    }
-                }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
+                File file = getFile(createFileName(cards[0].getMultiverseId()));
+                if(file.exists()){
+                    Log.d("img", "using existing image");
+                    Card card = cards[0];
+                    card.setImageUri(Uri.parse(file.getAbsolutePath()));
+                    magicDao.insertCard(card);
+                } else {
+                    Log.d("img", "downloading new image");
+                    final Card card = cards[0];
+                    CustomVolleyRequest volleyRequest = new CustomVolleyRequest(convertHttpToHttps(card.getImageUrl()), new Response.Listener<NetworkResponse>() {
+                        @Override
+                        public void onResponse(NetworkResponse response) {
+                            InputStream is = new ByteArrayInputStream(response.data);
+                            Bitmap b = BitmapFactory.decodeStream(is);
+                            saveImageToExternalStorage(false, b, card, magicDao);
+                        }
+                    }, new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
 
-                    }
-                });
+                        }
+                    });
 
-                // Add ImageRequest to the RequestQueue
-                requestQueue.add(volleyRequest);
+                    // Add ImageRequest to the RequestQueue
+                    requestQueue.add(volleyRequest);
+                    }
             } else {
                 existingCard.setQuantity(existingCard.getQuantity()+1);
                 magicDao.updateCard(existingCard);
@@ -213,7 +222,7 @@ public class CardRepository {
         protected Void doInBackground(Bitmap... bitmaps) {
             boolean success = true;
             //String dirFileName = "DIR_" + collectionId;
-            String imageFileName = "JPEG_" + card.getMultiverseId() + ".jpg";
+            String imageFileName = createFileName(card.getMultiverseId());
 
             //File dir = new File(parentFile, dirFileName);
             //if(!dir.exists())
@@ -270,4 +279,14 @@ public class CardRepository {
     private String convertHttpToHttps(String uri){
         return uri.replace("http://", "https://");
     }
+
+    private String createFileName(int multiverseId){
+        return "JPEG_" + multiverseId + ".jpg";
+    }
+
+    public File getFile(String fileName){
+        File file = new File(context.getCacheDir(), fileName);
+        return file;
+    }
+
 }
