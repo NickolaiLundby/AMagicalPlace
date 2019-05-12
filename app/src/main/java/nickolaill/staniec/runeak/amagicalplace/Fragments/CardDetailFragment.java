@@ -75,12 +75,16 @@ public class CardDetailFragment extends Fragment {
         }
 
         btnReturn = v.findViewById(R.id.btnReturn);
-        btnReturn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mListener.onCardDetailFragmentCancelInteraction();
-            }
-        });
+        if(!mode){
+            btnReturn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mListener.onCardDetailFragmentCancelInteraction();
+                }
+            });
+        } else {
+            btnReturn.setVisibility(View.INVISIBLE);
+        }
 
         imgCard = v.findViewById(R.id.imgCard);
         if(StorageUtils.isUriValid(card.getImageUri())){

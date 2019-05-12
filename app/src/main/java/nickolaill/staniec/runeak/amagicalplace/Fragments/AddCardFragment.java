@@ -39,17 +39,19 @@ import nickolaill.staniec.runeak.amagicalplace.ViewModels.AddCardViewModelFactor
 public class AddCardFragment extends Fragment{
     private AddCardFragmentListener mListener;
     private static final String ARG_COID = "collectionId";
+    private static final String ARG_MODE = "mode";
     private int collectionId;
+    private boolean mode;
     private EditText cardTitle;
     private Spinner seriesDropdown;
     private Card cardToBeAdded;
     private AddCardViewModel viewModel;
 
-    public static AddCardFragment newInstance(int collectionId) {
+    public static AddCardFragment newInstance(int collectionId, boolean mode) {
         AddCardFragment fragment = new AddCardFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_COID, collectionId);
-        // TODO: Any args needed should be put here.
+        args.putBoolean(ARG_MODE, mode);
         fragment.setArguments(args);
         return fragment;
     }
@@ -119,12 +121,17 @@ public class AddCardFragment extends Fragment{
             }
         });
 
-        cancelButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mListener.onAddCardFragmentCancelInteraction();
-            }
-        });
+        mode = getArguments().getBoolean(ARG_MODE);
+        if(!mode){
+            cancelButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mListener.onAddCardFragmentCancelInteraction();
+                }
+            });
+        } else {
+            cancelButton.setVisibility(View.INVISIBLE);
+        }
 
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
