@@ -40,6 +40,9 @@ public interface MagicDao {
     List<Card> getCardsByMultiverseId(int multiverseId);
 
     @Query("SELECT * FROM card_table WHERE collectionId LIKE :collectionId")
+    List<Card> getAllCardsList(int collectionId);
+
+    @Query("SELECT * FROM card_table WHERE collectionId LIKE :collectionId")
     LiveData<List<Card>> getAllCards(int collectionId);
 
     @Query("DELETE FROM card_table")

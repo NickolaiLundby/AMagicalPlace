@@ -108,7 +108,7 @@ public class OverviewActivity extends AppCompatActivity implements OverviewFragm
 
     @Override
     public void onCollectionDetailFragmentUpdate(Collection collection) {
-        priceService.testApi();
+        priceService.updateCollection(collection);
     }
 
     @Override
