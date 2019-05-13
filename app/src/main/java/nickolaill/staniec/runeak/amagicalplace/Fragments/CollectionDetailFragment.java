@@ -95,4 +95,11 @@ public class CollectionDetailFragment extends Fragment {
         void onCollectionDetailFragmentBack();
         void onCollectionDetailFragmentUpdate(Collection collection);
     }
+
+    public void OverrideArgs(Collection collection){
+        Bundle args = new Bundle();
+        args.putParcelable(ARG_COLLECTION, collection);
+        //TODO: Any more args are put here
+        this.setArguments(args);
+    }
 }

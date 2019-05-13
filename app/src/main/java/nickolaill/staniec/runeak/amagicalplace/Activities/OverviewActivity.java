@@ -1,13 +1,17 @@
 package nickolaill.staniec.runeak.amagicalplace.Activities;
 
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.BroadcastReceiver;
 import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.os.IBinder;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import nickolaill.staniec.runeak.amagicalplace.Fragments.CollectionDetailFragment;
 import nickolaill.staniec.runeak.amagicalplace.Fragments.OverviewFragment;
@@ -40,6 +44,8 @@ public class OverviewActivity extends AppCompatActivity implements OverviewFragm
             // we just leave this bracket empty, as this will automatically recreate the fragment(s)
         }
 
+        // Service
+        registerMyReceiver();
         Intent priceServiceIntent = new Intent(this, PriceService.class);
         getBaseContext().startService(priceServiceIntent);
     }
@@ -108,12 +114,31 @@ public class OverviewActivity extends AppCompatActivity implements OverviewFragm
 
     @Override
     public void onCollectionDetailFragmentUpdate(Collection collection) {
-        priceService.updateCollection(collection);
+        priceService.updateCollectionPrices(collection);
     }
+
+    private void registerMyReceiver() {
+        try {
+            IntentFilter intentFilter = new IntentFilter();
+            intentFilter.addAction(Constants.BROADCAST_DATABASE_UPDATED);
+            registerReceiver(receiver, intentFilter);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private final BroadcastReceiver receiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            Collection collection = intent.getParcelableExtra("col");
+            viewModel.update(collection);
+        }
+    };
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        unregisterReceiver(receiver);
         unbindService(mConnection);
     }
 }

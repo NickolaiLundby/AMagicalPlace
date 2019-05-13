@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Binder;
 import android.os.IBinder;
-import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -19,13 +18,15 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import nickolaill.staniec.runeak.amagicalplace.Database.CardDatabase;
 import nickolaill.staniec.runeak.amagicalplace.Models.Card;
 import nickolaill.staniec.runeak.amagicalplace.Models.Collection;
 import nickolaill.staniec.runeak.amagicalplace.Models.MagicDao;
+import nickolaill.staniec.runeak.amagicalplace.Utilities.Constants;
+import nickolaill.staniec.runeak.amagicalplace.Utilities.InternetUtils;
+import nickolaill.staniec.runeak.amagicalplace.Utilities.ValueCalculator;
 
 public class PriceService extends Service {
     private final static String ScryfallURL = "https://api.scryfall.com/cards/collection";
@@ -52,20 +53,16 @@ public class PriceService extends Service {
     }
 
     //API
-    public void testApi(){
-        Toast.makeText(this, "Update handled by service", Toast.LENGTH_SHORT).show();
-    }
-
-    public void updateCollection(Collection collection){
-        new UpdateCollectionAsyncTask(collection).execute();
+    public void updateCollectionPrices(Collection collection){
+        new UpdateCollectionPricesAsyncTask(collection).execute();
     }
 
     //Async operations
-    private class UpdateCollectionAsyncTask extends AsyncTask<Void, Void, Void> {
+    private class UpdateCollectionPricesAsyncTask extends AsyncTask<Void, Void, Void> {
         private Collection collection;
         private List<Card> allCardsInCollection;
 
-        private UpdateCollectionAsyncTask(Collection collection){
+        private UpdateCollectionPricesAsyncTask(Collection collection){
             this.collection = collection;
         }
 
@@ -89,10 +86,11 @@ public class PriceService extends Service {
                 JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, ScryfallURL, identifiersObj, new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        Toast.makeText(PriceService.this, "Response: " + response.toString(), Toast.LENGTH_SHORT).show();
                         // TODO: Should add the price to each card in collection.
+
                         // TODO: Should add the total value to this collection, and the lastEvaluated with date.
                         collection.setLastEvaluated(Calendar.getInstance().getTime());
+                        collection.setValue(ValueCalculator.calculateCollectionValue(allCardsInCollection, InternetUtils.extractJsonScryfall(response)));
                     }
                 }, new Response.ErrorListener() {
                     @Override
@@ -110,8 +108,19 @@ public class PriceService extends Service {
 
         @Override
         protected void onPostExecute(Void aVoid) {
-            super.onPostExecute(aVoid);
-            // TODO: Should make a broadcast so the UI can update.
+            sendMyBroadcast(collection);
+        }
+    }
+
+    //Broadcasting
+    private void sendMyBroadcast(Collection collection){
+        try{
+            Intent broadCastIntent = new Intent();
+            broadCastIntent.putExtra("col", collection);
+            broadCastIntent.setAction(Constants.BROADCAST_DATABASE_UPDATED);
+            sendBroadcast(broadCastIntent);
+        } catch (Exception e){
+            e.printStackTrace();
         }
     }
 }

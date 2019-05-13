@@ -10,4 +10,7 @@ public class Constants {
     public static final String TAG_FRAGMENT_CARDDETAIL = "nickolaill.staniec.runeak.amagicalplace.CARDDETAIL_FRAGMENT_TAG";
     public static final String TAG_FRAGMENT_COLLECTIONDETAIL = "nickolaill.staniec.runeak.amagicalplace.COLLECTIONDETAIL_FRAGMENT_TAG";
     public static final String TAG_FRAGMENT_OVERVIEW = "nickolaill.staniec.runeak.amagicalplace.OVERVIEW_FRAGMENT_TAG";
+
+    // Broadcasting
+    public static final String BROADCAST_DATABASE_UPDATED = "nickolaill.staniec.runeak.amagicalplace.DATABASE_UPDATED";
 }
