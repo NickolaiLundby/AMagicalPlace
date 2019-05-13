@@ -15,7 +15,7 @@
             android:id="@+id/tv_collection_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Title"
+            android:text="@string/title"
             android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
             android:layout_alignParentStart="true"
             android:layout_alignParentLeft="true"
@@ -26,7 +26,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/tv_collection_title"
-            android:text="Description"/>
+            android:text="@string/description"/>
 
         <Button
             android:id="@+id/button_collection_edit"
@@ -35,7 +35,7 @@
             android:gravity="center"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
-            android:text="Edit"
+            android:text="@string/btn_edit"
             android:textStyle="bold"
             android:background="@drawable/button_add"/>
 

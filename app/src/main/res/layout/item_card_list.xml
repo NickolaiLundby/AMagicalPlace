@@ -18,14 +18,14 @@
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
-            android:text="Alpha"
+            android:text="@string/item_card_list_alpha"
             android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"/>
 
         <TextView
             android:id="@+id/text_view_card_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Card name"
+            android:text="@string/item_card_list_cardName"
             android:textStyle="bold"
             android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
             android:maxLines="1"
@@ -37,7 +37,7 @@
             android:id="@+id/text_view_card_type"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Type"
+            android:text="@string/item_card_list_type"
             android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
             android:layout_below="@id/text_view_card_name" />
 
@@ -65,7 +65,8 @@
             android:layout_alignBottom="@id/text_view_card_type"
             android:cropToPadding="true"
             style="@style/small_square_button"
-            app:srcCompat="@drawable/ic_add_small"/>
+            app:srcCompat="@drawable/ic_add_small"
+            android:contentDescription="@string/item_card_list_incrementQ" />
 
         <ImageButton
             android:id="@+id/button_decrease_quantity"
@@ -80,8 +81,8 @@
             android:layout_alignBottom="@id/text_view_card_type"
             android:cropToPadding="true"
             style="@style/small_square_button"
-            app:srcCompat="@drawable/ic_remove_small"/>
-
+            app:srcCompat="@drawable/ic_remove_small"
+            android:contentDescription="@string/item_card_list_decrementQ" />
     </RelativeLayout>
 
 </android.support.v7.widget.CardView>
