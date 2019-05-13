@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/dialogBackground"
+    android:padding="15dp">
+
+    <!-- Date -->
+    <TableRow>
+        <TextView
+            android:id="@+id/dialog_collection_tv_dato"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Date:"
+            android:textColor="@color/colorWhite"/>
+        <EditText
+            android:id="@+id/dialog_collection_et_dato"
+            android:layout_height="wrap_content"
+            android:layout_width="280dp"
+            android:inputType="text"
+            android:textColor="@color/colorWhite"
+            android:backgroundTint="@color/colorWhite"
+            android:hint="Date here"
+            android:autofillHints="Date here" />
+    </TableRow>
+
+    <!-- Value -->
+    <TableRow>
+        <TextView
+            android:id="@+id/dialog_collection_tv_value"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:textColor="@color/colorWhite"
+            android:text="Value:" />
+        <EditText
+            android:id="@+id/dialog_collection_et_value"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:inputType="text"
+            android:textColor="@color/colorWhite"
+            android:backgroundTint="@color/colorWhite"
+            android:hint="Value here"
+            android:autofillHints="Value here"/>
+    </TableRow>
+
+    <!-- Buttons -->
+    <TableRow>
+
+        <Button
+            android:id="@+id/dialog_collection_btn_back"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button_cancel"
+            android:text="Back"
+            android:textStyle="bold"
+            android:layout_weight="1"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"/>
+
+        <Button
+            android:id="@+id/dialog_collection_btn_update"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button_add"
+            android:text="Update"
+            android:textStyle="bold"
+            android:layout_marginLeft="150dp"
+            android:layout_marginTop="10dp"
+            android:layout_weight="1"/>
+    </TableRow>
+</TableLayout>
+
