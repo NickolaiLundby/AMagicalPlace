@@ -19,6 +19,8 @@
             android:id="@+id/collection_detail_tv_date"
             android:layout_height="wrap_content"
             android:layout_width="280dp"
+            android:layout_marginLeft="4dp"
+            android:layout_marginStart="4dp"
             android:textColor="@color/colorWhite"
             android:text="Placeholder"
             android:backgroundTint="@color/colorWhite" />
@@ -36,6 +38,8 @@
             android:id="@+id/collection_detail_tv_value"
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
+            android:layout_marginLeft="4dp"
+            android:layout_marginStart="4dp"
             android:text="Placeholder"
             android:textColor="@color/colorWhite"
             android:backgroundTint="@color/colorWhite"/>

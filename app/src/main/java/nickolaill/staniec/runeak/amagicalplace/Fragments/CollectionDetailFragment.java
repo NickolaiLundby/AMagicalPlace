@@ -1,7 +1,9 @@
 package nickolaill.staniec.runeak.amagicalplace.Fragments;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -11,11 +13,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import nickolaill.staniec.runeak.amagicalplace.Models.Collection;
 import nickolaill.staniec.runeak.amagicalplace.R;
-import nickolaill.staniec.runeak.amagicalplace.Services.PriceService;
+import nickolaill.staniec.runeak.amagicalplace.Utilities.Constants;
 
 public class CollectionDetailFragment extends Fragment {
     public static final String ARG_COLLECTION = "collection";
@@ -38,6 +39,7 @@ public class CollectionDetailFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v;
         v = inflater.inflate(R.layout.fragment_collection_detail, container, false);
+        registerMyReceiver();
 
         collection = getArguments().getParcelable(ARG_COLLECTION);
 
@@ -96,10 +98,34 @@ public class CollectionDetailFragment extends Fragment {
         void onCollectionDetailFragmentUpdate(Collection collection);
     }
 
-    public void OverrideArgs(Collection collection){
-        Bundle args = new Bundle();
-        args.putParcelable(ARG_COLLECTION, collection);
-        //TODO: Any more args are put here
-        this.setArguments(args);
+    private void registerMyReceiver() {
+        try {
+            IntentFilter intentFilter = new IntentFilter();
+            intentFilter.addAction(Constants.BROADCAST_DATABASE_UPDATED);
+            getActivity().registerReceiver(receiver, intentFilter);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private final BroadcastReceiver receiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            Collection collection = intent.getParcelableExtra(Constants.COLLECTION_TAG);
+            Bundle args = new Bundle();
+            args.putParcelable(ARG_COLLECTION, collection);
+            getFragmentManager()
+                    .beginTransaction()
+                    .detach(CollectionDetailFragment.this)
+                    .attach(CollectionDetailFragment.this)
+                    .commit();
+        }
+    };
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if(receiver != null)
+            getActivity().unregisterReceiver(receiver);
     }
 }

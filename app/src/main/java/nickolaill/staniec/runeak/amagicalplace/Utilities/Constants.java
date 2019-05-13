@@ -3,6 +3,7 @@ package nickolaill.staniec.runeak.amagicalplace.Utilities;
 public class Constants {
 
     public static final String COLLECTION_ID = "nickolaill.staniec.runeak.amagicalplace.COLLECTION_ID";
+    public static final String COLLECTION_TAG = "nickolaill.staniec.runeak.amagicalplace.COLLECTION_TAG";
 
     // FRAGMENT TAGS
     public static final String TAG_FRAGMENT_COLLECTION = "nickolaill.staniec.runeak.amagicalplace.COLLECTION_FRAGMENT_TAG";

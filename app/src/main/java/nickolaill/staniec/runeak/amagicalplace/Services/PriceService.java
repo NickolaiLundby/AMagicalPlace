@@ -91,6 +91,7 @@ public class PriceService extends Service {
                         // TODO: Should add the total value to this collection, and the lastEvaluated with date.
                         collection.setLastEvaluated(Calendar.getInstance().getTime());
                         collection.setValue(ValueCalculator.calculateCollectionValue(allCardsInCollection, InternetUtils.extractJsonScryfall(response)));
+                        sendMyBroadcast(collection);
                     }
                 }, new Response.ErrorListener() {
                     @Override
@@ -105,18 +106,13 @@ public class PriceService extends Service {
             }
             return null;
         }
-
-        @Override
-        protected void onPostExecute(Void aVoid) {
-            sendMyBroadcast(collection);
-        }
     }
 
     //Broadcasting
     private void sendMyBroadcast(Collection collection){
         try{
             Intent broadCastIntent = new Intent();
-            broadCastIntent.putExtra("col", collection);
+            broadCastIntent.putExtra(Constants.COLLECTION_TAG, collection);
             broadCastIntent.setAction(Constants.BROADCAST_DATABASE_UPDATED);
             sendBroadcast(broadCastIntent);
         } catch (Exception e){

@@ -8,10 +8,8 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.os.IBinder;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.widget.Toast;
 
 import nickolaill.staniec.runeak.amagicalplace.Fragments.CollectionDetailFragment;
 import nickolaill.staniec.runeak.amagicalplace.Fragments.OverviewFragment;
@@ -130,7 +128,7 @@ public class OverviewActivity extends AppCompatActivity implements OverviewFragm
     private final BroadcastReceiver receiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            Collection collection = intent.getParcelableExtra("col");
+            Collection collection = intent.getParcelableExtra(Constants.COLLECTION_TAG);
             viewModel.update(collection);
         }
     };
