@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "5ba5fdf33f2961c68ba9773fa9d37ba5",
+    "identityHash": "030fc000a98a7388b1454686232b237b",
     "entities": [
       {
         "tableName": "card_table",
@@ -143,7 +143,7 @@
       },
       {
         "tableName": "collection_table",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`coId` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `title` TEXT, `description` TEXT)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`coId` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `title` TEXT, `description` TEXT, `value` REAL NOT NULL, `lastEvaluated` INTEGER)",
         "fields": [
           {
             "fieldPath": "coId",
@@ -161,6 +161,18 @@
             "fieldPath": "description",
             "columnName": "description",
             "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "value",
+            "columnName": "value",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "lastEvaluated",
+            "columnName": "lastEvaluated",
+            "affinity": "INTEGER",
             "notNull": false
           }
         ],
@@ -185,7 +197,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"5ba5fdf33f2961c68ba9773fa9d37ba5\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"030fc000a98a7388b1454686232b237b\")"
     ]
   }
 }

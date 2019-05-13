@@ -10,46 +10,42 @@
     <!-- Date -->
     <TableRow>
         <TextView
-            android:id="@+id/dialog_collection_tv_dato"
+            android:id="@+id/collection_detail_tv_hardcoded_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Date:"
             android:textColor="@color/colorWhite"/>
-        <EditText
-            android:id="@+id/dialog_collection_et_dato"
+        <TextView
+            android:id="@+id/collection_detail_tv_date"
             android:layout_height="wrap_content"
             android:layout_width="280dp"
-            android:inputType="text"
             android:textColor="@color/colorWhite"
-            android:backgroundTint="@color/colorWhite"
-            android:hint="Date here"
-            android:autofillHints="Date here" />
+            android:text="Placeholder"
+            android:backgroundTint="@color/colorWhite" />
     </TableRow>
 
     <!-- Value -->
     <TableRow>
         <TextView
-            android:id="@+id/dialog_collection_tv_value"
+            android:id="@+id/collection_detail_tv_hardcoded_value"
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
             android:textColor="@color/colorWhite"
             android:text="Value:" />
-        <EditText
-            android:id="@+id/dialog_collection_et_value"
+        <TextView
+            android:id="@+id/collection_detail_tv_value"
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
-            android:inputType="text"
+            android:text="Placeholder"
             android:textColor="@color/colorWhite"
-            android:backgroundTint="@color/colorWhite"
-            android:hint="Value here"
-            android:autofillHints="Value here"/>
+            android:backgroundTint="@color/colorWhite"/>
     </TableRow>
 
     <!-- Buttons -->
     <TableRow>
 
         <Button
-            android:id="@+id/dialog_collection_btn_back"
+            android:id="@+id/collection_detail_btn_back"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:background="@drawable/button_cancel"
@@ -60,7 +56,7 @@
             android:layout_marginTop="10dp"/>
 
         <Button
-            android:id="@+id/dialog_collection_btn_update"
+            android:id="@+id/collection_detail_btn_update"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:background="@drawable/button_add"
