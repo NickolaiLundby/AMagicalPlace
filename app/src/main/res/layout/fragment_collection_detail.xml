@@ -13,7 +13,7 @@
             android:id="@+id/collection_detail_tv_hardcoded_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Date:"
+            android:text="@string/fragment_collection_date"
             android:textColor="@color/colorWhite"/>
         <TextView
             android:id="@+id/collection_detail_tv_date"
@@ -22,7 +22,7 @@
             android:layout_marginLeft="4dp"
             android:layout_marginStart="4dp"
             android:textColor="@color/colorWhite"
-            android:text="Placeholder"
+            android:text="@string/placeholder"
             android:backgroundTint="@color/colorWhite" />
     </TableRow>
 
@@ -33,14 +33,14 @@
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
             android:textColor="@color/colorWhite"
-            android:text="Value:" />
+            android:text="@string/fragment_collection_value" />
         <TextView
             android:id="@+id/collection_detail_tv_value"
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
             android:layout_marginLeft="4dp"
             android:layout_marginStart="4dp"
-            android:text="Placeholder"
+            android:text="@string/placeholder"
             android:textColor="@color/colorWhite"
             android:backgroundTint="@color/colorWhite"/>
     </TableRow>
@@ -53,9 +53,10 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:background="@drawable/button_cancel"
-            android:text="Back"
+            android:text="@string/btn_back"
             android:textStyle="bold"
             android:layout_weight="1"
+            android:layout_marginStart="10dp"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"/>
 
@@ -64,8 +65,9 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:background="@drawable/button_add"
-            android:text="Update"
+            android:text="@string/btn_update"
             android:textStyle="bold"
+            android:layout_marginStart="150dp"
             android:layout_marginLeft="150dp"
             android:layout_marginTop="10dp"
             android:layout_weight="1"/>

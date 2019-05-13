@@ -156,7 +156,6 @@ public class CollectionActivity extends AppCompatActivity implements AddCardFrag
     @Override
     public void onCollectionFragmentDecreaseQuantity(Card card) {
         if(card.getQuantity() == 1){
-            //viewModel.delete(card);
             CollectionDialogDeletionAlert(card);
         }
         else{

@@ -19,6 +19,21 @@
     <string name="top_placeholder">Top Placeholder</string>
     <string name="btn_yes">Yes</string>
     <string name="btn_no">No</string>
+    <string name="add_card_to_collection">Add a card to collection</string>
+    <string name="btn_add">Add</string>
+    <string name="btn_cancel">Cancel</string>
+    <string name="fragment_collection_date">Date:</string>
+    <string name="placeholder">Placeholder</string>
+    <string name="fragment_collection_value">Value:</string>
+    <string name="btn_back">Back</string>
+    <string name="btn_update">Update</string>
+    <string name="item_card_list_alpha">Alpha</string>
+    <string name="item_card_list_cardName">Card name</string>
+    <string name="item_card_list_type">Type</string>
+    <string name="item_card_list_incrementQ">Increments the quantity</string>
+    <string name="item_card_list_decrementQ">Decrements the quantity</string>
+    <string name="description">Description</string>
+    <string name="btn_edit">Edit</string>
 
     <!-- TODO: All series should probably be checked if they work @ API -->
     <string-array name="magicsets">
