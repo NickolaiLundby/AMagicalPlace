@@ -3,6 +3,7 @@ package nickolaill.staniec.runeak.amagicalplace.Fragments;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
+import android.icu.text.RelativeDateTimeFormatter;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -17,6 +18,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -46,6 +48,7 @@ public class AddCardFragment extends Fragment{
     private Spinner seriesDropdown;
     private Card cardToBeAdded;
     private AddCardViewModel viewModel;
+    private RelativeLayout loadingPanel;
 
     public static AddCardFragment newInstance(int collectionId, boolean mode) {
         AddCardFragment fragment = new AddCardFragment();
@@ -140,6 +143,10 @@ public class AddCardFragment extends Fragment{
             }
         });
 
+        //https://stackoverflow.com/questions/5442183/using-the-animated-circle-in-an-imageview-while-loading-stuff
+        loadingPanel = v.findViewById(R.id.loadingPanel);
+        loadingPanel.setVisibility(View.GONE);
+
         return v;
     }
 
@@ -174,6 +181,9 @@ public class AddCardFragment extends Fragment{
     }
 
     private void SearchButtonClicked(){
+        loadingPanel.setVisibility(View.VISIBLE);
+        List<Card> noCards = new ArrayList<>();
+        viewModel.setAllCards(noCards);
         ArrayList<String> filter = new ArrayList<>();
         String cardNameString = cardTitle.getText().toString();
         if(cardNameString != null && !cardNameString.isEmpty()){
@@ -191,6 +201,7 @@ public class AddCardFragment extends Fragment{
     }
 
     private void onApiResult(List<io.magicthegathering.javasdk.resource.Card> cardList){
+        loadingPanel.setVisibility(View.GONE);
         if(cardList != null){
             if(!cardList.isEmpty()){
                 List<Card> cardsRrsults = new ArrayList<>();
