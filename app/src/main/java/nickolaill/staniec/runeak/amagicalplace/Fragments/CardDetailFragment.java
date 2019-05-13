@@ -78,7 +78,8 @@ public class CardDetailFragment extends Fragment {
 
         txtPrice = v.findViewById(R.id.txtPrice);
         Double price = card.getPrice();
-        if(price != null)
+        Log.d("price", ""+price);
+        if(price != null && price > 0)
             txtPrice.setText("" + price + " USD");
 
         txtLastEval = v.findViewById(R.id.txtLastEval);

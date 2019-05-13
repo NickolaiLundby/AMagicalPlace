@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Binder;
 import android.os.IBinder;
+import android.util.Log;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -78,8 +79,14 @@ public class PriceService extends Service {
             try{
                 for(Card c: allCardsInCollection){
                     JSONObject jsonObj = new JSONObject();
-                    jsonObj.put("multiverse_id", c.getMultiverseId());
-                    jsonArray.put(jsonObj);
+                    Log.d("mul", ""+c.getMultiverseId());
+                    if(c.getMultiverseId() > 0){
+                        Log.d("mul", "adding to jsonarray");
+                        jsonObj.put("multiverse_id", c.getMultiverseId());
+                        jsonArray.put(jsonObj);
+                    } else {
+                        allCardsInCollection.remove(c);
+                    }
                 }
                 JSONObject identifiersObj = new JSONObject();
                 identifiersObj.put("identifiers", jsonArray);
