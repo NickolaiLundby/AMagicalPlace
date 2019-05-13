@@ -11,6 +11,7 @@ import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
 import java.math.BigDecimal;
+import java.util.Date;
 
 import static android.arch.persistence.room.ForeignKey.CASCADE;
 
@@ -21,6 +22,8 @@ public class Card implements Parcelable {
     @PrimaryKey(autoGenerate = true)
     private int caId;
     private int quantity;
+    private double price;
+    private Date lastEvaluated;
     //@ForeignKey(entity = Collection.class, parentColumns = "coId", childColumns = "collectionId")
     private int collectionId;
 
@@ -57,6 +60,21 @@ public class Card implements Parcelable {
         this.types = TextUtils.join(",",card.getTypes());
     }
 
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
+    public Date getLastEvaluated() {
+        return lastEvaluated;
+    }
+
+    public void setLastEvaluated(Date lastEvaluated) {
+        this.lastEvaluated = lastEvaluated;
+    }
     public void setTitle(String title) {
         this.title = title;
     }
