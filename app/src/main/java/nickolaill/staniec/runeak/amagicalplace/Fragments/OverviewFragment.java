@@ -163,13 +163,13 @@ public class OverviewFragment extends Fragment {
 
     private void OverviewDialogDeletionAlert(final RecyclerView.ViewHolder viewHolder, final CollectionAdapter adapter) {
         LayoutInflater mLayout = LayoutInflater.from(getContext());
-        final View dialogView = mLayout.inflate(R.layout.dialog_overview_deletion, null);
+        final View dialogView = mLayout.inflate(R.layout.dialog_deletion, null);
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         builder.setView(dialogView);
 
         //Find objects
-        final Button btnYes = dialogView.findViewById(R.id.overview_dialog_btn_yes);
-        final Button btnNo = dialogView.findViewById(R.id.overview_dialog_btn_no);
+        final Button btnYes = dialogView.findViewById(R.id.dialog_btn_yes);
+        final Button btnNo = dialogView.findViewById(R.id.dialog_btn_no);
 
         //Creates the alert dialog
         //This allows the custom buttons to close dialog

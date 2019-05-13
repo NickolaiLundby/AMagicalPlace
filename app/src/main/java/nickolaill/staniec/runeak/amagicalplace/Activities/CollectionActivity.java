@@ -1,27 +1,20 @@
 package nickolaill.staniec.runeak.amagicalplace.Activities;
 
 import android.arch.lifecycle.ViewModelProviders;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.os.AsyncTask;
+import android.content.DialogInterface;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
-import android.widget.Toast;
-
-import java.io.ByteArrayInputStream;
-import java.io.File;
-import java.io.InputStream;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.Button;
 
 import nickolaill.staniec.runeak.amagicalplace.Fragments.AddCardFragment;
 import nickolaill.staniec.runeak.amagicalplace.Fragments.CardDetailFragment;
 import nickolaill.staniec.runeak.amagicalplace.Fragments.CollectionFragment;
 import nickolaill.staniec.runeak.amagicalplace.Models.Card;
-import nickolaill.staniec.runeak.amagicalplace.Models.MagicDao;
 import nickolaill.staniec.runeak.amagicalplace.R;
 import nickolaill.staniec.runeak.amagicalplace.Utilities.Constants;
-import nickolaill.staniec.runeak.amagicalplace.Utilities.CustomVolleyRequest;
-import nickolaill.staniec.runeak.amagicalplace.Utilities.StorageUtils;
 import nickolaill.staniec.runeak.amagicalplace.ViewModels.CollectionViewModel;
 import nickolaill.staniec.runeak.amagicalplace.ViewModels.CollectionViewModelFactory;
 
@@ -163,7 +156,8 @@ public class CollectionActivity extends AppCompatActivity implements AddCardFrag
     @Override
     public void onCollectionFragmentDecreaseQuantity(Card card) {
         if(card.getQuantity() == 1){
-            viewModel.delete(card);
+            //viewModel.delete(card);
+            CollectionDialogDeletionAlert(card);
         }
         else{
             card.setQuantity(card.getQuantity() - 1);
@@ -185,6 +179,41 @@ public class CollectionActivity extends AppCompatActivity implements AddCardFrag
                     .replace(R.id.collection_container, collectionFragment, Constants.TAG_FRAGMENT_COLLECTION)
                     .commit();
         }
+    }
+
+    private void CollectionDialogDeletionAlert(final Card card){
+        LayoutInflater mLayout = LayoutInflater.from(this);
+        final View dialogView = mLayout.inflate(R.layout.dialog_deletion, null);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setView(dialogView);
+
+        //Find objects
+        final Button btnYes = dialogView.findViewById(R.id.dialog_btn_yes);
+        final Button btnNo = dialogView.findViewById(R.id.dialog_btn_no);
+
+        //Creates the alert dialog
+        //This allows the custom buttons to close dialog
+        final AlertDialog dialog = builder.create();
+
+        //Button yes
+        btnYes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                viewModel.delete(card);
+                dialog.cancel();
+            }
+        });
+
+        //Button no
+        btnNo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+                dialog.cancel();
+            }
+        });
+
+        dialog.show();
     }
 
 }
