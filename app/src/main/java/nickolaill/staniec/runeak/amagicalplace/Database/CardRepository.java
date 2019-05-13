@@ -180,6 +180,8 @@ public class CardRepository {
         @Override
         protected Void doInBackground(Card... cards) {
             final Card card = cards[0];
+            if(card.getImageUrl().isEmpty())
+                return null;
             CustomVolleyRequest volleyRequest = new CustomVolleyRequest(convertHttpToHttps(card.getImageUrl()), new Response.Listener<NetworkResponse>() {
                 @Override
                 public void onResponse(NetworkResponse response) {
