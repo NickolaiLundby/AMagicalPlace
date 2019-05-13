@@ -83,11 +83,23 @@ public class CollectionAdapter extends ListAdapter<Collection, CollectionAdapter
                     }
                 }
             });
+            itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    if (listener != null && getAdapterPosition() != RecyclerView.NO_POSITION){
+                        listener.onLongItemClick(getItem(getAdapterPosition()));
+                        return true;
+                    }
+                    else
+                        return false;
+                }
+            });
         }
     }
 
     public interface OnItemClickListener {
         void onItemClick(Collection collection);
+        void onLongItemClick(Collection collection);
         void onButtonItemClick(Collection collection);
     }
 

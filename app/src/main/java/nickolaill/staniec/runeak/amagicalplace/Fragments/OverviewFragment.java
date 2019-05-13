@@ -88,6 +88,11 @@ public class OverviewFragment extends Fragment {
             }
 
             @Override
+            public void onLongItemClick(Collection collection) {
+                mListener.onOverviewFragmentLongClickCollection(collection);
+            }
+
+            @Override
             public void onButtonItemClick(Collection collection) {
                 OverviewDialogBuilder(collection);
             }
@@ -200,6 +205,7 @@ public class OverviewFragment extends Fragment {
         void onOverviewFragmentEditCollectionOk(Collection collection);
         void onOverviewFragmentAddCollectionOk(Collection collection);
         void onOverviewFragmentClickCollection(int id);
+        void onOverviewFragmentLongClickCollection(Collection collection);
         void onOverviewFragmentDeleteCollectionOk(Collection collection);
     }
 }

@@ -194,7 +194,6 @@ public class CardRepository {
                 }
             });
 
-            // Add ImageRequest to the RequestQueue
             requestQueue.add(volleyRequest);
 
             return null;

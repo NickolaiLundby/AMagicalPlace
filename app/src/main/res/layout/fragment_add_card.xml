@@ -12,6 +12,7 @@
         android:layout_height="wrap_content"
         android:text="Add a card to collection"
         android:textSize="16sp"
+        android:textStyle="bold"
         android:layout_alignParentTop="true"
         android:layout_centerInParent="true"
         android:layout_margin="4dp"
@@ -29,6 +30,7 @@
         android:layout_marginEnd="4dp"
         android:layout_marginRight="4dp"
         android:padding="12dp"
+        android:textStyle="bold"
         android:text="@string/title" />
 
     <EditText
@@ -54,6 +56,7 @@
         android:layout_marginRight="4dp"
         android:layout_marginBottom="4dp"
         android:padding="12dp"
+        android:textStyle="bold"
         android:text="@string/sets" />
 
     <Spinner
@@ -61,6 +64,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_toRightOf="@id/add_card_tv_spinner"
+        android:layout_toEndOf="@id/add_card_tv_spinner"
         android:layout_alignTop="@id/add_card_tv_spinner"
         android:layout_alignBottom="@id/add_card_tv_spinner"
         android:spinnerMode="dropdown"/>
