@@ -27,6 +27,7 @@ import com.android.volley.toolbox.Volley;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.InputStream;
+import java.util.Date;
 
 import nickolaill.staniec.runeak.amagicalplace.Models.Card;
 import nickolaill.staniec.runeak.amagicalplace.R;
@@ -40,6 +41,7 @@ public class CardDetailFragment extends Fragment {
     private static final String ARG_MODE = "mode";
     private Button btnReturn;
     private ImageView imgCard;
+    private TextView txtPrice, txtLastEval;
     private Card card;
     private boolean mode;
     private RequestQueue requestQueue;
@@ -73,6 +75,16 @@ public class CardDetailFragment extends Fragment {
         } else {
             v= inflater.inflate(R.layout.fragment_card_detail_portrait, container, false);
         }
+
+        txtPrice = v.findViewById(R.id.txtPrice);
+        Double price = card.getPrice();
+        if(price != null)
+            txtPrice.setText("" + price + " USD");
+
+        txtLastEval = v.findViewById(R.id.txtLastEval);
+        Date date = card.getLastEvaluated();
+        if(date != null)
+            txtLastEval.setText("" + card.getLastEvaluated());
 
         btnReturn = v.findViewById(R.id.btnReturn);
         if(!mode){

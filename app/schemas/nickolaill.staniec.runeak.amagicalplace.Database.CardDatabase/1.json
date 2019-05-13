@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "030fc000a98a7388b1454686232b237b",
+    "identityHash": "700853603344a3c4f72c8078ed853c4d",
     "entities": [
       {
         "tableName": "card_table",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`caId` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `quantity` INTEGER NOT NULL, `collectionId` INTEGER NOT NULL, `multiverseId` INTEGER NOT NULL, `title` TEXT, `series` TEXT, `text` TEXT, `types` TEXT, `type` TEXT, `rarity` TEXT, `toughness` TEXT, `power` TEXT, `manaCoast` TEXT, `imageUrl` TEXT, `colors` TEXT, `colorIdentity` TEXT, `imageUri` TEXT, FOREIGN KEY(`collectionId`) REFERENCES `collection_table`(`coId`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`caId` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `quantity` INTEGER NOT NULL, `price` REAL NOT NULL, `lastEvaluated` INTEGER, `collectionId` INTEGER NOT NULL, `multiverseId` INTEGER NOT NULL, `title` TEXT, `series` TEXT, `text` TEXT, `types` TEXT, `type` TEXT, `rarity` TEXT, `toughness` TEXT, `power` TEXT, `manaCoast` TEXT, `imageUrl` TEXT, `colors` TEXT, `colorIdentity` TEXT, `imageUri` TEXT, FOREIGN KEY(`collectionId`) REFERENCES `collection_table`(`coId`) ON UPDATE NO ACTION ON DELETE CASCADE )",
         "fields": [
           {
             "fieldPath": "caId",
@@ -19,6 +19,18 @@
             "columnName": "quantity",
             "affinity": "INTEGER",
             "notNull": true
+          },
+          {
+            "fieldPath": "price",
+            "columnName": "price",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "lastEvaluated",
+            "columnName": "lastEvaluated",
+            "affinity": "INTEGER",
+            "notNull": false
           },
           {
             "fieldPath": "collectionId",
@@ -197,7 +209,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"030fc000a98a7388b1454686232b237b\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"700853603344a3c4f72c8078ed853c4d\")"
     ]
   }
 }

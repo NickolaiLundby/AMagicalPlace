@@ -145,6 +145,8 @@ public class CardRepository {
                 } else {
                     Log.d("img", "downloading new image");
                     final Card card = cards[0];
+                    if(card.getImageUrl() == null)
+                        card.setImageUrl("http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=97066&type=card");
                     CustomVolleyRequest volleyRequest = new CustomVolleyRequest(convertHttpToHttps(card.getImageUrl()), new Response.Listener<NetworkResponse>() {
                         @Override
                         public void onResponse(NetworkResponse response) {
@@ -180,8 +182,9 @@ public class CardRepository {
         @Override
         protected Void doInBackground(Card... cards) {
             final Card card = cards[0];
-            if(card.getImageUrl().isEmpty())
-                return null;
+            if(card.getImageUrl() == null)
+                card.setImageUrl("http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=97066&type=card");
+            Log.d("img", "Url: " + card.getImageUrl());
             CustomVolleyRequest volleyRequest = new CustomVolleyRequest(convertHttpToHttps(card.getImageUrl()), new Response.Listener<NetworkResponse>() {
                 @Override
                 public void onResponse(NetworkResponse response) {

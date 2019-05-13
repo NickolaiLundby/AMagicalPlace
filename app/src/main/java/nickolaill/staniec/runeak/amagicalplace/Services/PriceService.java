@@ -87,7 +87,16 @@ public class PriceService extends Service {
                     @Override
                     public void onResponse(JSONObject response) {
                         // TODO: Should add the price to each card in collection.
-
+                        for(int i = 0; i < allCardsInCollection.size(); i++){
+                            String cardName = allCardsInCollection.get(i).getTitle();
+                            String scryFallName = InternetUtils.extractJsonScryfall(response).get(i).first;
+                            Double value = InternetUtils.extractJsonScryfall(response).get(i).second;
+                            if(cardName.equalsIgnoreCase(scryFallName)){
+                                allCardsInCollection.get(i).setPrice(value);
+                                allCardsInCollection.get(i).setLastEvaluated(Calendar.getInstance().getTime());
+                                new UpdateAllCardsIncollectionAsyncTask(magicDao).execute(allCardsInCollection);
+                            }
+                        }
                         // TODO: Should add the total value to this collection, and the lastEvaluated with date.
                         collection.setLastEvaluated(Calendar.getInstance().getTime());
                         collection.setValue(ValueCalculator.calculateCollectionValue(allCardsInCollection, InternetUtils.extractJsonScryfall(response)));
@@ -117,6 +126,20 @@ public class PriceService extends Service {
             sendBroadcast(broadCastIntent);
         } catch (Exception e){
             e.printStackTrace();
+        }
+    }
+
+    private static class UpdateAllCardsIncollectionAsyncTask extends AsyncTask<List<Card>, Void, Void> {
+        private MagicDao magicDao;
+
+        private UpdateAllCardsIncollectionAsyncTask(MagicDao magicDao) {
+            this.magicDao = magicDao;
+        }
+
+        @Override
+        protected Void doInBackground(List<Card>... cards) {
+            magicDao.updateCards(cards[0]);
+            return null;
         }
     }
 }

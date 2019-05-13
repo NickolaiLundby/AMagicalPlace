@@ -30,6 +30,9 @@ public interface MagicDao {
     @Update
     void updateCard(Card card);
 
+    @Update
+    void updateCards(List<Card> card);
+
     @Delete
     void deleteCard(Card card);
 
