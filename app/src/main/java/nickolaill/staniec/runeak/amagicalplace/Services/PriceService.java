@@ -30,7 +30,6 @@ import nickolaill.staniec.runeak.amagicalplace.Utilities.InternetUtils;
 import nickolaill.staniec.runeak.amagicalplace.Utilities.ValueCalculator;
 
 public class PriceService extends Service {
-    private final static String ScryfallURL = "https://api.scryfall.com/cards/collection";
     IBinder mBinder = new PriceBinder();
     private RequestQueue requestQueue;
     MagicDao magicDao;
@@ -79,21 +78,21 @@ public class PriceService extends Service {
             try{
                 for(Card c: allCardsInCollection){
                     JSONObject jsonObj = new JSONObject();
-                    Log.d("mul", ""+c.getMultiverseId());
+                    Log.d(Constants.LOG_TAG_MULTIVERSE, "MultiverseId of card: " + c.getMultiverseId());
                     if(c.getMultiverseId() > 0){
-                        Log.d("mul", "adding to jsonarray");
+                        Log.d(Constants.LOG_TAG_MULTIVERSE, "Adding valid multiverseId to JSONArray: " + c.getMultiverseId());
                         jsonObj.put("multiverse_id", c.getMultiverseId());
                         jsonArray.put(jsonObj);
                     } else {
+                        Log.e(Constants.LOG_TAG_MULTIVERSE, "Card " + c.getTitle() + " has invalid multiverseId: " + c.getMultiverseId());
                         allCardsInCollection.remove(c);
                     }
                 }
                 JSONObject identifiersObj = new JSONObject();
                 identifiersObj.put("identifiers", jsonArray);
-                JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, ScryfallURL, identifiersObj, new Response.Listener<JSONObject>() {
+                JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, Constants.SCRYFALL_URL, identifiersObj, new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        // TODO: Should add the price to each card in collection.
                         for(int i = 0; i < allCardsInCollection.size(); i++){
                             String cardName = allCardsInCollection.get(i).getTitle();
                             String scryFallName = InternetUtils.extractJsonScryfall(response).get(i).first;
@@ -104,7 +103,6 @@ public class PriceService extends Service {
                                 new UpdateAllCardsIncollectionAsyncTask(magicDao).execute(allCardsInCollection);
                             }
                         }
-                        // TODO: Should add the total value to this collection, and the lastEvaluated with date.
                         collection.setLastEvaluated(Calendar.getInstance().getTime());
                         collection.setValue(ValueCalculator.calculateCollectionValue(allCardsInCollection, InternetUtils.extractJsonScryfall(response)));
                         sendMyBroadcast(collection);

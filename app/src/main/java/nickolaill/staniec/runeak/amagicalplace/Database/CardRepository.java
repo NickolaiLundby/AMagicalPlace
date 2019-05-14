@@ -23,6 +23,7 @@ import java.util.List;
 
 import nickolaill.staniec.runeak.amagicalplace.Models.Card;
 import nickolaill.staniec.runeak.amagicalplace.Models.MagicDao;
+import nickolaill.staniec.runeak.amagicalplace.Utilities.Constants;
 import nickolaill.staniec.runeak.amagicalplace.Utilities.CustomVolleyRequest;
 
 public class CardRepository {
@@ -138,15 +139,17 @@ public class CardRepository {
             if(existingCard == null){
                 File file = getFile(createFileName(cards[0].getMultiverseId()));
                 if(file.exists()){
-                    Log.d("img", "using existing image");
+                    Log.d(Constants.LOG_TAG_IMAGE, "Using existing image for: " + cards[0].getMultiverseId());
                     Card card = cards[0];
                     card.setImageUri(Uri.parse(file.getAbsolutePath()));
                     magicDao.insertCard(card);
                 } else {
-                    Log.d("img", "downloading new image");
+                    Log.d(Constants.LOG_TAG_IMAGE, "Downloading new image for: " + cards[0].getMultiverseId());
                     final Card card = cards[0];
-                    if(card.getImageUrl() == null)
-                        card.setImageUrl("http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=97066&type=card");
+                    if(card.getImageUrl() == null) {
+                        card.setImageUrl(Constants.DEFAULT_IMG_URL);
+                        Log.d(Constants.LOG_TAG_IMAGE, "Using default image url for: " + cards[0].getMultiverseId());
+                    }
                     CustomVolleyRequest volleyRequest = new CustomVolleyRequest(convertHttpToHttps(card.getImageUrl()), new Response.Listener<NetworkResponse>() {
                         @Override
                         public void onResponse(NetworkResponse response) {
@@ -161,7 +164,6 @@ public class CardRepository {
                         }
                     });
 
-                    // Add ImageRequest to the RequestQueue
                     requestQueue.add(volleyRequest);
                     }
             } else {
@@ -183,8 +185,8 @@ public class CardRepository {
         protected Void doInBackground(Card... cards) {
             final Card card = cards[0];
             if(card.getImageUrl() == null)
-                card.setImageUrl("http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=97066&type=card");
-            Log.d("img", "Url: " + card.getImageUrl());
+                card.setImageUrl(Constants.DEFAULT_IMG_URL);
+            Log.d(Constants.LOG_TAG_IMAGE, "Url: " + card.getImageUrl());
             CustomVolleyRequest volleyRequest = new CustomVolleyRequest(convertHttpToHttps(card.getImageUrl()), new Response.Listener<NetworkResponse>() {
                 @Override
                 public void onResponse(NetworkResponse response) {
@@ -269,11 +271,11 @@ public class CardRepository {
                     File file = new File(cards[0].getImageUri().toString());
                     boolean deleted = file.delete();
                     if(deleted)
-                        Log.d("EXTERNAL_STORAGE", cards[0].getTitle() + " deleted from storage");
+                        Log.d(Constants.LOG_TAG_EXTERNAL_STORAGE, cards[0].getTitle() + " deleted from storage");
                     else
-                        Log.d("EXTERNAL STORAGE", cards[0].getTitle() + " was NOT deleted");
+                        Log.e(Constants.LOG_TAG_EXTERNAL_STORAGE, cards[0].getTitle() + " was NOT deleted");
                 } catch (Exception e) {
-                    Log.e("EXTERNAL_STORAGE", "Exception while deleting file " + e.getMessage());
+                    Log.e(Constants.LOG_TAG_EXTERNAL_STORAGE, "Exception while deleting file " + e.getMessage());
                 }
             }
             return null;

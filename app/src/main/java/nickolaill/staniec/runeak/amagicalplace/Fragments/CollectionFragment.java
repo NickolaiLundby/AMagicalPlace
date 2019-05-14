@@ -20,7 +20,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 import java.util.List;
 
 import nickolaill.staniec.runeak.amagicalplace.Adapters.CardAdapterGridView;
@@ -181,11 +180,9 @@ public class CollectionFragment extends Fragment {
         Bundle args = new Bundle();
         switch (item.getItemId()) {
             case R.id.menu_grid_on:
-                Toast.makeText(getActivity(), "Switching to grid view", Toast.LENGTH_SHORT).show();
                 args.putBoolean(ARG_GRIDVIEW, true);
                 break;
             case R.id.menu_grid_off:
-                Toast.makeText(getActivity(), "Switching to list view", Toast.LENGTH_SHORT).show();
                 args.putBoolean(ARG_GRIDVIEW, false);
                 break;
             default:

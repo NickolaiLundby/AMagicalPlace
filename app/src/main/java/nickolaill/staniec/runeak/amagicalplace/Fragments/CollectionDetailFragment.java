@@ -62,14 +62,14 @@ public class CollectionDetailFragment extends Fragment {
 
         tvDate = v.findViewById(R.id.collection_detail_tv_date);
         if(collection.getLastEvaluated() == null){
-            tvDate.setText("Never evaluated");
+            tvDate.setText(getResources().getString(R.string.never_evaluated));
         } else{
             tvDate.setText(collection.getLastEvaluated().toString());
         }
 
         tvValue = v.findViewById(R.id.collection_detail_tv_value);
         if(collection.getValue() == 0){
-            tvValue.setText("Never evaluated");
+            tvValue.setText(getResources().getString(R.string.never_evaluated));
         } else{
             tvValue.setText(String.valueOf(collection.getValue()));
         }

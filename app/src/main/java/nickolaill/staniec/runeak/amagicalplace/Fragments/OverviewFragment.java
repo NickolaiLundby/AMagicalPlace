@@ -135,14 +135,14 @@ public class OverviewFragment extends Fragment {
             collectionDescription.setText(collection.getDescription());
         }
 
-        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton(getResources().getString(R.string.okay_capitalized), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 if(collection == null) {
                     // Means we're adding a collection
                     if(collectionTitle.getText().toString().isEmpty() ||
                             collectionDescription.getText().toString().isEmpty()){
-                        Toast.makeText(getActivity(), "Fill in both title and description!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), getResources().getString(R.string.title_description_error), Toast.LENGTH_SHORT).show();
                         return;
                     }
                     Collection collection = new Collection(collectionTitle.getText().toString(), collectionDescription.getText().toString());
@@ -156,7 +156,7 @@ public class OverviewFragment extends Fragment {
             }
         });
 
-        builder.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
+        builder.setNegativeButton(getResources().getString(R.string.cancel_capitalized), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.cancel();

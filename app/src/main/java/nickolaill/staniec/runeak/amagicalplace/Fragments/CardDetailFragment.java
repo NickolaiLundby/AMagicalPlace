@@ -10,7 +10,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,7 +24,6 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.Volley;
 
 import java.io.ByteArrayInputStream;
-import java.io.File;
 import java.io.InputStream;
 import java.util.Date;
 
@@ -78,14 +76,16 @@ public class CardDetailFragment extends Fragment {
 
         txtPrice = v.findViewById(R.id.txtPrice);
         Double price = card.getPrice();
-        Log.d("price", ""+price);
-        if(price != null && price > 0)
-            txtPrice.setText("" + price + " USD");
+        if(price != null && price > 0){
+            String p = price + " USD";
+            txtPrice.setText(p);
+        }
+
 
         txtLastEval = v.findViewById(R.id.txtLastEval);
         Date date = card.getLastEvaluated();
         if(date != null)
-            txtLastEval.setText("" + card.getLastEvaluated());
+            txtLastEval.setText(String.valueOf(card.getLastEvaluated()));
 
         btnReturn = v.findViewById(R.id.btnReturn);
         if(!mode){
@@ -150,7 +150,6 @@ public class CardDetailFragment extends Fragment {
                 }
             });
 
-            // Add ImageRequest to the RequestQueue
             requestQueue.add(volleyRequest);
 
             return null;
