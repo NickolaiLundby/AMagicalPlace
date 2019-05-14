@@ -20,16 +20,18 @@ import nickolaill.staniec.runeak.amagicalplace.Utilities.Constants;
 
 public class CollectionDetailFragment extends Fragment {
     public static final String ARG_COLLECTION = "collection";
-    private boolean twoPaneCreation;
+    public static final String ARG_MODE = "twoPaneOn";
+    private boolean noCollection;
     private Collection collection;
     private CollectionDetailFragmentListener mListener;
     private Button btnUpdate, btnBack;
     private TextView tvDate, tvValue;
 
-    public static CollectionDetailFragment newInstance(Collection collection) {
+    public static CollectionDetailFragment newInstance(Collection collection, boolean twoPaneMode) {
         CollectionDetailFragment fragment = new CollectionDetailFragment();
         Bundle args = new Bundle();
         args.putParcelable(ARG_COLLECTION, collection);
+        args.putBoolean(ARG_MODE, twoPaneMode);
         fragment.setArguments(args);
         return fragment;
     }
@@ -42,11 +44,21 @@ public class CollectionDetailFragment extends Fragment {
         registerMyReceiver();
 
         collection = getArguments().getParcelable(ARG_COLLECTION);
+        boolean mode = getArguments().getBoolean(ARG_MODE);
         if(collection == null)
-            twoPaneCreation = true;
+            noCollection = true;
 
         btnUpdate = v.findViewById(R.id.collection_detail_btn_update);
         btnBack = v.findViewById(R.id.collection_detail_btn_back);
+        if(mode)
+            btnBack.setVisibility(View.GONE);
+        else
+            btnBack.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mListener.onCollectionDetailFragmentBack();
+                }
+            });
 
         btnUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -55,17 +67,10 @@ public class CollectionDetailFragment extends Fragment {
             }
         });
 
-        btnBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mListener.onCollectionDetailFragmentBack();
-            }
-        });
-
         tvDate = v.findViewById(R.id.collection_detail_tv_date);
         tvValue = v.findViewById(R.id.collection_detail_tv_value);
 
-        if(twoPaneCreation){
+        if(noCollection){
             tvDate.setText(getResources().getString(R.string.no_collection_selected));
             tvValue.setText(getResources().getString(R.string.no_collection_selected));
         } else{

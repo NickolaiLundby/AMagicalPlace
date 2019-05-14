@@ -10,6 +10,7 @@ import android.content.ServiceConnection;
 import android.os.IBinder;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 
 import nickolaill.staniec.runeak.amagicalplace.Fragments.CollectionDetailFragment;
 import nickolaill.staniec.runeak.amagicalplace.Fragments.OverviewFragment;
@@ -99,13 +100,13 @@ public class OverviewActivity extends AppCompatActivity implements OverviewFragm
     @Override
     public void onOverviewFragmentLongClickCollection(Collection collection) {
         if (mTwoPane) {
-            CollectionDetailFragment twoPaneFragment = CollectionDetailFragment.newInstance(collection);
+            CollectionDetailFragment twoPaneFragment = CollectionDetailFragment.newInstance(collection, true);
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.wide_collection_detail_fragment_container, twoPaneFragment, Constants.TAG_FRAGMENT_OVERVIEW)
                     .commit();
 
         } else {
-            CollectionDetailFragment fragment = CollectionDetailFragment.newInstance(collection);
+            CollectionDetailFragment fragment = CollectionDetailFragment.newInstance(collection, false);
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.overview_container, fragment, Constants.TAG_FRAGMENT_COLLECTIONDETAIL)
                     .commit();
@@ -154,7 +155,7 @@ public class OverviewActivity extends AppCompatActivity implements OverviewFragm
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.overview_container, fragment, Constants.TAG_FRAGMENT_OVERVIEW)
                     .commit();
-            CollectionDetailFragment collectionDetailFragment = CollectionDetailFragment.newInstance(null);
+            CollectionDetailFragment collectionDetailFragment = CollectionDetailFragment.newInstance(null, true);
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.wide_collection_detail_fragment_container, collectionDetailFragment, Constants.TAG_FRAGMENT_OVERVIEW)
                     .commit();
