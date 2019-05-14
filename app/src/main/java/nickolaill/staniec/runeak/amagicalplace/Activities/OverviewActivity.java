@@ -98,10 +98,18 @@ public class OverviewActivity extends AppCompatActivity implements OverviewFragm
 
     @Override
     public void onOverviewFragmentLongClickCollection(Collection collection) {
-        CollectionDetailFragment fragment = CollectionDetailFragment.newInstance(collection);
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.overview_container, fragment, Constants.TAG_FRAGMENT_COLLECTIONDETAIL)
-                .commit();
+        if (mTwoPane) {
+            CollectionDetailFragment twoPaneFragment = CollectionDetailFragment.newInstance(collection);
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.wide_collection_detail_fragment_container, twoPaneFragment, Constants.TAG_FRAGMENT_OVERVIEW)
+                    .commit();
+
+        } else {
+            CollectionDetailFragment fragment = CollectionDetailFragment.newInstance(collection);
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.overview_container, fragment, Constants.TAG_FRAGMENT_COLLECTIONDETAIL)
+                    .commit();
+        }
     }
 
     @Override
