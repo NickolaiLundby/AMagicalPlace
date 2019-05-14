@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import nickolaill.staniec.runeak.amagicalplace.Models.Collection;
 import nickolaill.staniec.runeak.amagicalplace.R;
+import nickolaill.staniec.runeak.amagicalplace.Utilities.Constants;
 
 public class CollectionAdapter extends ListAdapter<Collection, CollectionAdapter.CollectionHolder> {
     private OnItemClickListener listener;
@@ -31,9 +32,9 @@ public class CollectionAdapter extends ListAdapter<Collection, CollectionAdapter
         public boolean areContentsTheSame(@NonNull Collection oldItem, @NonNull Collection newItem) {
             boolean theSame = oldItem.getTitle().equals(newItem.getTitle()) &&
                     oldItem.getDescription().equals(newItem.getDescription());
-            Log.d("CollectionAdapter", "Title old: " +oldItem.getTitle() + " Description old: " + oldItem.getDescription()
+            Log.d(Constants.LOG_TAG_COLLECTION_ADAPTER, "Title old: " +oldItem.getTitle() + " Description old: " + oldItem.getDescription()
             + " Title new: " + newItem.getTitle() + " New Description: " + newItem.getDescription());
-            Log.d("CollectionAdapter", "areContentsTheSame: " +theSame);
+            Log.d(Constants.LOG_TAG_COLLECTION_ADAPTER, "areContentsTheSame: " +theSame);
             return oldItem.getTitle().equals(newItem.getTitle()) &&
                     oldItem.getDescription().equals(newItem.getDescription());
         }

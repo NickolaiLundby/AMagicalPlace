@@ -33,6 +33,7 @@ import io.magicthegathering.javasdk.api.CardAPI;
 import nickolaill.staniec.runeak.amagicalplace.Adapters.CardAdapterListView;
 import nickolaill.staniec.runeak.amagicalplace.Models.Card;
 import nickolaill.staniec.runeak.amagicalplace.R;
+import nickolaill.staniec.runeak.amagicalplace.Utilities.Constants;
 import nickolaill.staniec.runeak.amagicalplace.Utilities.InternetUtils;
 import nickolaill.staniec.runeak.amagicalplace.Utilities.StorageUtils;
 import nickolaill.staniec.runeak.amagicalplace.ViewModels.AddCardViewModel;
@@ -169,14 +170,14 @@ public class AddCardFragment extends Fragment{
     private void AddButtonClicked(){
         // TODO: A new card object should be generated based on the selection by the user.
         if (cardToBeAdded == null) {
-            Toast.makeText(getActivity(), "No card selected", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), getResources().getString(R.string.no_card_selected), Toast.LENGTH_SHORT).show();
             return;
         }
         else {
             if(StorageUtils.isExternalStorageWritable())
                 mListener.onAddCardFragmentAddInteraction(cardToBeAdded);
             else
-                Toast.makeText(getActivity(), "External storage not writable", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), getResources().getString(R.string.external_storage_unwritable), Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -214,7 +215,7 @@ public class AddCardFragment extends Fragment{
                 Toast.makeText(getActivity(), R.string.no_result, Toast.LENGTH_SHORT).show();
             }
         } else {
-            Log.e("Error", "APIAsyncTask return null");
+            Log.e(Constants.LOG_TAG_API_ERROR, "APIAsyncTask return null");
         }
 
     }
@@ -234,7 +235,7 @@ public class AddCardFragment extends Fragment{
                 try {
                     apiResults = CardAPI.getAllCards(arrayLists[0]);
                 } catch (Exception e) {
-                    Log.e("Error", e.getMessage());
+                    Log.e(Constants.LOG_TAG_API_ERROR, e.getMessage());
                     e.printStackTrace();
                 }
                 return true;

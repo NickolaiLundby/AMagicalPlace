@@ -34,6 +34,12 @@
     <string name="item_card_list_decrementQ">Decrements the quantity</string>
     <string name="description">Description</string>
     <string name="btn_edit">Edit</string>
+    <string name="never_evaluated">Never evaluated</string>
+    <string name="no_card_selected">No card selected</string>
+    <string name="external_storage_unwritable">External storage not writable</string>
+    <string name="okay_capitalized">OKAY</string>
+    <string name="cancel_capitalized">CANCEL</string>
+    <string name="title_description_error">Fill in both title and description!</string>
 
     <!-- TODO: All series should probably be checked if they work @ API -->
     <string-array name="magicsets">
