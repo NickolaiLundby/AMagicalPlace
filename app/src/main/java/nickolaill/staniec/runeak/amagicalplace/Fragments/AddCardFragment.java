@@ -182,9 +182,6 @@ public class AddCardFragment extends Fragment{
     }
 
     private void SearchButtonClicked(){
-        loadingPanel.setVisibility(View.VISIBLE);
-        List<Card> noCards = new ArrayList<>();
-        viewModel.setAllCards(noCards);
         ArrayList<String> filter = new ArrayList<>();
         String cardNameString = cardTitle.getText().toString();
         if(cardNameString != null && !cardNameString.isEmpty()){
@@ -195,6 +192,9 @@ public class AddCardFragment extends Fragment{
             filter.add("setName="+setNameString);
         }
         if(filter.size()>0){
+            loadingPanel.setVisibility(View.VISIBLE);
+            List<Card> noCards = new ArrayList<>();
+            viewModel.setAllCards(noCards);
             new APIAsyncTask().execute(filter);
         } else {
             Toast.makeText(getActivity(), R.string.no_search_terms, Toast.LENGTH_SHORT).show();

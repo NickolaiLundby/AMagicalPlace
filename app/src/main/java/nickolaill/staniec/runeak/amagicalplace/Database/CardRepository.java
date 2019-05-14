@@ -135,7 +135,8 @@ public class CardRepository {
 
         @Override
         protected Void doInBackground(Card... cards) {
-            Card existingCard = magicDao.getCardByCollectionAndMultiverseId(cards[0].getCollectionId(), cards[0].getMultiverseId());
+
+            Card existingCard = magicDao.getCardByCollectionAndMultiverseIdAndTitle(cards[0].getCollectionId(), cards[0].getMultiverseId(), cards[0].getTitle());
             if(existingCard == null){
                 File file = getFile(createFileName(cards[0].getMultiverseId()));
                 if(file.exists()){
