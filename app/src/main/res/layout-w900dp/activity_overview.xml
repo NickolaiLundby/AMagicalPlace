@@ -6,17 +6,17 @@
     tools:context=".Activities.OverviewActivity"
     android:id="@+id/wide_overview_container">
 
-    <android.support.v7.widget.RecyclerView
+    <android.support.design.widget.CoordinatorLayout
         android:id="@+id/overview_container"
         android:layout_width="600dp"
         android:layout_height="match_parent"
         android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"/>
-    
-    <android.support.v7.widget.RecyclerView
+        android:layout_alignParentLeft="true" />
+
+    <android.support.design.widget.CoordinatorLayout
         android:id="@+id/wide_collection_detail_fragment_container"
         android:layout_width="600dp"
         android:layout_height="match_parent"
         android:layout_toEndOf="@id/overview_container"
-        android:layout_toRightOf="@id/overview_container"/>
+        android:layout_toRightOf="@id/overview_container" />
 </RelativeLayout>
