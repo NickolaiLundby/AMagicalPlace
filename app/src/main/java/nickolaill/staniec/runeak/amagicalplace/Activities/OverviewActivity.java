@@ -10,6 +10,7 @@ import android.content.ServiceConnection;
 import android.os.IBinder;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 
 import nickolaill.staniec.runeak.amagicalplace.Fragments.CollectionDetailFragment;
 import nickolaill.staniec.runeak.amagicalplace.Fragments.OverviewFragment;
@@ -22,6 +23,7 @@ import nickolaill.staniec.runeak.amagicalplace.ViewModels.OverviewViewModel;
 public class OverviewActivity extends AppCompatActivity implements OverviewFragment.OverviewFragmentListener, CollectionDetailFragment.CollectionDetailFragmentListener {
     private OverviewViewModel viewModel;
     private boolean mBound;
+    private boolean mTwoPane;
     private PriceService priceService;
 
     @Override
@@ -31,15 +33,16 @@ public class OverviewActivity extends AppCompatActivity implements OverviewFragm
 
         viewModel = ViewModelProviders.of(this).get(OverviewViewModel.class);
 
-        if (savedInstanceState == null) {
-            OverviewFragment fragment = OverviewFragment.newInstance();
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.overview_container, fragment, Constants.TAG_FRAGMENT_OVERVIEW)
-                    .commit();
+        if(findViewById(R.id.wide_overview_container) != null) {
+            mTwoPane = true;
+        } else {
+            mTwoPane = false;
         }
-        else {
-            // If there is a savedInstanceState that means there is a fragment, therefor
-            // we just leave this bracket empty, as this will automatically recreate the fragment(s)
+
+        if(mTwoPane) {
+            twoPaneCreation(savedInstanceState);
+        } else {
+            singlePaneCreation(savedInstanceState);
         }
 
         // Service
@@ -96,10 +99,18 @@ public class OverviewActivity extends AppCompatActivity implements OverviewFragm
 
     @Override
     public void onOverviewFragmentLongClickCollection(Collection collection) {
-        CollectionDetailFragment fragment = CollectionDetailFragment.newInstance(collection);
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.overview_container, fragment, Constants.TAG_FRAGMENT_COLLECTIONDETAIL)
-                .commit();
+        if (mTwoPane) {
+            CollectionDetailFragment twoPaneFragment = CollectionDetailFragment.newInstance(collection, true);
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.wide_collection_detail_fragment_container, twoPaneFragment, Constants.TAG_FRAGMENT_OVERVIEW)
+                    .commit();
+
+        } else {
+            CollectionDetailFragment fragment = CollectionDetailFragment.newInstance(collection, false);
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.overview_container, fragment, Constants.TAG_FRAGMENT_COLLECTIONDETAIL)
+                    .commit();
+        }
     }
 
     @Override
@@ -122,6 +133,36 @@ public class OverviewActivity extends AppCompatActivity implements OverviewFragm
             registerReceiver(receiver, intentFilter);
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    private void singlePaneCreation(Bundle savedInstanceState) {
+        if (savedInstanceState == null) {
+            OverviewFragment fragment = OverviewFragment.newInstance();
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.overview_container, fragment, Constants.TAG_FRAGMENT_OVERVIEW)
+                    .commit();
+        }
+        else {
+            // If there is a savedInstanceState that means there is a fragment, therefor
+            // we just leave this bracket empty, as this will automatically recreate the fragment(s)
+        }
+    }
+
+    private void twoPaneCreation(Bundle savedInstanceState) {
+        if (savedInstanceState == null) {
+            OverviewFragment fragment = OverviewFragment.newInstance();
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.overview_container, fragment, Constants.TAG_FRAGMENT_OVERVIEW)
+                    .commit();
+            CollectionDetailFragment collectionDetailFragment = CollectionDetailFragment.newInstance(null, true);
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.wide_collection_detail_fragment_container, collectionDetailFragment, Constants.TAG_FRAGMENT_OVERVIEW)
+                    .commit();
+        }
+        else {
+            // If there is a savedInstanceState that means there is a fragment, therefor
+            // we just leave this bracket empty, as this will automatically recreate the fragment(s)
         }
     }
 
