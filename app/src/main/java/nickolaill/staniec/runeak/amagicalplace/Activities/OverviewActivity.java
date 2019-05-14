@@ -22,6 +22,7 @@ import nickolaill.staniec.runeak.amagicalplace.ViewModels.OverviewViewModel;
 public class OverviewActivity extends AppCompatActivity implements OverviewFragment.OverviewFragmentListener, CollectionDetailFragment.CollectionDetailFragmentListener {
     private OverviewViewModel viewModel;
     private boolean mBound;
+    private boolean mTwoPane;
     private PriceService priceService;
 
     @Override
@@ -31,15 +32,16 @@ public class OverviewActivity extends AppCompatActivity implements OverviewFragm
 
         viewModel = ViewModelProviders.of(this).get(OverviewViewModel.class);
 
-        if (savedInstanceState == null) {
-            OverviewFragment fragment = OverviewFragment.newInstance();
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.overview_container, fragment, Constants.TAG_FRAGMENT_OVERVIEW)
-                    .commit();
+        if(findViewById(R.id.wide_overview_container) != null) {
+            mTwoPane = true;
+        } else {
+            mTwoPane = false;
         }
-        else {
-            // If there is a savedInstanceState that means there is a fragment, therefor
-            // we just leave this bracket empty, as this will automatically recreate the fragment(s)
+
+        if(mTwoPane) {
+            twoPaneCreation(savedInstanceState);
+        } else {
+            singlePaneCreation(savedInstanceState);
         }
 
         // Service
@@ -122,6 +124,36 @@ public class OverviewActivity extends AppCompatActivity implements OverviewFragm
             registerReceiver(receiver, intentFilter);
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    private void singlePaneCreation(Bundle savedInstanceState) {
+        if (savedInstanceState == null) {
+            OverviewFragment fragment = OverviewFragment.newInstance();
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.overview_container, fragment, Constants.TAG_FRAGMENT_OVERVIEW)
+                    .commit();
+        }
+        else {
+            // If there is a savedInstanceState that means there is a fragment, therefor
+            // we just leave this bracket empty, as this will automatically recreate the fragment(s)
+        }
+    }
+
+    private void twoPaneCreation(Bundle savedInstanceState) {
+        if (savedInstanceState == null) {
+            OverviewFragment fragment = OverviewFragment.newInstance();
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.overview_container, fragment, Constants.TAG_FRAGMENT_OVERVIEW)
+                    .commit();
+            CollectionDetailFragment collectionDetailFragment = CollectionDetailFragment.newInstance(null);
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.wide_collection_detail_fragment_container, collectionDetailFragment, Constants.TAG_FRAGMENT_OVERVIEW)
+                    .commit();
+        }
+        else {
+            // If there is a savedInstanceState that means there is a fragment, therefor
+            // we just leave this bracket empty, as this will automatically recreate the fragment(s)
         }
     }
 
