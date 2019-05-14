@@ -36,8 +36,8 @@ public interface MagicDao {
     @Delete
     void deleteCard(Card card);
 
-    @Query("SELECT * FROM card_table WHERE collectionId LIKE :collectionId AND multiverseId LIKE :multiverseId")
-    Card getCardByCollectionAndMultiverseId(int collectionId, int multiverseId);
+    @Query("SELECT * FROM card_table WHERE collectionId LIKE :collectionId AND multiverseId LIKE :multiverseId AND title LIKE :title")
+    Card getCardByCollectionAndMultiverseIdAndTitle(int collectionId, int multiverseId, String title);
 
     @Query("SELECT * FROM card_table WHERE multiverseId LIKE :multiverseId")
     List<Card> getCardsByMultiverseId(int multiverseId);

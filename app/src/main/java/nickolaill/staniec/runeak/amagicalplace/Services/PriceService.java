@@ -18,6 +18,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -77,36 +78,37 @@ public class PriceService extends Service {
             allCardsInCollection = magicDao.getAllCardsList(collection.getCoId());
             JSONArray jsonArray = new JSONArray();
             try{
-                for(Card c: allCardsInCollection){
+                List<Card> tempCards = new ArrayList<>();
+                for(Card c: allCardsInCollection) {
                     JSONObject jsonObj = new JSONObject();
-                    Log.d("mul", ""+c.getMultiverseId());
-                    if(c.getMultiverseId() > 0){
+                    Log.d("mul", "" + c.getMultiverseId());
+                    if (c.getMultiverseId() > 0) {
                         Log.d("mul", "adding to jsonarray");
                         jsonObj.put("multiverse_id", c.getMultiverseId());
                         jsonArray.put(jsonObj);
-                    } else {
-                        allCardsInCollection.remove(c);
+                        tempCards.add(c);
                     }
                 }
+                final List<Card> cardsToGetPricefor = tempCards;
                 JSONObject identifiersObj = new JSONObject();
                 identifiersObj.put("identifiers", jsonArray);
                 JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, ScryfallURL, identifiersObj, new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
                         // TODO: Should add the price to each card in collection.
-                        for(int i = 0; i < allCardsInCollection.size(); i++){
-                            String cardName = allCardsInCollection.get(i).getTitle();
+                        for(int i = 0; i < cardsToGetPricefor.size(); i++){
+                            String cardName = cardsToGetPricefor.get(i).getTitle();
                             String scryFallName = InternetUtils.extractJsonScryfall(response).get(i).first;
                             Double value = InternetUtils.extractJsonScryfall(response).get(i).second;
                             if(cardName.equalsIgnoreCase(scryFallName)){
                                 allCardsInCollection.get(i).setPrice(value);
                                 allCardsInCollection.get(i).setLastEvaluated(Calendar.getInstance().getTime());
-                                new UpdateAllCardsIncollectionAsyncTask(magicDao).execute(allCardsInCollection);
+                                new UpdateAllCardsIncollectionAsyncTask(magicDao).execute(cardsToGetPricefor);
                             }
                         }
                         // TODO: Should add the total value to this collection, and the lastEvaluated with date.
                         collection.setLastEvaluated(Calendar.getInstance().getTime());
-                        collection.setValue(ValueCalculator.calculateCollectionValue(allCardsInCollection, InternetUtils.extractJsonScryfall(response)));
+                        collection.setValue(ValueCalculator.calculateCollectionValue(cardsToGetPricefor, InternetUtils.extractJsonScryfall(response)));
                         sendMyBroadcast(collection);
                     }
                 }, new Response.ErrorListener() {
