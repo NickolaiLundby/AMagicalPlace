@@ -41,6 +41,7 @@
     <string name="title_description_error">Fill in both title and description!</string>
     <string name="grid_view" translatable="false">Grid View</string>
     <string name="list_view" translatable="false">List View</string>
+    <string name="no_collection_selected">No collection selected</string>
 
     <!-- TODO: All series should probably be checked if they work @ API -->
     <string-array name="magicsets">

@@ -20,6 +20,7 @@ import nickolaill.staniec.runeak.amagicalplace.Utilities.Constants;
 
 public class CollectionDetailFragment extends Fragment {
     public static final String ARG_COLLECTION = "collection";
+    private boolean twoPaneCreation;
     private Collection collection;
     private CollectionDetailFragmentListener mListener;
     private Button btnUpdate, btnBack;
@@ -29,7 +30,6 @@ public class CollectionDetailFragment extends Fragment {
         CollectionDetailFragment fragment = new CollectionDetailFragment();
         Bundle args = new Bundle();
         args.putParcelable(ARG_COLLECTION, collection);
-        //TODO: Any more args are put here
         fragment.setArguments(args);
         return fragment;
     }
@@ -42,6 +42,8 @@ public class CollectionDetailFragment extends Fragment {
         registerMyReceiver();
 
         collection = getArguments().getParcelable(ARG_COLLECTION);
+        if(collection == null)
+            twoPaneCreation = true;
 
         btnUpdate = v.findViewById(R.id.collection_detail_btn_update);
         btnBack = v.findViewById(R.id.collection_detail_btn_back);
@@ -61,17 +63,23 @@ public class CollectionDetailFragment extends Fragment {
         });
 
         tvDate = v.findViewById(R.id.collection_detail_tv_date);
-        if(collection.getLastEvaluated() == null){
-            tvDate.setText(getResources().getString(R.string.never_evaluated));
-        } else{
-            tvDate.setText(collection.getLastEvaluated().toString());
-        }
-
         tvValue = v.findViewById(R.id.collection_detail_tv_value);
-        if(collection.getValue() == 0){
-            tvValue.setText(getResources().getString(R.string.never_evaluated));
+
+        if(twoPaneCreation){
+            tvDate.setText(getResources().getString(R.string.no_collection_selected));
+            tvValue.setText(getResources().getString(R.string.no_collection_selected));
         } else{
-            tvValue.setText(String.valueOf(collection.getValue()));
+            if(collection.getLastEvaluated() == null){
+                tvDate.setText(getResources().getString(R.string.never_evaluated));
+            } else{
+                tvDate.setText(collection.getLastEvaluated().toString());
+            }
+
+            if(collection.getValue() == 0){
+                tvValue.setText(getResources().getString(R.string.never_evaluated));
+            } else{
+                tvValue.setText(String.valueOf(collection.getValue()));
+            }
         }
 
         return v;
