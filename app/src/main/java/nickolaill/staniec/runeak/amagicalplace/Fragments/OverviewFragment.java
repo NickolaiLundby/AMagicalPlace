@@ -135,7 +135,7 @@ public class OverviewFragment extends Fragment {
             collectionDescription.setText(collection.getDescription());
         }
 
-        builder.setPositiveButton(getResources().getString(R.string.okay_capitalized), new DialogInterface.OnClickListener() {
+        builder.setPositiveButton(getResources().getString(android.R.string.ok), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 if(collection == null) {

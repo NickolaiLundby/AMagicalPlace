@@ -16,14 +16,14 @@
     <string name="add_collection">Add Collection</string>
     <string name="no_internet_connection">No internet connection</string>
     <string name="are_you_sure">Are you sure?</string>
-    <string name="top_placeholder">Top Placeholder</string>
+    <string name="top_placeholder" translatable="false">Top Placeholder</string>
     <string name="btn_yes">Yes</string>
     <string name="btn_no">No</string>
     <string name="add_card_to_collection">Add a card to collection</string>
     <string name="btn_add">Add</string>
     <string name="btn_cancel">Cancel</string>
     <string name="fragment_collection_date">Date:</string>
-    <string name="placeholder">Placeholder</string>
+    <string name="placeholder" translatable="false">Placeholder</string>
     <string name="fragment_collection_value">Value:</string>
     <string name="btn_back">Back</string>
     <string name="btn_update">Update</string>
@@ -37,9 +37,10 @@
     <string name="never_evaluated">Never evaluated</string>
     <string name="no_card_selected">No card selected</string>
     <string name="external_storage_unwritable">External storage not writable</string>
-    <string name="okay_capitalized">OKAY</string>
-    <string name="cancel_capitalized">CANCEL</string>
+    <string name="cancel_capitalized">Cancel</string>
     <string name="title_description_error">Fill in both title and description!</string>
+    <string name="grid_view" translatable="false">Grid View</string>
+    <string name="list_view" translatable="false">List View</string>
 
     <!-- TODO: All series should probably be checked if they work @ API -->
     <string-array name="magicsets">
