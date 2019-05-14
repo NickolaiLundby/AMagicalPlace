@@ -27,10 +27,14 @@
     <string name="overview_dialog_et_title_hint">Titel her</string>
     <string name="overview_dialog_tv_description">Beskrivelse:</string>
     <string name="overview_dialog_tv_title">Titel:</string>
-    <string name="placeholder">Placeholder</string>
     <string name="price">Pris:</string>
     <string name="sets">Sets</string>
     <string name="text">Tekst</string>
     <string name="title">Titel</string>
     <string name="title_to_search_for">Titel for at søge</string>
+    <string name="cancel_capitalized">Fortryd</string>
+    <string name="external_storage_unwritable">Ekstern lagring er ikke skrivbar</string>
+    <string name="never_evaluated">Aldrig evalueret</string>
+    <string name="no_card_selected">Ingen kort valgt</string>
+    <string name="title_description_error">Udfyld både titel og beskrivelse!</string>
 </resources>

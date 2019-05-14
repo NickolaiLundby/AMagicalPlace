@@ -3,10 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item android:id="@+id/menu_grid_on"
         android:icon="@drawable/ic_grid_on"
-        android:title="Grid View"
+        android:title="@string/grid_view"
         app:showAsAction="ifRoom"/>
     <item android:id="@+id/menu_grid_off"
         android:icon="@drawable/ic_grid_off"
-        android:title="List View"
+        android:title="@string/list_view"
         app:showAsAction="ifRoom"/>
 </menu>
