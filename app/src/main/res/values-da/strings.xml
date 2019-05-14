@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">A Magical Place</string>
+    <string name="add_card_to_collection">Tilføj et kort til samlingen</string>
+    <string name="add_collection">Tilføj en samling</string>
+    <string name="are_you_sure">Er du sikker?</string>
+    <string name="btn_add">Tilføj</string>
+    <string name="btn_back">Tilbage</string>
+    <string name="btn_cancel">Fortryd</string>
+    <string name="btn_edit">Rediger</string>
+    <string name="btn_no">Nej</string>
+    <string name="btn_update">Opdater</string>
+    <string name="btn_yes">Ja</string>
+    <string name="description">Beskrivelse</string>
+    <string name="edit_collection">Rediger Samling</string>
+    <string name="fragment_collection_date">Dato:</string>
+    <string name="fragment_collection_value">Værdi:</string>
+    <string name="item_card_list_alpha">Alpha</string>
+    <string name="item_card_list_cardName">Kort navn</string>
+    <string name="item_card_list_decrementQ">Reducere antallet</string>
+    <string name="item_card_list_incrementQ">Øge antallet</string>
+    <string name="item_card_list_type">Type</string>
+    <string name="no_internet_connection">Ingen internetforbindelse</string>
+    <string name="no_result">Ingen resultater</string>
+    <string name="no_search_terms">Ingen søgetermer valgt</string>
+    <string name="overview_dialog_et_description_hint">Beskrivelse her</string>
+    <string name="overview_dialog_et_title_hint">Titel her</string>
+    <string name="overview_dialog_tv_description">Beskrivelse:</string>
+    <string name="overview_dialog_tv_title">Titel:</string>
+    <string name="placeholder">Placeholder</string>
+    <string name="price">Pris:</string>
+    <string name="sets">Sets</string>
+    <string name="text">Tekst</string>
+    <string name="title">Titel</string>
+    <string name="title_to_search_for">Titel for at søge</string>
+</resources>
