@@ -46,6 +46,9 @@ public class InternetUtils {
         } catch (JSONException e){
             e.printStackTrace();
         }
-        return pairList;
+        if(pairList.isEmpty())
+            return null;
+        else
+            return pairList;
     }
 }
