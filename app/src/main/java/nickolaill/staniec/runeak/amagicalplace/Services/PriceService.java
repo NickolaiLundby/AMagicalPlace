@@ -6,6 +6,8 @@ import android.os.AsyncTask;
 import android.os.Binder;
 import android.os.IBinder;
 import android.util.Log;
+import android.util.Pair;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -26,6 +28,7 @@ import nickolaill.staniec.runeak.amagicalplace.Database.CardDatabase;
 import nickolaill.staniec.runeak.amagicalplace.Models.Card;
 import nickolaill.staniec.runeak.amagicalplace.Models.Collection;
 import nickolaill.staniec.runeak.amagicalplace.Models.MagicDao;
+import nickolaill.staniec.runeak.amagicalplace.R;
 import nickolaill.staniec.runeak.amagicalplace.Utilities.Constants;
 import nickolaill.staniec.runeak.amagicalplace.Utilities.InternetUtils;
 import nickolaill.staniec.runeak.amagicalplace.Utilities.ValueCalculator;
@@ -94,20 +97,24 @@ public class PriceService extends Service {
                 JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, Constants.SCRYFALL_URL, identifiersObj, new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        // TODO: Should add the price to each card in collection.
-                        for(int i = 0; i < cardsToGetPricefor.size(); i++){
-                            String cardName = cardsToGetPricefor.get(i).getTitle();
-                            String scryFallName = InternetUtils.extractJsonScryfall(response).get(i).first;
-                            Double value = InternetUtils.extractJsonScryfall(response).get(i).second;
-                            if(cardName.equalsIgnoreCase(scryFallName)){
-                                allCardsInCollection.get(i).setPrice(value);
-                                allCardsInCollection.get(i).setLastEvaluated(Calendar.getInstance().getTime());
-                                new UpdateAllCardsIncollectionAsyncTask(magicDao).execute(cardsToGetPricefor);
+                        ArrayList<Pair<String, Double>> extractedData = InternetUtils.extractJsonScryfall(response);
+                        if(extractedData != null){
+                            for(int i = 0; i < cardsToGetPricefor.size(); i++){
+                                String cardName = cardsToGetPricefor.get(i).getTitle();
+                                String scryFallName = extractedData.get(i).first;
+                                Double value = extractedData.get(i).second;
+                                if(cardName.equalsIgnoreCase(scryFallName)){
+                                    allCardsInCollection.get(i).setPrice(value);
+                                    allCardsInCollection.get(i).setLastEvaluated(Calendar.getInstance().getTime());
+                                    new UpdateAllCardsIncollectionAsyncTask(magicDao).execute(cardsToGetPricefor);
+                                }
                             }
+                            collection.setLastEvaluated(Calendar.getInstance().getTime());
+                            collection.setValue(ValueCalculator.calculateCollectionValue(cardsToGetPricefor, extractedData));
+                            sendMyBroadcast(collection);
+                        } else {
+                            Toast.makeText(getBaseContext(), getResources().getString(R.string.no_result), Toast.LENGTH_LONG).show();
                         }
-                        collection.setLastEvaluated(Calendar.getInstance().getTime());
-                        collection.setValue(ValueCalculator.calculateCollectionValue(cardsToGetPricefor, InternetUtils.extractJsonScryfall(response)));
-                        sendMyBroadcast(collection);
                     }
                 }, new Response.ErrorListener() {
                     @Override

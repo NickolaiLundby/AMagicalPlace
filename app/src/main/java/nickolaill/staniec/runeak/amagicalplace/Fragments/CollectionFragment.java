@@ -100,24 +100,6 @@ public class CollectionFragment extends Fragment {
             }
         });
 
-        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0,
-                ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
-            @Override
-            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder viewHolder1) {
-                return false;
-            }
-
-            @Override
-            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int i) {
-                if(recyclerView.getAdapter() instanceof CardAdapterListView){
-                    viewModel.delete(((CardAdapterListView) recyclerView.getAdapter()).getCardAt(viewHolder.getAdapterPosition()));
-                }
-                else if(recyclerView.getAdapter() instanceof CardAdapterGridView){
-                    viewModel.delete(((CardAdapterGridView) recyclerView.getAdapter()).getCardAt(viewHolder.getAdapterPosition()));
-                }
-            }
-        }).attachToRecyclerView(recyclerView);
-
         if(recyclerView.getAdapter() instanceof CardAdapterListView){
             ((CardAdapterListView) recyclerView.getAdapter()).setOnItemClickListener(new CardAdapterListView.OnItemClickListener() {
                 @Override
